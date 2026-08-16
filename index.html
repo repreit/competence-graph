@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>competency-graph</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f4ef;
+        --ink: #1c1b18;
+        --muted: #5c5850;
+        --line: #d8d3c8;
+        --card: #fffdf8;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #161513;
+          --ink: #f3efe6;
+          --muted: #b0aaa0;
+          --line: #3a372f;
+          --card: #1f1d1a;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.55;
+      }
+
+      main {
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 3rem 1.25rem 4rem;
+      }
+
+      p,
+      li {
+        color: var(--ink);
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.5rem;
+      }
+
+      h2 {
+        font-size: 1.1rem;
+        margin: 0 0 0.6rem;
+      }
+
+      header p {
+        margin: 0;
+      }
+
+      section {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 1.1rem 1.15rem 1.2rem;
+        margin-top: 1.25rem;
+      }
+
+      ul {
+        margin: 0.4rem 0 0;
+        padding-left: 1.2rem;
+      }
+
+      li + li {
+        margin-top: 0.35rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>competency-graph</h1>
+        <p class="muted">
+          A shared language for checkable competence. Competency is a history of
+          participation and doing, not a badge. A field graph is a lens over
+          that history.
+        </p>
+      </header>
+
+      <section>
+        <h2>History</h2>
+        <p class="muted">Belongs to a person. Append-only. Not for sale.</p>
+        <ul>
+          <li>Participation — you showed up (inspectable).</li>
+          <li>Doing — you made something (inspectable).</li>
+          <li>No history → not a competency. Self-claim is not enough.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Field graph</h2>
+        <p class="muted">Belongs to a domain. A lens, not a diploma.</p>
+        <ul>
+          <li>Anyone may publish a lens in JSON later.</li>
+          <li>A node is valid only if it names what history would satisfy it.</li>
+          <li>Edges: prerequisite (blocks) or bridge (does not block).</li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
