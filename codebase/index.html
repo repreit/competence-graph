@@ -131,10 +131,23 @@
       .node {
         position: relative;
         z-index: 1;
+        display: block;
+        width: 100%;
+        padding: 0;
         border: 1px solid var(--line);
         border-radius: 6px;
         overflow: hidden;
         background: var(--card);
+        color: inherit;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .node:hover,
+      .node:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
       }
 
       .node.bridge {
@@ -203,6 +216,51 @@
           grid-row: auto;
         }
       }
+
+      dialog {
+        position: relative;
+        width: min(40rem, calc(100vw - 2rem));
+        max-height: calc(100vh - 2rem);
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--card);
+        color: var(--ink);
+        overflow: auto;
+      }
+
+      dialog::backdrop {
+        background: rgba(22, 21, 19, 0.55);
+      }
+
+      dialog img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+      }
+
+      dialog .sheet {
+        padding: 1rem 1.15rem 1.25rem;
+      }
+
+      dialog h2 {
+        margin: 0 0 0.25rem;
+      }
+
+      dialog .close {
+        position: absolute;
+        top: 0.55rem;
+        right: 0.55rem;
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--card);
+        color: var(--ink);
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -226,8 +284,8 @@
         </ul>
         <p class="muted" style="margin: 1rem 0 0">
           Example: Mina building a Web3 peer-to-peer real estate fulfillment
-          system. Each box is a deed someone can inspect. Later work rests on
-          earlier work. No loops.
+          system. Each box is a deed someone can inspect. Click a box to open
+          it. Later work rests on earlier work. No loops.
         </p>
         <div class="legend">
           <span><i class="swatch"></i>Grew from this deed</span>
@@ -235,8 +293,8 @@
         </div>
         <div
           class="dag-board"
-          role="img"
-          aria-label="Mina building a Web3 peer-to-peer real estate fulfillment system, shown as a directed acyclic graph of inspectable deeds"
+          role="group"
+          aria-label="Mina building a Web3 peer-to-peer real estate fulfillment system. Click a deed to open details."
         >
           <svg class="dag-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <defs>
@@ -266,46 +324,91 @@
               marker-end="url(#arrow)"
             />
           </svg>
-          <article class="node n-group">
+          <button
+            type="button"
+            class="node n-group"
+            data-title="Title and escrow working group"
+            data-kind="participation"
+            data-proof="Attendance notes and the public working-group agenda."
+            data-story="Mina sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds. Showing up is the first inspectable deed."
+            data-image="images/deed-title-group.png"
+            data-alt="People at a table with floor plans and a peer-to-peer property deal sketch"
+          >
             <img
               src="images/deed-title-group.png"
               alt="People at a table with floor plans and a peer-to-peer property deal sketch"
             />
             <h3>Title and escrow working group</h3>
             <p>participation</p>
-          </article>
-          <article class="node n-escrow">
+          </button>
+          <button
+            type="button"
+            class="node n-escrow"
+            data-title="Property escrow contract PR"
+            data-kind="doing · github.com/…"
+            data-proof="A public pull request: deposit, inspection window, release to seller."
+            data-story="She wrote the contract that holds buyer funds until inspection and handover. A stranger can open the PR and read the rules."
+            data-image="images/deed-property-escrow-pr.png"
+            data-alt="Laptop showing a property escrow contract pull request"
+          >
             <img
               src="images/deed-property-escrow-pr.png"
               alt="Laptop showing a property escrow contract pull request"
             />
             <h3>Property escrow contract PR</h3>
             <p>doing · github.com/…</p>
-          </article>
-          <article class="node n-testnet">
+          </button>
+          <button
+            type="button"
+            class="node n-testnet"
+            data-title="Testnet P2P listing"
+            data-kind="doing · 0x8f2a…"
+            data-proof="A testnet listing and a lock-deposit transaction."
+            data-story="The working group and the escrow PR made a test listing possible: a house, a deposit button, no platform as middleman."
+            data-image="images/deed-testnet-listing.png"
+            data-alt="Phone showing a peer-to-peer property listing with a lock-deposit action"
+          >
             <img
               src="images/deed-testnet-listing.png"
               alt="Phone showing a peer-to-peer property listing with a lock-deposit action"
             />
             <h3>Testnet P2P listing</h3>
             <p>doing · 0x8f2a…</p>
-          </article>
-          <article class="node n-live">
+          </button>
+          <button
+            type="button"
+            class="node n-live"
+            data-title="Live P2P fulfillment"
+            data-kind="doing · etherscan"
+            data-proof="A mainnet fulfillment transaction and a recorded key handover."
+            data-story="A real deal completed: deposit locked, inspection passed, keys handed over, funds released. This is the live system, not a course certificate."
+            data-image="images/deed-live-fulfillment.png"
+            data-alt="Keys and a tablet showing fulfillment complete"
+          >
             <img
               src="images/deed-live-fulfillment.png"
               alt="Keys and a tablet showing fulfillment complete"
             />
             <h3>Live P2P fulfillment</h3>
             <p>doing · etherscan</p>
-          </article>
-          <article class="node n-design bridge">
+          </button>
+          <button
+            type="button"
+            class="node n-design bridge"
+            data-title="Listing and handover UX"
+            data-kind="design · another field"
+            data-proof="Wireframes for listing, deposit, inspection, and handover."
+            data-story="The same fulfillment work also produced a design trail. This does not unlock the live system. It is a bridge into another field."
+            data-image="images/deed-listing-design.png"
+            data-alt="Paper wireframes of a property listing and fulfillment steps"
+          >
             <img
               src="images/deed-listing-design.png"
               alt="Paper wireframes of a property listing and fulfillment steps"
             />
             <h3>Listing and handover UX</h3>
             <p>design · another field</p>
-          </article>
+          </button>
         </div>
       </section>
 
@@ -319,5 +422,51 @@
         </ul>
       </section>
     </main>
+
+    <dialog id="deed-window" aria-labelledby="deed-title">
+      <button type="button" class="close" aria-label="Close">&times;</button>
+      <img id="deed-image" alt="" />
+      <div class="sheet">
+        <h2 id="deed-title"></h2>
+        <p class="muted" id="deed-kind"></p>
+        <p id="deed-story"></p>
+        <p class="muted" id="deed-proof"></p>
+      </div>
+    </dialog>
+
+    <script>
+      const windowEl = document.getElementById("deed-window");
+      const imageEl = document.getElementById("deed-image");
+      const titleEl = document.getElementById("deed-title");
+      const kindEl = document.getElementById("deed-kind");
+      const storyEl = document.getElementById("deed-story");
+      const proofEl = document.getElementById("deed-proof");
+
+      function openDeed(node) {
+        titleEl.textContent = node.dataset.title;
+        kindEl.textContent = node.dataset.kind;
+        storyEl.textContent = node.dataset.story;
+        proofEl.textContent = "Inspectable: " + node.dataset.proof;
+        imageEl.src = node.dataset.image;
+        imageEl.alt = node.dataset.alt;
+        windowEl.showModal();
+      }
+
+      document.querySelectorAll(".node").forEach(function (node) {
+        node.addEventListener("click", function () {
+          openDeed(node);
+        });
+      });
+
+      windowEl.querySelector(".close").addEventListener("click", function () {
+        windowEl.close();
+      });
+
+      windowEl.addEventListener("click", function (event) {
+        if (event.target === windowEl) {
+          windowEl.close();
+        }
+      });
+    </script>
   </body>
 </html>
