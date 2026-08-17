@@ -1,0 +1,50 @@
+# competency-graph
+
+A shared language for **checkable competence**.
+
+Competency is a history of participation and doing — not a badge, not a course completion. A **field graph** is a lens over that history. It does not issue a title.
+
+Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
+
+## Why this exists
+
+One team cannot write every field (nursing, Solidity, design, law, real estate). The public good is the **format**, plus one reference viewer. Anyone can publish a tree later as JSON.
+
+This is closer to Vitalik’s history-you-cannot-sell than to a skill tree. Soul or worldview may be inferred from results. They are not labels in the format. Personality is not represented.
+
+## Format (the MVP)
+
+| File | What it is |
+|---|---|
+| [`codebase/history.json`](codebase/history.json) | One person’s append-only deeds |
+| [`codebase/lens.json`](codebase/lens.json) | One field’s lens: which history counts here |
+| [`codebase/index.html`](codebase/index.html) | Reference viewer (no framework) |
+
+**History entry:** inspectable participation or doing. No inspectable proof → not an entry.
+
+**Lens node:** illegal without saying what history would satisfy it.
+
+**Edges:** `prerequisite` (blocks) or `bridge` (cross-field, does not block). The structure is a DAG.
+
+Optional later: `{ easUid?, did? }` on a history entry. No wallet in this MVP.
+
+## Example
+
+Mina building a Web3 peer-to-peer real estate fulfillment system. The page loads her history from JSON. Click a deed for the photo and the proof.
+
+## Run locally
+
+GitHub Pages serves `codebase/`. Opening `index.html` as a file may block JSON fetch.
+
+```bash
+cd codebase
+python3 -m http.server 4173
+```
+
+Then open http://localhost:4173/
+
+Push to `main` to update the live demo.
+
+## Not in this MVP
+
+Wallet, EAS writes, login, marketplace, grant application UI, real on-chain verification.

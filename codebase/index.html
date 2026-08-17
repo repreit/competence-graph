@@ -58,6 +58,10 @@
         color: var(--muted);
       }
 
+      a {
+        color: inherit;
+      }
+
       h1 {
         font-size: 1.75rem;
         font-weight: 600;
@@ -289,10 +293,11 @@
           <li>Doing — you made something (inspectable).</li>
           <li>No history → not a competency. Self-claim is not enough.</li>
         </ul>
-        <p class="muted" style="margin: 1rem 0 0">
-          Example: Mina building a Web3 peer-to-peer real estate fulfillment
-          system. Each box is a deed someone can inspect. Click a box to open
-          it. Later work rests on earlier work. No loops.
+        <p class="muted" id="example-blurb" style="margin: 1rem 0 0">
+          Example loaded from
+          <a href="history.json">history.json</a>
+          and
+          <a href="lens.json">lens.json</a>.
         </p>
         <div class="legend">
           <span><i class="swatch"></i>Grew from this deed</span>
@@ -331,91 +336,6 @@
               marker-end="url(#arrow)"
             />
           </svg>
-          <button
-            type="button"
-            class="node n-group"
-            data-title="Title and escrow working group"
-            data-kind="participation"
-            data-proof="Attendance notes and the public working-group agenda."
-            data-story="Mina sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds. Showing up is the first inspectable deed."
-            data-image="images/deed-title-group.png"
-            data-alt="People at a table with floor plans and a peer-to-peer property deal sketch"
-          >
-            <img
-              src="images/deed-title-group.png"
-              alt="People at a table with floor plans and a peer-to-peer property deal sketch"
-            />
-            <h3>Title and escrow working group</h3>
-            <p>participation</p>
-          </button>
-          <button
-            type="button"
-            class="node n-escrow"
-            data-title="Property escrow contract PR"
-            data-kind="doing · github.com/…"
-            data-proof="A public pull request: deposit, inspection window, release to seller."
-            data-story="She wrote the contract that holds buyer funds until inspection and handover. A stranger can open the PR and read the rules."
-            data-image="images/deed-property-escrow-pr.png"
-            data-alt="Laptop showing a property escrow contract pull request"
-          >
-            <img
-              src="images/deed-property-escrow-pr.png"
-              alt="Laptop showing a property escrow contract pull request"
-            />
-            <h3>Property escrow contract PR</h3>
-            <p>doing · github.com/…</p>
-          </button>
-          <button
-            type="button"
-            class="node n-testnet"
-            data-title="Testnet P2P listing"
-            data-kind="doing · 0x8f2a…"
-            data-proof="A testnet listing and a lock-deposit transaction."
-            data-story="The working group and the escrow PR made a test listing possible: a house, a deposit button, no platform as middleman."
-            data-image="images/deed-testnet-listing.png"
-            data-alt="Phone showing a peer-to-peer property listing with a lock-deposit action"
-          >
-            <img
-              src="images/deed-testnet-listing.png"
-              alt="Phone showing a peer-to-peer property listing with a lock-deposit action"
-            />
-            <h3>Testnet P2P listing</h3>
-            <p>doing · 0x8f2a…</p>
-          </button>
-          <button
-            type="button"
-            class="node n-live"
-            data-title="Live P2P fulfillment"
-            data-kind="doing · etherscan"
-            data-proof="A mainnet fulfillment transaction and a recorded key handover."
-            data-story="A real deal completed: deposit locked, inspection passed, keys handed over, funds released. This is the live system, not a course certificate."
-            data-image="images/deed-live-fulfillment.png"
-            data-alt="Keys and a tablet showing fulfillment complete"
-          >
-            <img
-              src="images/deed-live-fulfillment.png"
-              alt="Keys and a tablet showing fulfillment complete"
-            />
-            <h3>Live P2P fulfillment</h3>
-            <p>doing · etherscan</p>
-          </button>
-          <button
-            type="button"
-            class="node n-design bridge"
-            data-title="Listing and handover UX"
-            data-kind="design · another field"
-            data-proof="Wireframes for listing, deposit, inspection, and handover."
-            data-story="The same fulfillment work also produced a design trail. This does not unlock the live system. It is a bridge into another field."
-            data-image="images/deed-listing-design.png"
-            data-alt="Paper wireframes of a property listing and fulfillment steps"
-          >
-            <img
-              src="images/deed-listing-design.png"
-              alt="Paper wireframes of a property listing and fulfillment steps"
-            />
-            <h3>Listing and handover UX</h3>
-            <p>design · another field</p>
-          </button>
         </div>
       </section>
 
@@ -427,6 +347,7 @@
           <li>A node is valid only if it names what history would satisfy it.</li>
           <li>Edges: prerequisite (blocks) or bridge (does not block).</li>
         </ul>
+        <ul id="lens-nodes"></ul>
       </section>
     </main>
 
@@ -452,6 +373,9 @@
       const kindEl = document.getElementById("deed-kind");
       const storyEl = document.getElementById("deed-story");
       const proofEl = document.getElementById("deed-proof");
+      const boardEl = document.querySelector(".dag-board");
+      const blurbEl = document.getElementById("example-blurb");
+      const lensListEl = document.getElementById("lens-nodes");
 
       function openDeed(node) {
         titleEl.textContent = node.dataset.title;
@@ -463,11 +387,79 @@
         windowEl.showModal();
       }
 
-      document.querySelectorAll(".node").forEach(function (node) {
-        node.addEventListener("click", function () {
-          openDeed(node);
+      function renderHistory(history) {
+        const name = history.person && history.person.name ? history.person.name : "Someone";
+        blurbEl.insertAdjacentText(
+          "afterbegin",
+          name + " — " + history.title + ". "
+        );
+        boardEl.setAttribute(
+          "aria-label",
+          name + " — " + history.title + ". Click a deed to open details."
+        );
+
+        history.entries.forEach(function (entry) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "node " + entry.slot + (entry.bridge ? " bridge" : "");
+          button.dataset.title = entry.title;
+          button.dataset.kind = entry.summary;
+          button.dataset.proof = entry.proof.acceptance;
+          button.dataset.story = entry.story;
+          button.dataset.image = entry.image;
+          button.dataset.alt = entry.alt;
+
+          const img = document.createElement("img");
+          img.src = entry.image;
+          img.alt = entry.alt;
+
+          const heading = document.createElement("h3");
+          heading.textContent = entry.title;
+
+          const summary = document.createElement("p");
+          summary.textContent = entry.summary;
+
+          button.appendChild(img);
+          button.appendChild(heading);
+          button.appendChild(summary);
+          button.addEventListener("click", function () {
+            openDeed(button);
+          });
+          boardEl.appendChild(button);
         });
-      });
+      }
+
+      function renderLens(lens) {
+        lens.nodes.forEach(function (node) {
+          const item = document.createElement("li");
+          item.textContent =
+            node.title + " — " + node.competency;
+          lensListEl.appendChild(item);
+        });
+      }
+
+      Promise.all([
+        fetch("history.json").then(function (response) {
+          if (!response.ok) {
+            throw new Error("history.json");
+          }
+          return response.json();
+        }),
+        fetch("lens.json").then(function (response) {
+          if (!response.ok) {
+            throw new Error("lens.json");
+          }
+          return response.json();
+        }),
+      ])
+        .then(function (files) {
+          renderHistory(files[0]);
+          renderLens(files[1]);
+        })
+        .catch(function () {
+          blurbEl.textContent =
+            "Could not load history.json. Serve this folder with a local server, or open the GitHub Pages demo.";
+        });
 
       windowEl.querySelector(".close").addEventListener("click", function () {
         windowEl.close();

@@ -1,0 +1,86 @@
+{
+  "person": {
+    "id": "mina",
+    "name": "Mina"
+  },
+  "title": "Web3 peer-to-peer real estate fulfillment",
+  "entries": [
+    {
+      "id": "working-group",
+      "kind": "participation",
+      "title": "Title and escrow working group",
+      "summary": "participation",
+      "image": "images/deed-title-group.png",
+      "alt": "People at a table with floor plans and a peer-to-peer property deal sketch",
+      "proof": {
+        "type": "other",
+        "acceptance": "Attendance notes and the public working-group agenda."
+      },
+      "story": "Mina sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds.",
+      "slot": "n-group"
+    },
+    {
+      "id": "escrow-pr",
+      "kind": "doing",
+      "title": "Property escrow contract PR",
+      "summary": "doing · github.com/…",
+      "image": "images/deed-property-escrow-pr.png",
+      "alt": "Laptop showing a property escrow contract pull request",
+      "proof": {
+        "type": "pull_request",
+        "acceptance": "A public pull request: deposit, inspection window, release to seller."
+      },
+      "story": "She wrote the contract that holds buyer funds until inspection and handover. A stranger can open the PR and read the rules.",
+      "slot": "n-escrow"
+    },
+    {
+      "id": "testnet-listing",
+      "kind": "doing",
+      "title": "Testnet P2P listing",
+      "summary": "doing · 0x8f2a…",
+      "image": "images/deed-testnet-listing.png",
+      "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action",
+      "proof": {
+        "type": "deployed_contract",
+        "acceptance": "A testnet listing and a lock-deposit transaction."
+      },
+      "story": "The working group and the escrow PR made a test listing possible: a house, a deposit button, no platform as middleman.",
+      "slot": "n-testnet"
+    },
+    {
+      "id": "live-fulfillment",
+      "kind": "doing",
+      "title": "Live P2P fulfillment",
+      "summary": "doing · etherscan",
+      "image": "images/deed-live-fulfillment.png",
+      "alt": "Keys and a tablet showing fulfillment complete",
+      "proof": {
+        "type": "deployed_contract",
+        "acceptance": "A mainnet fulfillment transaction and a recorded key handover."
+      },
+      "story": "A real deal completed: deposit locked, inspection passed, keys handed over, funds released.",
+      "slot": "n-live"
+    },
+    {
+      "id": "listing-ux",
+      "kind": "doing",
+      "title": "Listing and handover UX",
+      "summary": "design · another field",
+      "image": "images/deed-listing-design.png",
+      "alt": "Paper wireframes of a property listing and fulfillment steps",
+      "proof": {
+        "type": "design",
+        "acceptance": "Wireframes for listing, deposit, inspection, and handover."
+      },
+      "story": "The same fulfillment work also produced a design trail. This does not unlock the live system. It is a bridge into another field.",
+      "slot": "n-design",
+      "bridge": true
+    }
+  ],
+  "edges": [
+    { "from": "working-group", "to": "testnet-listing", "type": "prerequisite" },
+    { "from": "escrow-pr", "to": "testnet-listing", "type": "prerequisite" },
+    { "from": "testnet-listing", "to": "live-fulfillment", "type": "prerequisite" },
+    { "from": "testnet-listing", "to": "listing-ux", "type": "bridge" }
+  ]
+}
