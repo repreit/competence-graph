@@ -12,11 +12,11 @@ Two seats. Both have to exist.
 
 **Builder** — participates, ships, and accumulates a history. Someone who cares about Ethereum and web3, and wants professional competence — not a course badge. They work at home or wherever they learn. They need income, a map of the new landscape, and room for another dream.
 
-**Requester** — inspects that history in order to act: fund, collaborate, or entrust the next piece of work. A protocol, a grant, a DAO, or a collaborator. Not a spectator. Not an employer in the old sense.
+**Requester** — inspects that history in order to act: fund or entrust the next piece of work. A protocol, a grant, a DAO, or a collaborator. Not a spectator. Not an employer in the old sense.
 
 The graph is the language between them. Other fields can use the same format later. This first graph is that Ethereum / web3 context.
 
-**When this is used:** a requester used to ask for a school name, a resume, a portfolio of claims. That is the old filter. This graph is for the moment that is not enough — inspect what the builder actually did, then act: fund, collaborate, or entrust the next piece of work.
+**When this is used:** a requester used to ask for a school name, a resume, a portfolio of claims. That is the old filter. This graph is for the moment that is not enough — inspect what the builder actually did, then act: fund or entrust the next piece of work.
 
 ## Why this exists
 

@@ -170,6 +170,7 @@
 
       .time-edit {
         --lane: color-mix(in srgb, var(--ink) 7%, var(--bg));
+        --gutter: 4.25rem;
         position: relative;
         z-index: 3;
         min-width: 40rem;
@@ -184,15 +185,18 @@
       .ruler {
         display: flex;
         align-items: stretch;
-        height: 1.2rem;
-        margin: 0 0 0.15rem;
+        height: 1.35rem;
+        margin: 0 0 0.4rem;
         color: var(--muted);
         font-size: 0.62rem;
         letter-spacing: 0.02em;
       }
 
       .ruler-gutter {
-        flex: 0 0 3.35rem;
+        flex: 0 0 var(--gutter);
+        width: var(--gutter);
+        min-width: var(--gutter);
+        max-width: var(--gutter);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -319,7 +323,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        padding: 0 0.15rem;
+        padding: 0 0.15rem 0 0;
         background-image:
           repeating-linear-gradient(
             to right,
@@ -336,45 +340,54 @@
         background-repeat: no-repeat;
       }
 
+      .ruler-scale::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 1px;
+        height: 9px;
+        background: var(--line);
+      }
+
       .track {
         display: flex;
-        align-items: stretch;
-        min-height: 2.05rem;
+        align-items: center;
+        min-height: 1.55rem;
         margin-top: 3px;
       }
 
       .track-name {
-        flex: 0 0 3.35rem;
+        flex: 0 0 var(--gutter);
+        width: var(--gutter);
+        min-width: var(--gutter);
+        max-width: var(--gutter);
         display: flex;
         align-items: center;
-        padding: 0 0.5rem 0 0.2rem;
-        border-right: 1px solid var(--line);
+        padding: 0 0.45rem 0 0.2rem;
         font-size: 0.62rem;
         font-weight: 650;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: var(--muted);
+        overflow: hidden;
       }
 
       .clips {
+        position: relative;
         display: flex;
         flex: 1;
         min-width: 0;
         gap: 2px;
-        margin-left: 0.3rem;
-        padding: 3px;
+        padding: 0;
+        overflow: hidden;
         border-radius: 5px;
-        background:
-          repeating-linear-gradient(
-            to right,
-            transparent 0 9.95%,
-            color-mix(in srgb, var(--ink) 10%, transparent) 9.95% 10%
-          ),
-          var(--lane);
+        background: var(--lane);
       }
 
       .track:has(.clip.after) {
-        min-height: 2.2rem;
+        align-items: center;
+        min-height: 1.85rem;
       }
 
       .track:has(.clip.after) .track-name {
@@ -382,17 +395,12 @@
       }
 
       .track:has(.clip.after) .clips {
-        background:
-          repeating-linear-gradient(
-            to right,
-            transparent 0 9.95%,
-            color-mix(in srgb, var(--ink) 14%, transparent) 9.95% 10%
-          ),
-          color-mix(in srgb, var(--ink) 5%, var(--card));
+        background: color-mix(in srgb, var(--ink) 5%, var(--card));
       }
 
       .clip {
         position: relative;
+        z-index: 1;
         min-width: 0;
         overflow: hidden;
         height: 1.55rem;
@@ -408,7 +416,6 @@
             color-mix(in srgb, var(--ink) 5%, transparent) 4px
           ),
           color-mix(in srgb, var(--muted) 38%, var(--card));
-        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card) 40%, transparent);
         color: var(--muted);
         font: inherit;
         font-size: 0.68rem;
@@ -424,18 +431,17 @@
       .clip::before {
         content: "";
         position: absolute;
-        top: 3px;
-        bottom: 3px;
+        top: 0;
+        bottom: 0;
         left: 0;
         width: 3px;
-        border-radius: 2px;
         background: color-mix(in srgb, var(--ink) 38%, transparent);
       }
 
       .clip:hover,
       .clip:focus-visible {
-        outline: 1px solid var(--ink);
-        outline-offset: 0;
+        outline: none;
+        box-shadow: inset 0 0 0 1px var(--ink);
         z-index: 1;
       }
 
@@ -449,7 +455,17 @@
       }
 
       .clip.after::before {
+        top: 3px;
+        bottom: 3px;
+        border-radius: 2px;
         background: var(--ink);
+      }
+
+      .clip.after:hover,
+      .clip.after:focus-visible {
+        box-shadow:
+          inset 0 0 0 1px var(--ink),
+          inset 0 1px 0 color-mix(in srgb, var(--card) 70%, transparent);
       }
 
       .clip-bubble {
@@ -804,7 +820,7 @@
                 Click a clip.
             </p>
             <div class="time-scene">
-                <h3>Entrust or collaborate</h3>
+                <h3>Entrust</h3>
                 <p class="muted">About one minute — the first sitting before someone is invited or passed over.</p>
                 <div class="time-edit">
                     <div class="ruler" aria-hidden="true">
@@ -827,8 +843,7 @@
                         <div class="clips">
                             <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~6 s" data-story="Open the graph. Same one-minute sitting. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a history on a laptop">Open</button>
                             <button type="button" class="clip after" style="flex: 6" data-title="Inspect deeds" data-kind="After · ~36 s" data-story="This is where the minute now goes. Follow participation and doing. Open an artifact, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting an artifact of work on a laptop">Inspect deeds</button>
-                            <button type="button" class="clip after" style="flex: 1.5" data-title="Entrust" data-kind="After · ~9 s" data-story="If the trail is there, the requester can entrust the next piece of work. Not a spectator." data-image="images/clip-entrust.jpg" data-alt="Assigning the next piece of work on a laptop">Entrust</button>
-                            <button type="button" class="clip after" style="flex: 1.5" data-title="Collaborate" data-kind="After · ~9 s" data-story="Or sit down on the same work. A collaborator inspects the trail, then builds with them — not from a resume." data-image="images/clip-collaborate.jpg" data-alt="Two people inspecting the same trail of work on a laptop">Collaborate</button>
+                            <button type="button" class="clip after" style="flex: 3" data-title="Entrust" data-kind="After · leftover" data-story="If the trail is there, the requester can entrust the next piece of work. Not a spectator." data-image="images/clip-entrust.jpg" data-alt="Assigning the next piece of work on a laptop">Entrust</button>
                         </div>
                     </div>
                 </div>
@@ -1507,7 +1522,7 @@
                     clip: clip,
                     start: (rect.left - lane.left) / lane.width,
                     end: (rect.right - lane.left) / lane.width,
-                    dwell: dwellForClip(clip),
+                    dwell: dwellForClip(clip)
                 };
             });
         }
