@@ -16,6 +16,8 @@ Two seats. Both have to exist.
 
 The graph is the language between them. Other fields can use the same format later. This first graph is that Ethereum / web3 context.
 
+**When this is used:** a requester used to ask for a school name, a resume, a portfolio of claims. That is the old filter. This graph is for the moment that is not enough — inspect what the builder actually did, then act. Not hiring in the old sense. Entrusting the next piece of work.
+
 ## Why this exists
 
 One team cannot write every field (nursing, Solidity, design, law, real estate). The public good is the **format**, plus one reference viewer. Anyone can publish a tree later as JSON.
