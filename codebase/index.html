@@ -108,21 +108,427 @@
         margin: 0;
       }
 
+      header .mark {
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
       header p + p {
-        margin-top: 0.85rem;
+        margin-top: 0.55rem;
       }
 
-      .context-grid {
+      .minutes > h2,
+      .minutes > p,
+      header,
+      footer,
+      main > section:not(.minutes) {
+        transition: filter 0.22s ease, opacity 0.22s ease;
+      }
+
+      .minutes {
+        counter-reset: situation;
+      }
+
+      .time-scene {
+        margin-top: 1.4rem;
+        transition: filter 0.22s ease, opacity 0.22s ease;
+        counter-increment: situation;
+      }
+
+      .time-scene h3 {
+        font-size: 0.95rem;
+        margin: 0 0 0.15rem;
+      }
+
+      .time-scene h3::before {
+        content: counter(situation);
+        margin-right: 0.4rem;
+        color: var(--muted);
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .time-scene > p {
+        margin: 0 0 0.5rem;
+        font-size: 0.85rem;
+      }
+
+      body:has(.time-scene:hover) :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
+      body:has(.clip:focus-visible) :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
+      body.timeline-focus :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
+      body:has(.time-scene:hover) .time-scene:not(:hover),
+      body.timeline-focus .time-scene:not(.is-active) {
+        filter: blur(7px);
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      .time-edit {
+        --lane: color-mix(in srgb, var(--ink) 7%, var(--bg));
+        position: relative;
+        z-index: 3;
+        margin-top: 0.45rem;
+        padding: 0.4rem 0.45rem 0.5rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--ink) 3.5%, var(--card));
+        font-family: ui-sans-serif, system-ui, sans-serif;
+      }
+
+      .ruler {
+        display: flex;
+        align-items: stretch;
+        height: 1.2rem;
+        margin: 0 0 0.15rem;
+        color: var(--muted);
+        font-size: 0.62rem;
+        letter-spacing: 0.02em;
+      }
+
+      .ruler-gutter {
+        flex: 0 0 3.35rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .transport {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.75rem;
-        margin-top: 1.1rem;
+        place-items: center;
+        width: 1.35rem;
+        height: 1.35rem;
+        padding: 0;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: var(--card);
+        color: var(--ink);
+        cursor: pointer;
       }
 
-      @media (max-width: 640px) {
-        .context-grid {
-          grid-template-columns: 1fr;
+      .transport:hover,
+      .transport:focus-visible {
+        outline: 1px solid var(--ink);
+        outline-offset: 0;
+      }
+
+      .play-shape {
+        width: 0;
+        height: 0;
+        margin-left: 2px;
+        border-top: 4px solid transparent;
+        border-bottom: 4px solid transparent;
+        border-left: 7px solid currentColor;
+      }
+
+      .pause-shape {
+        display: none;
+        width: 8px;
+        height: 8px;
+        background:
+          linear-gradient(currentColor, currentColor) 0 0 / 2.5px 100% no-repeat,
+          linear-gradient(currentColor, currentColor) 100% 0 / 2.5px 100% no-repeat;
+      }
+
+      .transport[aria-pressed="true"] .play-shape {
+        display: none;
+      }
+
+      .transport[aria-pressed="true"] .pause-shape {
+        display: block;
+      }
+
+      .playhead {
+        position: absolute;
+        top: 0.4rem;
+        bottom: 0.5rem;
+        width: 2px;
+        margin-left: -1px;
+        background: var(--ink);
+        pointer-events: none;
+        z-index: 6;
+      }
+
+      .playhead::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 6px solid var(--ink);
+      }
+
+      .playhead[hidden] {
+        display: none;
+      }
+
+      .time-edit.is-playing .track:not(.is-live) {
+        opacity: 0.38;
+      }
+
+      .time-edit.is-recut .track.is-live .track-name {
+        color: var(--ink);
+      }
+
+      .time-edit.is-recut .track.is-live .clips {
+        animation: recut-in 0.9s ease;
+      }
+
+      .time-edit.is-recut .track.is-live .clip {
+        animation: recut-clips 0.9s ease;
+      }
+
+      @keyframes recut-in {
+        0% {
+          filter: brightness(1.55);
+          box-shadow: inset 0 0 0 1.5px var(--ink);
         }
+        100% {
+          filter: none;
+          box-shadow: none;
+        }
+      }
+
+      @keyframes recut-clips {
+        0% {
+          transform: translateY(3px);
+          opacity: 0.35;
+        }
+        100% {
+          transform: none;
+          opacity: 1;
+        }
+      }
+
+      .clip.is-on {
+        outline: 1px solid var(--ink);
+        outline-offset: 0;
+        z-index: 1;
+      }
+
+      .ruler-scale {
+        position: relative;
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 0 0.15rem;
+        background-image:
+          repeating-linear-gradient(
+            to right,
+            var(--line) 0 1px,
+            transparent 1px 10%
+          ),
+          repeating-linear-gradient(
+            to right,
+            color-mix(in srgb, var(--ink) 18%, transparent) 0 1px,
+            transparent 1px 2%
+          );
+        background-position: 0 100%, 0 100%;
+        background-size: 100% 9px, 100% 5px;
+        background-repeat: no-repeat;
+      }
+
+      .track {
+        display: flex;
+        align-items: stretch;
+        min-height: 2.05rem;
+        margin-top: 3px;
+      }
+
+      .track-name {
+        flex: 0 0 3.35rem;
+        display: flex;
+        align-items: center;
+        padding: 0 0.5rem 0 0.2rem;
+        border-right: 1px solid var(--line);
+        font-size: 0.62rem;
+        font-weight: 650;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .clips {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        gap: 2px;
+        margin-left: 0.3rem;
+        padding: 3px;
+        border-radius: 5px;
+        background:
+          repeating-linear-gradient(
+            to right,
+            transparent 0 9.95%,
+            color-mix(in srgb, var(--ink) 10%, transparent) 9.95% 10%
+          ),
+          var(--lane);
+      }
+
+      .track:has(.clip.now) {
+        min-height: 2.2rem;
+      }
+
+      .track:has(.clip.now) .track-name {
+        color: var(--ink);
+      }
+
+      .track:has(.clip.now) .clips {
+        background:
+          repeating-linear-gradient(
+            to right,
+            transparent 0 9.95%,
+            color-mix(in srgb, var(--ink) 14%, transparent) 9.95% 10%
+          ),
+          color-mix(in srgb, var(--ink) 5%, var(--card));
+      }
+
+      .clip {
+        position: relative;
+        min-width: 0;
+        overflow: hidden;
+        height: 1.55rem;
+        padding: 0 0.4rem 0 0.55rem;
+        border: 0;
+        border-radius: 3px;
+        background:
+          repeating-linear-gradient(
+            -55deg,
+            transparent,
+            transparent 3px,
+            color-mix(in srgb, var(--ink) 5%, transparent) 3px,
+            color-mix(in srgb, var(--ink) 5%, transparent) 4px
+          ),
+          color-mix(in srgb, var(--muted) 38%, var(--card));
+        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card) 40%, transparent);
+        color: var(--muted);
+        font: inherit;
+        font-size: 0.68rem;
+        font-weight: 600;
+        line-height: 1.55rem;
+        letter-spacing: 0.01em;
+        text-align: left;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+      }
+
+      .clip::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        bottom: 3px;
+        left: 0;
+        width: 3px;
+        border-radius: 2px;
+        background: color-mix(in srgb, var(--ink) 38%, transparent);
+      }
+
+      .clip:hover,
+      .clip:focus-visible {
+        outline: 1px solid var(--ink);
+        outline-offset: 0;
+        z-index: 1;
+      }
+
+      .clip.now {
+        height: 1.85rem;
+        line-height: 1.85rem;
+        border-radius: 4px;
+        color: var(--ink);
+        background: color-mix(in srgb, var(--ink) 16%, var(--card));
+        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card) 70%, transparent);
+      }
+
+      .clip.now::before {
+        background: var(--ink);
+      }
+
+      .clip-bubble {
+        position: fixed;
+        z-index: 40;
+        width: min(16rem, calc(100vw - 1.5rem));
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 10px 28px rgba(28, 27, 24, 0.16);
+        pointer-events: none;
+      }
+
+      .clip-bubble .transport {
+        position: absolute;
+        top: 0.45rem;
+        right: 0.45rem;
+        z-index: 2;
+        width: 1.7rem;
+        height: 1.7rem;
+        pointer-events: auto;
+        box-shadow: 0 2px 8px rgba(28, 27, 24, 0.18);
+      }
+
+      .clip-bubble.is-playing {
+        pointer-events: auto;
+      }
+
+      .clip-bubble[hidden] {
+        display: none;
+      }
+
+      .clip-bubble img {
+        display: block;
+        width: 100%;
+        height: 7.25rem;
+        object-fit: cover;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .clip-bubble img[hidden] {
+        display: none;
+      }
+
+      .clip-bubble .sheet {
+        padding: 0.6rem 0.75rem 0.7rem;
+      }
+
+      .clip-bubble h3 {
+        margin: 0 0 0.1rem;
+        font-size: 0.92rem;
+      }
+
+      .clip-bubble .kind {
+        margin: 0 0 0.3rem;
+        font-size: 0.75rem;
+      }
+
+      .clip-bubble .story {
+        margin: 0;
+        font-size: 0.82rem;
+        line-height: 1.4;
+      }
+
+      .clip-bubble .tail {
+        position: absolute;
+        left: var(--tail-x, 50%);
+        bottom: -6px;
+        width: 12px;
+        height: 12px;
+        background: var(--card);
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        transform: translateX(-50%) rotate(45deg);
+      }
+
+      .clip-bubble.below .tail {
+        bottom: auto;
+        top: -6px;
+        border: none;
+        border-left: 1px solid var(--line);
+        border-top: 1px solid var(--line);
       }
 
         section {
@@ -131,6 +537,7 @@
             border-radius: 6px;
             padding: 1.1rem 1.15rem 1.2rem;
             margin-top: 1.25rem;
+            overflow: visible;
         }
 
         ul {
@@ -328,34 +735,104 @@
     <main>
         <header>
             <h1>competency-graph</h1>
+            <p class="mark">protocol</p>
             <p class="muted">
-                A shared language for checkable competence. Competency is a history of
-                participation and doing, not a badge. A field graph is a lens over
-                that history. Both seats have to exist: the builder who accumulates
-                deeds, and the requester who inspects them in order to act.
+                A shared language for checkable competence.
+                Open the history. Then act.
             </p>
         </header>
 
-        <section>
-            <h2>When this is used</h2>
+        <section class="minutes">
+            <h2>How does this change the way people spend time?</h2>
             <p class="muted">
-                The old moment: someone needs to trust competence, so they ask for a
-                school name, a resume, a portfolio of claims. This graph is for the
-                moment that is not enough — when a requester must inspect what a
-                builder actually did, then act. Not hiring in the old sense.
-                Entrusting the next piece of work.
+                Same need to act. Different object. Different cut of time.
+                Hover or click a clip.
             </p>
-            <div class="context-grid">
-                <button type="button" class="node" data-title="The old filter" data-kind="School, resume, claimed portfolio." data-story="A requester used to trust a diploma and a list of claims. That paper does not open. It cannot be inspected as work." data-image="images/situation-old.png" data-alt="A desk with a resume, a diploma folder, and a closed portfolio">
-                    <img src="images/situation-old.png" alt="" />
-                    <h3>Then</h3>
-                    <p>resume, school, claims</p>
-                </button>
-                <button type="button" class="node" data-title="This graph" data-kind="Inspectable deeds, then a decision." data-story="Same need to trust. Different object: a history a stranger can open. If the trail is there, the requester can fund, collaborate, or entrust the next piece of work." data-image="images/situation-now.png" data-alt="A desk with inspectable work: contract, key, a trail of deeds">
-                    <img src="images/situation-now.png" alt="" />
-                    <h3>Now</h3>
-                    <p>open the work, then act</p>
-                </button>
+            <div class="time-scene">
+                <h3>Entrust work</h3>
+                <p class="muted">About one minute — the first sitting before someone is invited or passed over. Not hiring.</p>
+                <div class="time-edit">
+                    <div class="ruler" aria-hidden="true">
+                        <span class="ruler-gutter"></span>
+                        <div class="ruler-scale">
+                            <span>0</span><span>30 s</span><span>1 min</span>
+                        </div>
+                    </div>
+                    <div class="track">
+                        <span class="track-name">Then</span>
+                        <div class="clips">
+                            <button type="button" class="clip" style="flex: 1" data-title="School" data-kind="Then · ~6 s" data-story="A glance at a school name. Recruiters’ first pass is measured in seconds. The paper does not open." data-image="images/clip-school.jpg" data-alt="A diploma folder on a wooden desk">School</button>
+                            <button type="button" class="clip" style="flex: 5" data-title="Resume" data-kind="Then · ~30 s" data-story="Most of the sitting. Titles, dates, keywords. Typical first-pass resume time is about half a minute." data-image="images/clip-resume.jpg" data-alt="A printed resume on a wooden desk">Resume</button>
+                            <button type="button" class="clip" style="flex: 3" data-title="Claims" data-kind="Then · ~18 s" data-story="A portfolio or GitHub, if they open it. Often scanned in under a minute with the resume, still as claims." data-image="images/clip-claims.jpg" data-alt="A closed portfolio and a laptop on a desk">Claims</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Guess" data-kind="Then · leftover" data-story="Fit or no-fit. Then the requester acts on paper, not on work." data-image="images/clip-guess.jpg" data-alt="A closed folder and a decision left on paper">Guess</button>
+                        </div>
+                    </div>
+                    <div class="track">
+                        <span class="track-name">Now</span>
+                        <div class="clips">
+                            <button type="button" class="clip now" style="flex: 1" data-title="Open" data-kind="Now · ~6 s" data-story="Open the graph. Same one-minute sitting. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
+                            <button type="button" class="clip now" style="flex: 7" data-title="Inspect deeds" data-kind="Now · ~42 s" data-story="This is where the minute now goes. Follow participation and doing. Open an artifact, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting photographs and notes of work">Inspect deeds</button>
+                            <button type="button" class="clip now" style="flex: 2" data-title="Entrust" data-kind="Now · ~12 s" data-story="If the trail is there, the requester can entrust the next piece of work. Not hiring in the old sense." data-image="images/clip-entrust.jpg" data-alt="Hands handing over keys and a folder of work">Entrust</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="time-scene">
+                <h3>Fund a trail</h3>
+                <p class="muted">About three hours on one application. The calendar wait is weeks; the cut is hours.</p>
+                <div class="time-edit">
+                    <div class="ruler" aria-hidden="true">
+                        <span class="ruler-gutter"></span>
+                        <div class="ruler-scale">
+                            <span>0</span><span>1.5 h</span><span>3 h</span>
+                        </div>
+                    </div>
+                    <div class="track">
+                        <span class="track-name">Then</span>
+                        <div class="clips">
+                            <button type="button" class="clip" style="flex: 6" data-title="Deck" data-kind="Then · ~1 h 50 m" data-story="Read a pitch. Independent grant review is typically two to four hours per application. Most of it goes to the proposal, not the work." data-image="images/clip-deck.jpg" data-alt="A printed pitch deck fanned on a table">Deck</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="CV" data-kind="Then · ~20 m" data-story="Who they say they are. Titles, schools, a list. Still a claim." data-image="images/clip-cv.jpg" data-alt="A printed CV on cream paper">CV</button>
+                            <button type="button" class="clip" style="flex: 2" data-title="Interview" data-kind="Then · ~35 m" data-story="Sometimes a call. Still not the trail. Time goes to performance in a room." data-image="images/clip-interview.jpg" data-alt="A laptop on a table showing a video call">Interview</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Score" data-kind="Then · ~20 m" data-story="A score, a panel, a vote. The funds move. The trail was never opened." data-image="images/clip-score.jpg" data-alt="A scoring sheet and a red pen">Score</button>
+                        </div>
+                    </div>
+                    <div class="track">
+                        <span class="track-name">Now</span>
+                        <div class="clips">
+                            <button type="button" class="clip now" style="flex: 1" data-title="Open" data-kind="Now · ~20 m" data-story="Open the graph. Same three hours. Different object: a trail a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
+                            <button type="button" class="clip now" style="flex: 7" data-title="Follow the trail" data-kind="Now · ~2 h" data-story="This is where the hours now go. Participation and doing, in order. If it is not there, it is not a competency." data-image="images/clip-follow.jpg" data-alt="Hands following a trail of photos and notes">Follow the trail</button>
+                            <button type="button" class="clip now" style="flex: 2" data-title="Fund" data-kind="Now · ~35 m" data-story="If the trail is there, the requester can fund the next piece of work. Not a spectator. Not a prize for a slide deck." data-image="images/clip-fund.jpg" data-alt="Hands placing funds beside a folder of work">Fund</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="time-scene">
+                <h3>Choose the next deed</h3>
+                <p class="muted">About six months — the usual professional-certificate pace. Same months, different object.</p>
+                <div class="time-edit">
+                    <div class="ruler" aria-hidden="true">
+                        <span class="ruler-gutter"></span>
+                        <div class="ruler-scale">
+                            <span>0</span><span>3 mo</span><span>6</span>
+                        </div>
+                    </div>
+                    <div class="track">
+                        <span class="track-name">Then</span>
+                        <div class="clips">
+                            <button type="button" class="clip" style="flex: 1" data-title="Catalog" data-kind="Then · ~2 wk" data-story="Browse courses. A few days, not months. The catalog does not become history." data-image="images/clip-catalog.jpg" data-alt="An open course catalog on a table">Catalog</button>
+                            <button type="button" class="clip" style="flex: 8" data-title="Course" data-kind="Then · ~5 mo" data-story="Sit through the hours. Typical certificate load is about ten hours a week for three to six months. Nothing a stranger can open." data-image="images/clip-course.jpg" data-alt="An empty classroom with a projector">Course</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Certificate" data-kind="Then · leftover" data-story="A paper at the end. It does not open. It is not participation, and it is not doing." data-image="images/clip-certificate.jpg" data-alt="A framed paper certificate on a wall">Certificate</button>
+                        </div>
+                    </div>
+                    <div class="track">
+                        <span class="track-name">Now</span>
+                        <div class="clips">
+                            <button type="button" class="clip now" style="flex: 1" data-title="Open the lens" data-kind="Now · a sitting" data-story="Open a field graph. See what history would count here. Not a diploma. A map of what to do next." data-image="images/clip-lens.jpg" data-alt="A printed field map of connected nodes">Open the lens</button>
+                            <button type="button" class="clip now" style="flex: 8" data-title="Do inspectable work" data-kind="Now · ~5 mo" data-story="Show up. Ship. Leave artifacts a stranger can open. This is where the months now go." data-image="images/clip-doing.jpg" data-alt="Hands doing inspectable work at a table">Do inspectable work</button>
+                            <button type="button" class="clip now" style="flex: 1" data-title="Leave a trail" data-kind="Now · leftover" data-story="The next deed is now on the graph. A requester can later inspect it, then act." data-image="images/clip-trail.jpg" data-alt="A trail of dated photographs left on a table">Leave a trail</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -425,6 +902,20 @@
       </p>
     </footer>
 
+    <div class="clip-bubble" id="clip-bubble" hidden>
+        <button type="button" class="transport" id="bubble-transport" hidden aria-label="Pause">
+            <span class="play-shape" aria-hidden="true"></span>
+            <span class="pause-shape" aria-hidden="true"></span>
+        </button>
+        <img id="clip-bubble-image" alt="" />
+        <div class="sheet">
+            <h3 id="clip-bubble-title"></h3>
+            <p class="muted kind" id="clip-bubble-kind"></p>
+            <p class="story" id="clip-bubble-story"></p>
+        </div>
+        <span class="tail" aria-hidden="true"></span>
+    </div>
+
     <dialog id="deed-window" aria-labelledby="deed-title">
         <button type="button" class="close" aria-label="Close">&times;</button>
         <img id="deed-image" alt="" />
@@ -446,6 +937,76 @@
         const boardEl = document.querySelector(".dag-board");
         const blurbEl = document.getElementById("example-blurb");
         const lensBlurbEl = document.getElementById("lens-blurb");
+
+        const bubbleEl = document.getElementById("clip-bubble");
+        const bubbleImg = document.getElementById("clip-bubble-image");
+        const bubbleTitle = document.getElementById("clip-bubble-title");
+        const bubbleKind = document.getElementById("clip-bubble-kind");
+        const bubbleStory = document.getElementById("clip-bubble-story");
+        const bubbleTransportEl = document.getElementById("bubble-transport");
+        let bubbleClip = null;
+
+        function hideClipBubble() {
+            if (playback) {
+                return;
+            }
+            bubbleClip = null;
+            bubbleEl.hidden = true;
+            document.body.classList.remove("timeline-focus");
+            document.querySelectorAll(".time-scene.is-active").forEach(function (scene) {
+                scene.classList.remove("is-active");
+            });
+        }
+
+        function placeClipBubble(clip) {
+            const rect = clip.getBoundingClientRect();
+            const gap = 12;
+            const width = bubbleEl.offsetWidth;
+            const height = bubbleEl.offsetHeight;
+            const center = rect.left + rect.width / 2;
+            let left = center - width / 2;
+            left = Math.max(8, Math.min(left, window.innerWidth - width - 8));
+            const fitsAbove = rect.top > height + gap + 8;
+            bubbleEl.classList.toggle("below", !fitsAbove);
+            const top = fitsAbove
+                ? rect.top - height - gap
+                : rect.bottom + gap;
+            bubbleEl.style.left = left + "px";
+            bubbleEl.style.top = top + "px";
+            bubbleEl.style.setProperty("--tail-x", center - left + "px");
+        }
+
+        function showClipBubble(clip) {
+            bubbleClip = clip;
+            document.body.classList.add("timeline-focus");
+            const scene = clip.closest(".time-scene");
+            document.querySelectorAll(".time-scene.is-active").forEach(function (el) {
+                el.classList.remove("is-active");
+            });
+            if (scene) {
+                scene.classList.add("is-active");
+            }
+            bubbleTitle.textContent = clip.dataset.title;
+            bubbleKind.textContent = clip.dataset.kind || "";
+            bubbleKind.hidden = !clip.dataset.kind;
+            bubbleStory.textContent = clip.dataset.story;
+            if (clip.dataset.image) {
+                bubbleImg.hidden = false;
+                bubbleImg.src = clip.dataset.image;
+                bubbleImg.alt = clip.dataset.alt || "";
+            } else {
+                bubbleImg.hidden = true;
+                bubbleImg.removeAttribute("src");
+            }
+            bubbleEl.hidden = false;
+            placeClipBubble(clip);
+        }
+
+        bubbleImg.addEventListener("load", function () {
+            if (bubbleClip) {
+                placeClipBubble(bubbleClip);
+            }
+        });
 
         function openDeed(node) {
             titleEl.textContent = node.dataset.title;
@@ -556,10 +1117,324 @@
                     "Could not load history.json. Serve this folder with a local server, or open the GitHub Pages demo.";
             });
 
-        document.querySelectorAll(".context-grid .node").forEach(function (node) {
-            node.addEventListener("click", function () {
-                openDeed(node);
+        document.querySelectorAll(".clip").forEach(function (clip) {
+            clip.addEventListener("pointerenter", function (event) {
+                if (event.pointerType === "mouse") {
+                    if (playbackLocksClip(clip)) {
+                        return;
+                    }
+                    showClipBubble(clip);
+                }
             });
+            clip.addEventListener("focus", function () {
+                if (playbackLocksClip(clip)) {
+                    return;
+                }
+                showClipBubble(clip);
+            });
+            clip.addEventListener("blur", hideClipBubble);
+            clip.addEventListener("click", function (event) {
+                if (playbackLocksClip(clip)) {
+                    event.preventDefault();
+                    return;
+                }
+                showClipBubble(clip);
+            });
+        });
+
+        const MIN_DWELL_MS = 5500;
+        const MAX_DWELL_MS = 12000;
+        const MS_PER_WORD = 420;
+        const RECUT_MS = 900;
+        let playback = null;
+
+        function playbackLocksClip(clip) {
+            return playback && playback.edit === clip.closest(".time-edit");
+        }
+
+        function dwellForClip(clip) {
+            const text = [clip.dataset.title, clip.dataset.kind, clip.dataset.story]
+                .filter(Boolean)
+                .join(" ");
+            const words = text.trim().split(/\s+/).filter(Boolean).length;
+            return Math.min(MAX_DWELL_MS, Math.max(MIN_DWELL_MS, words * MS_PER_WORD));
+        }
+
+        function clipQueue(clipsEl) {
+            const lane = clipsEl.getBoundingClientRect();
+            return Array.prototype.map.call(clipsEl.querySelectorAll(".clip"), function (clip) {
+                const rect = clip.getBoundingClientRect();
+                return {
+                    clip: clip,
+                    start: (rect.left - lane.left) / lane.width,
+                    end: (rect.right - lane.left) / lane.width,
+                    dwell: dwellForClip(clip),
+                };
+            });
+        }
+
+        function setPlayheadAt(edit, playhead, clipsEl, progress) {
+            const editRect = edit.getBoundingClientRect();
+            const laneRect = clipsEl.getBoundingClientRect();
+            playhead.style.left =
+                laneRect.left - editRect.left + progress * laneRect.width + "px";
+        }
+
+        function isPlaybackUi(node) {
+            if (!node || !playback) {
+                return false;
+            }
+            const scene = playback.edit.closest(".time-scene");
+            if (scene && scene.contains(node)) {
+                return true;
+            }
+            return Boolean(node.closest && node.closest(".clip-bubble"));
+        }
+
+        function setTransportPlaying(playing) {
+            const label = playing ? "Pause" : "Play this timeline";
+            const buttons = [];
+            if (playback && playback.button) {
+                buttons.push(playback.button);
+            }
+            buttons.push(bubbleTransportEl);
+            buttons.forEach(function (button) {
+                button.setAttribute("aria-pressed", playing ? "true" : "false");
+                button.setAttribute("aria-label", label);
+            });
+            bubbleTransportEl.hidden = !playback;
+            bubbleEl.classList.toggle("is-playing", Boolean(playback));
+        }
+
+        function stopPlayback() {
+            if (!playback) {
+                return;
+            }
+            cancelAnimationFrame(playback.raf);
+            playback.edit.classList.remove("is-playing", "is-recut");
+            playback.edit.querySelectorAll(".is-live, .is-on").forEach(function (el) {
+                el.classList.remove("is-live", "is-on");
+            });
+            playback.playhead.hidden = true;
+            const button = playback.button;
+            playback = null;
+            button.setAttribute("aria-pressed", "false");
+            button.setAttribute("aria-label", "Play this timeline");
+            bubbleTransportEl.hidden = true;
+            bubbleTransportEl.setAttribute("aria-pressed", "false");
+            bubbleTransportEl.setAttribute("aria-label", "Pause");
+            bubbleEl.classList.remove("is-playing");
+        }
+
+        function pausePlayback() {
+            if (!playback || playback.paused) {
+                return;
+            }
+            cancelAnimationFrame(playback.raf);
+            playback.paused = true;
+            playback.elapsed = performance.now() - playback.started;
+            setTransportPlaying(false);
+        }
+
+        function resumePlayback() {
+            if (!playback || !playback.paused) {
+                return;
+            }
+            playback.paused = false;
+            playback.started = performance.now() - playback.elapsed;
+            setTransportPlaying(true);
+            playback.raf = requestAnimationFrame(tickPlayback);
+        }
+
+        function tickPlayback(now) {
+            if (!playback) {
+                return;
+            }
+            if (playback.phase === "recut") {
+                const nowClips = playback.tracks[1].querySelector(".clips");
+                setPlayheadAt(playback.edit, playback.playhead, nowClips, 0);
+                if (now - playback.started >= RECUT_MS) {
+                    playback.phase = "play";
+                    playback.pass = 1;
+                    playback.started = now;
+                    playback.lastClip = null;
+                    playback.edit.classList.remove("is-recut");
+                    playback.raf = requestAnimationFrame(tickPlayback);
+                    return;
+                }
+                playback.raf = requestAnimationFrame(tickPlayback);
+                return;
+            }
+            const track = playback.tracks[playback.pass];
+            playback.tracks.forEach(function (el, index) {
+                el.classList.toggle("is-live", index === playback.pass);
+            });
+            const clipsEl = track.querySelector(".clips");
+            const queue = clipQueue(clipsEl);
+            const elapsed = now - playback.started;
+            let acc = 0;
+            let current = queue[queue.length - 1];
+            let local = 1;
+            let done = true;
+            for (let i = 0; i < queue.length; i += 1) {
+                if (elapsed < acc + queue[i].dwell) {
+                    current = queue[i];
+                    local = (elapsed - acc) / queue[i].dwell;
+                    done = false;
+                    break;
+                }
+                acc += queue[i].dwell;
+            }
+            const at = current.start + (current.end - current.start) * local;
+            setPlayheadAt(playback.edit, playback.playhead, clipsEl, at);
+            clipsEl.querySelectorAll(".clip").forEach(function (clip) {
+                clip.classList.toggle("is-on", clip === current.clip);
+            });
+            if (current.clip !== playback.lastClip) {
+                playback.lastClip = current.clip;
+                showClipBubble(current.clip);
+            } else {
+                placeClipBubble(current.clip);
+            }
+            if (done) {
+                if (playback.pass === 0) {
+                    playback.phase = "recut";
+                    playback.started = now;
+                    playback.lastClip = null;
+                    playback.tracks[0].classList.remove("is-live");
+                    playback.tracks[0].querySelectorAll(".is-on").forEach(function (clip) {
+                        clip.classList.remove("is-on");
+                    });
+                    playback.tracks[1].classList.add("is-live");
+                    playback.edit.classList.add("is-recut");
+                    setPlayheadAt(
+                        playback.edit,
+                        playback.playhead,
+                        playback.tracks[1].querySelector(".clips"),
+                        0
+                    );
+                    bubbleEl.hidden = true;
+                    playback.raf = requestAnimationFrame(tickPlayback);
+                    return;
+                }
+                stopPlayback();
+                return;
+            }
+            playback.raf = requestAnimationFrame(tickPlayback);
+        }
+
+        function startPlayback(edit) {
+            const button = edit.querySelector(".transport");
+            const playhead = edit.querySelector(".playhead");
+            const tracks = edit.querySelectorAll(".track");
+            playback = {
+                edit: edit,
+                button: button,
+                playhead: playhead,
+                tracks: tracks,
+                pass: 0,
+                phase: "play",
+                started: performance.now(),
+                elapsed: 0,
+                paused: false,
+                lastClip: null,
+                raf: 0,
+            };
+            edit.classList.add("is-playing");
+            playhead.hidden = false;
+            setTransportPlaying(true);
+            playback.raf = requestAnimationFrame(tickPlayback);
+        }
+
+        function togglePlayback(edit) {
+            if (playback && playback.edit === edit) {
+                if (playback.paused) {
+                    resumePlayback();
+                } else {
+                    pausePlayback();
+                }
+                return;
+            }
+            if (playback) {
+                stopPlayback();
+            }
+            startPlayback(edit);
+        }
+
+        document.querySelectorAll(".time-edit").forEach(function (edit) {
+            const gutter = edit.querySelector(".ruler-gutter");
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "transport";
+            button.setAttribute("aria-label", "Play this timeline");
+            button.innerHTML =
+                '<span class="play-shape" aria-hidden="true"></span>' +
+                '<span class="pause-shape" aria-hidden="true"></span>';
+            gutter.appendChild(button);
+
+            const playhead = document.createElement("div");
+            playhead.className = "playhead";
+            playhead.hidden = true;
+            edit.appendChild(playhead);
+
+            button.addEventListener("click", function (event) {
+                event.stopPropagation();
+                togglePlayback(edit);
+            });
+
+            edit.addEventListener("focusout", function (event) {
+                if (!playback || playback.edit !== edit) {
+                    return;
+                }
+                if (isPlaybackUi(event.relatedTarget)) {
+                    return;
+                }
+                if (!event.relatedTarget) {
+                    return;
+                }
+                stopPlayback();
+                hideClipBubble();
+            });
+
+            edit.addEventListener("pointerleave", function (event) {
+                if (event.pointerType === "mouse") {
+                    hideClipBubble();
+                }
+            });
+        });
+
+        bubbleTransportEl.addEventListener("click", function (event) {
+            event.stopPropagation();
+            if (!playback) {
+                return;
+            }
+            togglePlayback(playback.edit);
+        });
+
+        document.addEventListener("pointerdown", function (event) {
+            if (isPlaybackUi(event.target)) {
+                return;
+            }
+            if (playback) {
+                stopPlayback();
+                hideClipBubble();
+                return;
+            }
+            if (!event.target.closest(".clip")) {
+                hideClipBubble();
+            }
+        });
+
+        window.addEventListener("scroll", function () {
+            if (bubbleClip) {
+                placeClipBubble(bubbleClip);
+            }
+        }, { passive: true });
+
+        window.addEventListener("resize", function () {
+            if (bubbleClip) {
+                placeClipBubble(bubbleClip);
+            }
         });
 
         windowEl.querySelector(".close").addEventListener("click", function () {

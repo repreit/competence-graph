@@ -10,7 +10,7 @@
       "kind": "participation",
       "title": "Title and escrow working group",
       "summary": "participation",
-      "image": "images/deed-title-group.png",
+      "image": "images/deed-title-group.jpg",
       "alt": "People at a table with floor plans and a peer-to-peer property deal sketch",
       "proof": {
         "type": "other",
@@ -24,7 +24,7 @@
       "kind": "doing",
       "title": "Property escrow contract PR",
       "summary": "doing · github.com/…",
-      "image": "images/deed-property-escrow-pr.png",
+      "image": "images/deed-property-escrow-pr.jpg",
       "alt": "Laptop showing a property escrow contract pull request",
       "proof": {
         "type": "pull_request",
@@ -38,7 +38,7 @@
       "kind": "doing",
       "title": "Testnet P2P listing",
       "summary": "doing · 0x8f2a…",
-      "image": "images/deed-testnet-listing.png",
+      "image": "images/deed-testnet-listing.jpg",
       "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action",
       "proof": {
         "type": "deployed_contract",
@@ -52,7 +52,7 @@
       "kind": "doing",
       "title": "Live P2P fulfillment",
       "summary": "doing · etherscan",
-      "image": "images/deed-live-fulfillment.png",
+      "image": "images/deed-live-fulfillment.jpg",
       "alt": "Keys and a tablet showing fulfillment complete",
       "proof": {
         "type": "deployed_contract",
@@ -66,7 +66,7 @@
       "kind": "doing",
       "title": "Listing and handover UX",
       "summary": "design · another field",
-      "image": "images/deed-listing-design.png",
+      "image": "images/deed-listing-design.jpg",
       "alt": "Paper wireframes of a property listing and fulfillment steps",
       "proof": {
         "type": "design",
