@@ -296,6 +296,10 @@
             object-fit: cover;
         }
 
+        dialog img[hidden] {
+            display: none;
+        }
+
         dialog .sheet {
             padding: 1rem 1.15rem 1.25rem;
         }
@@ -440,8 +444,14 @@
                 ? "Inspectable: " + node.dataset.proof
                 : "";
             proofEl.hidden = !node.dataset.proof;
-            imageEl.src = node.dataset.image;
-            imageEl.alt = node.dataset.alt;
+            imageEl.hidden = !node.dataset.image;
+            if (node.dataset.image) {
+                imageEl.src = node.dataset.image;
+                imageEl.alt = node.dataset.alt || "";
+            } else {
+                imageEl.removeAttribute("src");
+                imageEl.alt = "";
+            }
             const scrollY = window.scrollY;
             windowEl.showModal();
             document.body.style.position = "fixed";
