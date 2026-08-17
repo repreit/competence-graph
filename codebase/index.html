@@ -257,7 +257,7 @@
         }
 
         dialog {
-            position: relative;
+            position: fixed;
             width: min(40rem, calc(100vw - 2rem));
             max-height: calc(100vh - 2rem);
             padding: 0;
@@ -355,13 +355,10 @@
 
         <section>
             <h2>Field graph</h2>
-            <p class="muted">Belongs to a domain. A lens, not a diploma.</p>
-            <ul>
-                <li>Anyone may publish a lens in JSON later.</li>
-                <li>A node is valid only if it names what history would satisfy it.</li>
-                <li>Edges: prerequisite (blocks) or bridge (does not block).</li>
-            </ul>
-            <ul id="lens-nodes"></ul>
+            <p class="muted" id="lens-blurb">
+                A lens over this history, not a diploma.
+                <a href="lens.json">lens.json</a>
+            </p>
         </section>
     </main>
 
@@ -403,7 +400,7 @@
         const proofEl = document.getElementById("deed-proof");
         const boardEl = document.querySelector(".dag-board");
         const blurbEl = document.getElementById("example-blurb");
-        const lensListEl = document.getElementById("lens-nodes");
+        const lensBlurbEl = document.getElementById("lens-blurb");
 
         function openDeed(node) {
             titleEl.textContent = node.dataset.title;
@@ -412,7 +409,21 @@
             proofEl.textContent = "Inspectable: " + node.dataset.proof;
             imageEl.src = node.dataset.image;
             imageEl.alt = node.dataset.alt;
+            const scrollY = window.scrollY;
             windowEl.showModal();
+            document.body.style.position = "fixed";
+            document.body.style.top = "-" + scrollY + "px";
+            document.body.style.left = "0";
+            document.body.style.right = "0";
+        }
+
+        function unlockScroll() {
+            const top = document.body.style.top;
+            document.body.style.position = "";
+            document.body.style.top = "";
+            document.body.style.left = "";
+            document.body.style.right = "";
+            window.scrollTo(0, Math.abs(parseInt(top || "0", 10)));
         }
 
         function renderHistory(history) {
@@ -458,12 +469,14 @@
         }
 
         function renderLens(lens) {
-            lens.nodes.forEach(function (node) {
-                const item = document.createElement("li");
-                item.textContent =
-                    node.title + " — " + node.competency;
-                lensListEl.appendChild(item);
-            });
+            lensBlurbEl.replaceChildren();
+            lensBlurbEl.appendChild(
+                document.createTextNode(lens.title + " — a lens over this history, not a diploma. ")
+            );
+            const link = document.createElement("a");
+            link.href = "lens.json";
+            link.textContent = "lens.json";
+            lensBlurbEl.appendChild(link);
         }
 
         Promise.all([
@@ -498,6 +511,8 @@
                 windowEl.close();
             }
         });
+
+        windowEl.addEventListener("close", unlockScroll);
 
         const timeEl = document.getElementById("last-modified");
 
