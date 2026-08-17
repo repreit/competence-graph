@@ -6,6 +6,16 @@ Competency is a history of participation and doing — not a badge, not a course
 
 Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
 
+## Who this is for
+
+Two seats. Both have to exist.
+
+**Builder** — participates, ships, and accumulates a history. Someone who cares about Ethereum and web3, and wants professional competence — not a course badge. They work at home or wherever they learn. They need income, a map of the new landscape, and room for another dream.
+
+**Requester** — inspects that history in order to act: fund, collaborate, or entrust the next piece of work. A protocol, a grant, a DAO, or a collaborator. Not a spectator. Not an employer in the old sense.
+
+The graph is the language between them. Other fields can use the same format later. This first graph is that Ethereum / web3 context.
+
 ## Why this exists
 
 One team cannot write every field (nursing, Solidity, design, law, real estate). The public good is the **format**, plus one reference viewer. Anyone can publish a tree later as JSON.
