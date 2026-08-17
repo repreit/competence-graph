@@ -552,6 +552,34 @@
             color: var(--muted);
         }
 
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.85rem 0 0;
+        }
+
+        .filters button {
+            padding: 0.28rem 0.65rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--card);
+            color: var(--ink);
+            font: inherit;
+            font-size: 0.78rem;
+            cursor: pointer;
+        }
+
+        .filters button[aria-pressed="true"] {
+            border-color: var(--ink);
+            background: color-mix(in srgb, var(--ink) 12%, var(--card));
+        }
+
+        .filters button:focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 2px;
+        }
+
         .swatch {
             display: inline-block;
             width: 1.1rem;
@@ -572,7 +600,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             grid-template-rows: auto auto auto;
-            gap: 1.5rem 1.1rem;
+            gap: 1.5rem;
             margin-top: 1rem;
         }
 
@@ -581,13 +609,15 @@
             inset: 0;
             width: 100%;
             height: 100%;
+            overflow: visible;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
+            color: color-mix(in srgb, var(--ink) 72%, var(--line));
         }
 
         .node {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             display: block;
             width: 100%;
             padding: 0;
@@ -609,6 +639,10 @@
 
         .node.bridge {
             border-style: dashed;
+        }
+
+        .node.is-out {
+            opacity: 0.38;
         }
 
         .node img {
@@ -821,7 +855,7 @@
                     <div class="track">
                         <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open the lens" data-kind="After · a sitting" data-story="Open a field graph. See what history would count here. Not a diploma. A map of what to do next." data-image="images/clip-lens.jpg" data-alt="A printed field map of connected nodes">Open the lens</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open a filter" data-kind="After · a sitting" data-story="Open a field. See what history would count here. Not a diploma. A map of what to do next." data-image="images/clip-filter.jpg" data-alt="A printed field map of connected nodes">Open a filter</button>
                             <button type="button" class="clip after" style="flex: 8" data-title="Do inspectable work" data-kind="After · ~5 mo" data-story="Show up. Ship. Leave artifacts a stranger can open. This is where the months now go." data-image="images/clip-doing.jpg" data-alt="Hands doing inspectable work at a table">Do inspectable work</button>
                             <button type="button" class="clip after" style="flex: 1" data-title="Leave a trail" data-kind="After · leftover" data-story="The next deed is now on the graph. A requester can later inspect it, then act." data-image="images/clip-trail.jpg" data-alt="A new node added to a digital trail of deeds">Leave a trail</button>
                         </div>
@@ -831,8 +865,8 @@
         </section>
 
         <section>
-            <h2>History</h2>
-            <p class="muted">Belongs to a person. Append-only. Not for sale.</p>
+            <h2>How does this actually work?</h2>
+            <p class="muted">A person's history, then a filter. The filter does not issue a title. It says which deeds count here.</p>
             <ul>
                 <li>Participation — you showed up (inspectable).</li>
                 <li>Doing — you made something (inspectable).</li>
@@ -842,39 +876,17 @@
                 Example loaded from
                 <a href="history.json">history.json</a>
                 and
-                <a href="lens.json">lens.json</a>.
+                <a href="filter.json">filter.json</a>.
             </p>
+            <div class="filters" id="history-filters" role="group" aria-label="Filter this history"></div>
             <div class="legend">
-                <span><i class="swatch"></i>Grew from this deed</span>
+                <span><i class="swatch"></i>Linked</span>
                 <span><i class="swatch bridge"></i>Also used in another field</span>
             </div>
             <div class="dag-board" role="group"
                 aria-label="Mina building a Web3 peer-to-peer real estate fulfillment system. Click a deed to open details.">
-                <svg class="dag-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                    <defs>
-                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
-                            orient="auto-start-reverse">
-                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                        </marker>
-                    </defs>
-                    <line x1="16" y1="16" x2="42" y2="48" stroke="currentColor" stroke-width="0.6"
-                        marker-end="url(#arrow)" />
-                    <line x1="16" y1="84" x2="42" y2="58" stroke="currentColor" stroke-width="0.6"
-                        marker-end="url(#arrow)" />
-                    <line x1="58" y1="50" x2="74" y2="50" stroke="currentColor" stroke-width="0.6"
-                        marker-end="url(#arrow)" />
-                    <line x1="58" y1="46" x2="78" y2="18" stroke="currentColor" stroke-width="0.6"
-                        stroke-dasharray="1.4 1.1" marker-end="url(#arrow)" />
-                </svg>
+                <svg class="dag-lines" aria-hidden="true"></svg>
             </div>
-        </section>
-
-        <section>
-            <h2>Field graph</h2>
-            <p class="muted" id="lens-blurb">
-                A lens over this history, not a diploma.
-                <a href="lens.json">lens.json</a>
-            </p>
         </section>
     </main>
 
@@ -930,7 +942,9 @@
         const proofEl = document.getElementById("deed-proof");
         const boardEl = document.querySelector(".dag-board");
         const blurbEl = document.getElementById("example-blurb");
-        const lensBlurbEl = document.getElementById("lens-blurb");
+        const filtersEl = document.getElementById("history-filters");
+        let filters = [];
+        let historyEdges = [];
 
         const bubbleEl = document.getElementById("clip-bubble");
         const bubbleImg = document.getElementById("clip-bubble-image");
@@ -1052,6 +1066,7 @@
                 const button = document.createElement("button");
                 button.type = "button";
                 button.className = "node " + entry.slot + (entry.bridge ? " bridge" : "");
+                button.dataset.entryId = entry.id;
                 button.dataset.title = entry.title;
                 button.dataset.kind = entry.summary;
                 button.dataset.proof = entry.proof.acceptance;
@@ -1077,17 +1092,138 @@
                 });
                 boardEl.appendChild(button);
             });
+            historyEdges = history.edges || [];
+            boardEl.querySelectorAll(".node img").forEach(function (img) {
+                img.addEventListener("load", drawDagLines);
+            });
+            drawDagLines();
         }
 
-        function renderLens(lens) {
-            lensBlurbEl.replaceChildren();
-            lensBlurbEl.appendChild(
-                document.createTextNode(lens.title + " — a lens over this history, not a diploma. ")
-            );
-            const link = document.createElement("a");
-            link.href = "lens.json";
-            link.textContent = "lens.json";
-            lensBlurbEl.appendChild(link);
+        function boxOf(el, boardRect) {
+            const r = el.getBoundingClientRect();
+            return {
+                left: r.left - boardRect.left,
+                top: r.top - boardRect.top,
+                right: r.right - boardRect.left,
+                bottom: r.bottom - boardRect.top,
+                cx: (r.left + r.right) / 2 - boardRect.left,
+                cy: (r.top + r.bottom) / 2 - boardRect.top
+            };
+        }
+
+        function exitPoint(rect, towardX, towardY) {
+            const dx = towardX - rect.cx;
+            const dy = towardY - rect.cy;
+            const hw = (rect.right - rect.left) / 2;
+            const hh = (rect.bottom - rect.top) / 2;
+            const tx = Math.abs(dx) < 0.01 ? Infinity : hw / Math.abs(dx);
+            const ty = Math.abs(dy) < 0.01 ? Infinity : hh / Math.abs(dy);
+            const t = Math.min(tx, ty);
+            return { x: rect.cx + dx * t, y: rect.cy + dy * t };
+        }
+
+        function drawDagLines() {
+            const svg = boardEl.querySelector(".dag-lines");
+            if (!svg) {
+                return;
+            }
+            if (window.matchMedia("(max-width: 640px)").matches) {
+                svg.replaceChildren();
+                svg.removeAttribute("viewBox");
+                return;
+            }
+            const boardRect = boardEl.getBoundingClientRect();
+            const w = boardRect.width;
+            const h = boardRect.height;
+            if (w < 8 || h < 8) {
+                return;
+            }
+            svg.setAttribute("viewBox", "0 0 " + w + " " + h);
+            const ns = "http://www.w3.org/2000/svg";
+            svg.replaceChildren();
+
+            historyEdges.forEach(function (edge) {
+                const ends = edge.nodes || [edge.from, edge.to];
+                const from = boardEl.querySelector('.node[data-entry-id="' + ends[0] + '"]');
+                const to = boardEl.querySelector('.node[data-entry-id="' + ends[1] + '"]');
+                if (!from || !to) {
+                    return;
+                }
+                const a = boxOf(from, boardRect);
+                const b = boxOf(to, boardRect);
+                const start = exitPoint(a, b.cx, b.cy);
+                const end = exitPoint(b, a.cx, a.cy);
+                const dx = end.x - start.x;
+                const dy = end.y - start.y;
+                const len = Math.hypot(dx, dy);
+                if (len < 2) {
+                    return;
+                }
+                const pad = Math.min(4, Math.max(0, len / 2 - 1));
+                const ux = dx / len;
+                const uy = dy / len;
+                const line = document.createElementNS(ns, "line");
+                line.setAttribute("x1", start.x + ux * pad);
+                line.setAttribute("y1", start.y + uy * pad);
+                line.setAttribute("x2", end.x - ux * pad);
+                line.setAttribute("y2", end.y - uy * pad);
+                line.setAttribute("stroke", "currentColor");
+                line.setAttribute("stroke-width", "2");
+                line.setAttribute("stroke-linecap", "round");
+                if (edge.type === "bridge") {
+                    line.setAttribute("stroke-dasharray", "5 4");
+                }
+                svg.appendChild(line);
+            });
+        }
+
+        function historyIdsForFilter(filter) {
+            const ids = {};
+            (filter.nodes || []).forEach(function (node) {
+                (node.historySatisfies || []).forEach(function (id) {
+                    ids[id] = true;
+                });
+            });
+            return ids;
+        }
+
+        function applyFilter(filterId) {
+            const filter = filters.find(function (item) {
+                return item.id === filterId;
+            });
+            const allowed = filter ? historyIdsForFilter(filter) : null;
+            boardEl.querySelectorAll(".node").forEach(function (node) {
+                node.classList.toggle("is-out", Boolean(allowed) && !allowed[node.dataset.entryId]);
+            });
+            filtersEl.querySelectorAll("button").forEach(function (button) {
+                button.setAttribute("aria-pressed", button.dataset.filterId === String(filterId) ? "true" : "false");
+            });
+        }
+
+        function renderFilters(list) {
+            filters = list;
+            filtersEl.replaceChildren();
+            const all = document.createElement("button");
+            all.type = "button";
+            all.dataset.filterId = "";
+            all.textContent = "All";
+            all.setAttribute("aria-pressed", "false");
+            all.addEventListener("click", function () {
+                applyFilter("");
+            });
+            filtersEl.appendChild(all);
+            list.forEach(function (filter) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.dataset.filterId = filter.id;
+                button.textContent = filter.title;
+                button.setAttribute("aria-pressed", "false");
+                button.addEventListener("click", function () {
+                    applyFilter(filter.id);
+                });
+                filtersEl.appendChild(button);
+            });
+            applyFilter("");
         }
 
         Promise.all([
@@ -1097,21 +1233,25 @@
                 }
                 return response.json();
             }),
-            fetch("lens.json").then(function (response) {
+            fetch("filter.json").then(function (response) {
                 if (!response.ok) {
-                    throw new Error("lens.json");
+                    throw new Error("filter.json");
                 }
                 return response.json();
             }),
         ])
             .then(function (files) {
                 renderHistory(files[0]);
-                renderLens(files[1]);
+                renderFilters(files[1].filters || []);
             })
             .catch(function () {
                 blurbEl.textContent =
                     "Could not load history.json. Serve this folder with a local server, or open the GitHub Pages demo.";
             });
+
+        if (window.ResizeObserver) {
+            new ResizeObserver(drawDagLines).observe(boardEl);
+        }
 
         document.querySelectorAll(".clip").forEach(function (clip) {
             clip.addEventListener("click", function (event) {
@@ -1435,6 +1575,7 @@
         }, { passive: true });
 
         window.addEventListener("resize", function () {
+            drawDagLines();
             if (bubbleClip) {
                 placeClipBubble(bubbleClip);
             }

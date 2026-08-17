@@ -72,15 +72,15 @@
         "type": "design",
         "acceptance": "Wireframes for listing, deposit, inspection, and handover."
       },
-      "story": "The same fulfillment work also produced a design trail. This does not unlock the live system. It is a bridge into another field.",
+      "story": "The same fulfillment work also produced a design trail. It is a bridge into another field.",
       "slot": "n-design",
       "bridge": true
     }
   ],
   "edges": [
-    { "from": "working-group", "to": "testnet-listing", "type": "prerequisite" },
-    { "from": "escrow-pr", "to": "testnet-listing", "type": "prerequisite" },
-    { "from": "testnet-listing", "to": "live-fulfillment", "type": "prerequisite" },
-    { "from": "testnet-listing", "to": "listing-ux", "type": "bridge" }
+    { "nodes": ["working-group", "testnet-listing"] },
+    { "nodes": ["escrow-pr", "testnet-listing"] },
+    { "nodes": ["testnet-listing", "live-fulfillment"] },
+    { "nodes": ["testnet-listing", "listing-ux"], "type": "bridge" }
   ]
 }

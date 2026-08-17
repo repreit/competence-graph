@@ -2,7 +2,7 @@
 
 A shared language for **checkable competence**.
 
-Competency is a history of participation and doing — not a badge, not a course completion. A **field graph** is a lens over that history. It does not issue a title.
+Competency is a history of participation and doing — not a badge, not a course completion. A **field** is a filter over that history. It does not issue a title.
 
 Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
 
@@ -29,20 +29,20 @@ This is closer to Vitalik’s history-you-cannot-sell than to a skill tree. Soul
 | File | What it is |
 |---|---|
 | [`codebase/history.json`](codebase/history.json) | One person’s append-only deeds |
-| [`codebase/lens.json`](codebase/lens.json) | One field’s lens: which history counts here |
+| [`codebase/filter.json`](codebase/filter.json) | Fields as filters: which history counts here |
 | [`codebase/index.html`](codebase/index.html) | Reference viewer (no framework) |
 
 **History entry:** inspectable participation or doing. No inspectable proof → not an entry.
 
-**Lens node:** illegal without saying what history would satisfy it.
+**Filter node:** illegal without saying what history would satisfy it.
 
-**Edges:** `prerequisite` (blocks) or `bridge` (cross-field, does not block). The structure is a DAG.
+**Edges:** a link, not an unlock. `bridge` marks a cross-field link. The structure is a network.
 
 Optional later: `{ easUid?, did? }` on a history entry. No wallet in this MVP.
 
 ## Example
 
-Mina building a Web3 peer-to-peer real estate fulfillment system. The page loads her history from JSON. Click a deed for the photo and the proof.
+Mina building a Web3 peer-to-peer real estate fulfillment system. The page loads her history from JSON. Click a deed for the photo and the proof. Pick a field to see which deeds count there.
 
 ## Run locally
 
