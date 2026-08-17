@@ -28,7 +28,7 @@ This is closer to Vitalik’s history-you-cannot-sell than to a ladder of badges
 
 | File | What it is |
 |---|---|
-| [`codebase/history.json`](codebase/history.json) | One person’s append-only deeds |
+| [`codebase/history.json`](codebase/history.json) | Append-only deeds, one history per person |
 | [`codebase/filter.json`](codebase/filter.json) | Fields as filters: which history counts here |
 | [`codebase/index.html`](codebase/index.html) | Reference viewer (no framework) |
 
@@ -42,7 +42,7 @@ Optional later: `{ easUid?, did? }` on a history entry. No wallet in this MVP.
 
 ## Example
 
-Mina’s history. The page loads her deeds from JSON. Click a deed for the photo and the proof. Pick a field to see which deeds count there.
+Mina and Hana. Two histories, same field filters. Click a deed for the photo and the proof. Pick a person, then a field, to see which deeds count there.
 
 ## Run locally
 

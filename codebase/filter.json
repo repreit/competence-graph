@@ -9,7 +9,7 @@
           "id": "title-escrow-practice",
           "title": "Know title and escrow in practice",
           "competency": "Can map a peer-to-peer deal: list, deposit, inspect, hand over, release funds.",
-          "historySatisfies": ["working-group"]
+          "historySatisfies": ["working-group", "closings-desk"]
         },
         {
           "id": "write-escrow",
@@ -27,13 +27,13 @@
           "id": "complete-fulfillment",
           "title": "Complete a live P2P fulfillment",
           "competency": "Can finish a real deal: deposit, inspect, hand over keys, release funds.",
-          "historySatisfies": ["live-fulfillment"]
+          "historySatisfies": ["live-fulfillment", "live-operator"]
         },
         {
           "id": "repeat-live-fulfillment",
           "title": "Repeat a live fulfillment",
           "competency": "Can finish another real deal on a new property, not a one-off.",
-          "historySatisfies": []
+          "historySatisfies": ["second-live"]
         }
       ]
     },

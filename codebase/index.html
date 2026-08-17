@@ -607,7 +607,20 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
+            margin: 0.35rem 0 0;
+        }
+
+        .chip-kicker {
             margin: 0.85rem 0 0;
+            font-size: 0.62rem;
+            font-weight: 650;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .chip-kicker:first-of-type {
+            margin-top: 1rem;
         }
 
         .filters button {
@@ -881,7 +894,7 @@
 
         <section>
             <h2>How does this actually work?</h2>
-            <p class="muted">A person's history, then a filter. The filter does not issue a title. It says which deeds count here.</p>
+            <p class="muted">Two histories. Same filters. The filter does not issue a title. It says which deeds count here.</p>
             <ul>
                 <li>Participation — you showed up (inspectable).</li>
                 <li>Doing — you made something (inspectable).</li>
@@ -893,6 +906,9 @@
                 and
                 <a href="filter.json">filter.json</a>.
             </p>
+            <p class="chip-kicker">Person</p>
+            <div class="filters" id="people" role="group" aria-label="Whose history"></div>
+            <p class="chip-kicker">Field</p>
             <div class="filters" id="history-filters" role="group" aria-label="Filter this history"></div>
             <div class="field-map" id="field-map" hidden></div>
             <div class="legend">
@@ -960,8 +976,12 @@
         const proofEl = document.getElementById("deed-proof");
         const boardEl = document.querySelector(".dag-board");
         const blurbEl = document.getElementById("example-blurb");
+        const peopleEl = document.getElementById("people");
         const filtersEl = document.getElementById("history-filters");
         let filters = [];
+        let histories = [];
+        let activePersonId = "";
+        let activeFilterId = "";
         let historyEdges = [];
         let historyEntries = [];
 
@@ -1073,14 +1093,13 @@
         function renderHistory(history) {
             historyEntries = history.entries || [];
             const name = history.person && history.person.name ? history.person.name : "Someone";
-            blurbEl.insertAdjacentText(
-                "afterbegin",
-                name + ". "
-            );
             boardEl.setAttribute(
                 "aria-label",
                 name + ". Click a deed to open details."
             );
+            boardEl.querySelectorAll(".node").forEach(function (node) {
+                node.remove();
+            });
 
             history.entries.forEach(function (entry) {
                 const button = document.createElement("button");
@@ -1117,6 +1136,37 @@
                 img.addEventListener("load", layoutNetwork);
             });
             layoutNetwork();
+        }
+
+        function showPerson(personId) {
+            const history = histories.find(function (item) {
+                return item.person && item.person.id === personId;
+            }) || histories[0];
+            if (!history) {
+                return;
+            }
+            activePersonId = history.person.id;
+            peopleEl.querySelectorAll("button").forEach(function (button) {
+                button.setAttribute("aria-pressed", button.dataset.personId === activePersonId ? "true" : "false");
+            });
+            renderHistory(history);
+            applyFilter(activeFilterId);
+        }
+
+        function renderPeople(list) {
+            peopleEl.replaceChildren();
+            list.forEach(function (history) {
+                const person = history.person || {};
+                const button = document.createElement("button");
+                button.type = "button";
+                button.dataset.personId = person.id || "";
+                button.textContent = person.name || "Someone";
+                button.setAttribute("aria-pressed", "false");
+                button.addEventListener("click", function () {
+                    showPerson(person.id);
+                });
+                peopleEl.appendChild(button);
+            });
         }
 
         let layoutWidth = 0;
@@ -1281,6 +1331,7 @@
         }
 
         function applyFilter(filterId) {
+            activeFilterId = filterId || "";
             const filter = filters.find(function (item) {
                 return item.id === filterId;
             });
@@ -1289,7 +1340,7 @@
                 node.classList.toggle("is-out", Boolean(allowed) && !allowed[node.dataset.entryId]);
             });
             filtersEl.querySelectorAll("button").forEach(function (button) {
-                button.setAttribute("aria-pressed", button.dataset.filterId === String(filterId) ? "true" : "false");
+                button.setAttribute("aria-pressed", button.dataset.filterId === String(activeFilterId) ? "true" : "false");
             });
             renderFieldMap(filter);
             drawDagLines();
@@ -1375,7 +1426,7 @@
                 });
                 filtersEl.appendChild(button);
             });
-            applyFilter("");
+            applyFilter(activeFilterId);
         }
 
         Promise.all([
@@ -1393,8 +1444,17 @@
             }),
         ])
             .then(function (files) {
-                renderHistory(files[0]);
+                const data = files[0];
+                histories = Array.isArray(data.histories) ? data.histories : [data];
+                const names = histories.map(function (history) {
+                    return history.person && history.person.name;
+                }).filter(Boolean);
+                if (names.length) {
+                    blurbEl.insertAdjacentText("afterbegin", names.join(" and ") + ". ");
+                }
+                renderPeople(histories);
                 renderFilters(files[1].filters || []);
+                showPerson(histories[0] && histories[0].person && histories[0].person.id);
             })
             .catch(function () {
                 blurbEl.textContent =
