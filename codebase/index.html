@@ -370,15 +370,15 @@
           var(--lane);
       }
 
-      .track:has(.clip.now) {
+      .track:has(.clip.after) {
         min-height: 2.2rem;
       }
 
-      .track:has(.clip.now) .track-name {
+      .track:has(.clip.after) .track-name {
         color: var(--ink);
       }
 
-      .track:has(.clip.now) .clips {
+      .track:has(.clip.after) .clips {
         background:
           repeating-linear-gradient(
             to right,
@@ -436,7 +436,7 @@
         z-index: 1;
       }
 
-      .clip.now {
+      .clip.after {
         height: 1.85rem;
         line-height: 1.85rem;
         border-radius: 4px;
@@ -445,7 +445,7 @@
         box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card) 70%, transparent);
       }
 
-      .clip.now::before {
+      .clip.after::before {
         background: var(--ink);
       }
 
@@ -744,7 +744,7 @@
             </p>
             <div class="time-scene">
                 <h3>Entrust work</h3>
-                <p class="muted">About one minute — the first sitting before someone is invited or passed over. Not hiring.</p>
+                <p class="muted">About one minute — the first sitting before someone is invited or passed over.</p>
                 <div class="time-edit">
                     <div class="ruler" aria-hidden="true">
                         <span class="ruler-gutter"></span>
@@ -753,20 +753,20 @@
                         </div>
                     </div>
                     <div class="track">
-                        <span class="track-name">Then</span>
+                        <span class="track-name">Before</span>
                         <div class="clips">
-                            <button type="button" class="clip" style="flex: 1" data-title="School" data-kind="Then · ~6 s" data-story="A glance at a school name. Recruiters’ first pass is measured in seconds. The paper does not open." data-image="images/clip-school.jpg" data-alt="A diploma folder on a wooden desk">School</button>
-                            <button type="button" class="clip" style="flex: 5" data-title="Resume" data-kind="Then · ~30 s" data-story="Most of the sitting. Titles, dates, keywords. Typical first-pass resume time is about half a minute." data-image="images/clip-resume.jpg" data-alt="A printed resume on a wooden desk">Resume</button>
-                            <button type="button" class="clip" style="flex: 3" data-title="Claims" data-kind="Then · ~18 s" data-story="A portfolio or GitHub, if they open it. Often scanned in under a minute with the resume, still as claims." data-image="images/clip-claims.jpg" data-alt="A closed portfolio and a laptop on a desk">Claims</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="Guess" data-kind="Then · leftover" data-story="Fit or no-fit. Then the requester acts on paper, not on work." data-image="images/clip-guess.jpg" data-alt="A closed folder and a decision left on paper">Guess</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="School" data-kind="Before · ~6 s" data-story="A glance at a school name. Recruiters’ first pass is measured in seconds. The paper does not open." data-image="images/clip-school.jpg" data-alt="A diploma folder on a wooden desk">School</button>
+                            <button type="button" class="clip" style="flex: 5" data-title="Resume" data-kind="Before · ~30 s" data-story="Most of the sitting. Titles, dates, keywords. Typical first-pass resume time is about half a minute." data-image="images/clip-resume.jpg" data-alt="A printed resume on a wooden desk">Resume</button>
+                            <button type="button" class="clip" style="flex: 3" data-title="Claims" data-kind="Before · ~18 s" data-story="A portfolio or GitHub, if they open it. Often scanned in under a minute with the resume, still as claims." data-image="images/clip-claims.jpg" data-alt="A laptop showing a portfolio grid, barely glanced at">Claims</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Guess" data-kind="Before · leftover" data-story="Fit or no-fit. Then the requester acts on paper, not on work." data-image="images/clip-guess.jpg" data-alt="A resume face-down, a keep-or-discard guess">Guess</button>
                         </div>
                     </div>
                     <div class="track">
-                        <span class="track-name">Now</span>
+                        <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip now" style="flex: 1" data-title="Open" data-kind="Now · ~6 s" data-story="Open the graph. Same one-minute sitting. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
-                            <button type="button" class="clip now" style="flex: 7" data-title="Inspect deeds" data-kind="Now · ~42 s" data-story="This is where the minute now goes. Follow participation and doing. Open an artifact, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting photographs and notes of work">Inspect deeds</button>
-                            <button type="button" class="clip now" style="flex: 2" data-title="Entrust" data-kind="Now · ~12 s" data-story="If the trail is there, the requester can entrust the next piece of work. Not hiring in the old sense." data-image="images/clip-entrust.jpg" data-alt="Hands handing over keys and a folder of work">Entrust</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~6 s" data-story="Open the graph. Same one-minute sitting. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
+                            <button type="button" class="clip after" style="flex: 7" data-title="Inspect deeds" data-kind="After · ~42 s" data-story="This is where the minute now goes. Follow participation and doing. Open an artifact, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting an artifact of work on a laptop">Inspect deeds</button>
+                            <button type="button" class="clip after" style="flex: 2" data-title="Entrust" data-kind="After · ~12 s" data-story="If the trail is there, the requester can entrust the next piece of work. Not hiring in the old sense." data-image="images/clip-entrust.jpg" data-alt="Hands handing over keys and a folder of work">Entrust</button>
                         </div>
                     </div>
                 </div>
@@ -782,20 +782,20 @@
                         </div>
                     </div>
                     <div class="track">
-                        <span class="track-name">Then</span>
+                        <span class="track-name">Before</span>
                         <div class="clips">
-                            <button type="button" class="clip" style="flex: 6" data-title="Deck" data-kind="Then · ~1 h 50 m" data-story="Read a pitch. Independent grant review is typically two to four hours per application. Most of it goes to the proposal, not the work." data-image="images/clip-deck.jpg" data-alt="A printed pitch deck fanned on a table">Deck</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="CV" data-kind="Then · ~20 m" data-story="Who they say they are. Titles, schools, a list. Still a claim." data-image="images/clip-cv.jpg" data-alt="A printed CV on cream paper">CV</button>
-                            <button type="button" class="clip" style="flex: 2" data-title="Interview" data-kind="Then · ~35 m" data-story="Sometimes a call. Still not the trail. Time goes to performance in a room." data-image="images/clip-interview.jpg" data-alt="A laptop on a table showing a video call">Interview</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="Score" data-kind="Then · ~20 m" data-story="A score, a panel, a vote. The funds move. The trail was never opened." data-image="images/clip-score.jpg" data-alt="A scoring sheet and a red pen">Score</button>
+                            <button type="button" class="clip" style="flex: 6" data-title="Deck" data-kind="Before · ~1 h 50 m" data-story="Read a pitch. Independent grant review is typically two to four hours per application. Most of it goes to the proposal, not the work." data-image="images/clip-deck.jpg" data-alt="A printed pitch deck fanned on a table">Deck</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="CV" data-kind="Before · ~20 m" data-story="Who they say they are. Titles, schools, a list. Still a claim." data-image="images/clip-cv.jpg" data-alt="A printed CV on cream paper">CV</button>
+                            <button type="button" class="clip" style="flex: 2" data-title="Interview" data-kind="Before · ~35 m" data-story="Sometimes a call. Still not the trail. Time goes to performance in a room." data-image="images/clip-interview.jpg" data-alt="A laptop on a table showing a video call">Interview</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Score" data-kind="Before · ~20 m" data-story="A score, a panel, a vote. The funds move. The trail was never opened." data-image="images/clip-score.jpg" data-alt="A scoring sheet and a red pen">Score</button>
                         </div>
                     </div>
                     <div class="track">
-                        <span class="track-name">Now</span>
+                        <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip now" style="flex: 1" data-title="Open" data-kind="Now · ~20 m" data-story="Open the graph. Same three hours. Different object: a trail a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
-                            <button type="button" class="clip now" style="flex: 7" data-title="Follow the trail" data-kind="Now · ~2 h" data-story="This is where the hours now go. Participation and doing, in order. If it is not there, it is not a competency." data-image="images/clip-follow.jpg" data-alt="Hands following a trail of photos and notes">Follow the trail</button>
-                            <button type="button" class="clip now" style="flex: 2" data-title="Fund" data-kind="Now · ~35 m" data-story="If the trail is there, the requester can fund the next piece of work. Not a spectator. Not a prize for a slide deck." data-image="images/clip-fund.jpg" data-alt="Hands placing funds beside a folder of work">Fund</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~20 m" data-story="Open the graph. Same three hours. Different object: a trail a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
+                            <button type="button" class="clip after" style="flex: 7" data-title="Follow the trail" data-kind="After · ~2 h" data-story="This is where the hours now go. Participation and doing, in order. If it is not there, it is not a competency." data-image="images/clip-follow.jpg" data-alt="A hand tracing a trail of deeds on a large screen">Follow the trail</button>
+                            <button type="button" class="clip after" style="flex: 2" data-title="Fund" data-kind="After · ~35 m" data-story="If the trail is there, the requester can fund the next piece of work. Not a spectator. Not a prize for a slide deck." data-image="images/clip-fund.jpg" data-alt="Confirming an Ethereum transfer on a laptop">Fund</button>
                         </div>
                     </div>
                 </div>
@@ -811,19 +811,19 @@
                         </div>
                     </div>
                     <div class="track">
-                        <span class="track-name">Then</span>
+                        <span class="track-name">Before</span>
                         <div class="clips">
-                            <button type="button" class="clip" style="flex: 1" data-title="Catalog" data-kind="Then · ~2 wk" data-story="Browse courses. A few days, not months. The catalog does not become history." data-image="images/clip-catalog.jpg" data-alt="An open course catalog on a table">Catalog</button>
-                            <button type="button" class="clip" style="flex: 8" data-title="Course" data-kind="Then · ~5 mo" data-story="Sit through the hours. Typical certificate load is about ten hours a week for three to six months. Nothing a stranger can open." data-image="images/clip-course.jpg" data-alt="An empty classroom with a projector">Course</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="Certificate" data-kind="Then · leftover" data-story="A paper at the end. It does not open. It is not participation, and it is not doing." data-image="images/clip-certificate.jpg" data-alt="A framed paper certificate on a wall">Certificate</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Catalog" data-kind="Before · ~2 wk" data-story="Browse courses. A few days, not months. The catalog does not become history." data-image="images/clip-catalog.jpg" data-alt="An open course catalog on a table">Catalog</button>
+                            <button type="button" class="clip" style="flex: 8" data-title="Course" data-kind="Before · ~5 mo" data-story="Sit through the hours. Typical certificate load is about ten hours a week for three to six months. Nothing a stranger can open." data-image="images/clip-course.jpg" data-alt="An empty classroom with a projector">Course</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Certificate" data-kind="Before · leftover" data-story="A paper at the end. It does not open. It is not participation, and it is not doing." data-image="images/clip-certificate.jpg" data-alt="A framed paper certificate on a wall">Certificate</button>
                         </div>
                     </div>
                     <div class="track">
-                        <span class="track-name">Now</span>
+                        <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip now" style="flex: 1" data-title="Open the lens" data-kind="Now · a sitting" data-story="Open a field graph. See what history would count here. Not a diploma. A map of what to do next." data-image="images/clip-lens.jpg" data-alt="A printed field map of connected nodes">Open the lens</button>
-                            <button type="button" class="clip now" style="flex: 8" data-title="Do inspectable work" data-kind="Now · ~5 mo" data-story="Show up. Ship. Leave artifacts a stranger can open. This is where the months now go." data-image="images/clip-doing.jpg" data-alt="Hands doing inspectable work at a table">Do inspectable work</button>
-                            <button type="button" class="clip now" style="flex: 1" data-title="Leave a trail" data-kind="Now · leftover" data-story="The next deed is now on the graph. A requester can later inspect it, then act." data-image="images/clip-trail.jpg" data-alt="A trail of dated photographs left on a table">Leave a trail</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open the lens" data-kind="After · a sitting" data-story="Open a field graph. See what history would count here. Not a diploma. A map of what to do next." data-image="images/clip-lens.jpg" data-alt="A printed field map of connected nodes">Open the lens</button>
+                            <button type="button" class="clip after" style="flex: 8" data-title="Do inspectable work" data-kind="After · ~5 mo" data-story="Show up. Ship. Leave artifacts a stranger can open. This is where the months now go." data-image="images/clip-doing.jpg" data-alt="Hands doing inspectable work at a table">Do inspectable work</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Leave a trail" data-kind="After · leftover" data-story="The next deed is now on the graph. A requester can later inspect it, then act." data-image="images/clip-trail.jpg" data-alt="A trail of dated photographs left on a table">Leave a trail</button>
                         </div>
                     </div>
                 </div>
@@ -1304,19 +1304,39 @@
             playback.raf = requestAnimationFrame(tickPlayback);
         }
 
-        function startPlayback(edit) {
+        function elapsedBeforeClip(clipsEl, startClip) {
+            const queue = clipQueue(clipsEl);
+            let acc = 0;
+            for (let i = 0; i < queue.length; i += 1) {
+                if (queue[i].clip === startClip) {
+                    return acc;
+                }
+                acc += queue[i].dwell;
+            }
+            return 0;
+        }
+
+        function startPlayback(edit, fromClip) {
             const button = edit.querySelector(".transport");
             const playhead = edit.querySelector(".playhead");
             const tracks = edit.querySelectorAll(".track");
+            let pass = 0;
+            let elapsed = 0;
+            if (fromClip && tracks[1] && tracks[1].contains(fromClip)) {
+                pass = 1;
+                elapsed = elapsedBeforeClip(tracks[1].querySelector(".clips"), fromClip);
+            } else if (fromClip && tracks[0] && tracks[0].contains(fromClip)) {
+                elapsed = elapsedBeforeClip(tracks[0].querySelector(".clips"), fromClip);
+            }
             playback = {
                 edit: edit,
                 button: button,
                 playhead: playhead,
                 tracks: tracks,
-                pass: 0,
+                pass: pass,
                 phase: "play",
-                started: performance.now(),
-                elapsed: 0,
+                started: performance.now() - elapsed,
+                elapsed: elapsed,
                 paused: false,
                 lastClip: null,
                 raf: 0,
@@ -1380,11 +1400,14 @@
 
         bubbleTransportEl.addEventListener("click", function (event) {
             event.stopPropagation();
-            const edit = playback
-                ? playback.edit
-                : bubbleClip && bubbleClip.closest(".time-edit");
+            if (playback) {
+                togglePlayback(playback.edit);
+                return;
+            }
+            const clip = bubbleClip;
+            const edit = clip && clip.closest(".time-edit");
             if (edit) {
-                togglePlayback(edit);
+                startPlayback(edit, clip);
             }
         });
 
