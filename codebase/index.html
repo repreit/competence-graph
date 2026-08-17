@@ -1,504 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>competency-graph</title>
     <style>
-      :root {
-        color-scheme: light dark;
-        --bg: #f6f4ef;
-        --ink: #1c1b18;
-        --muted: #5c5850;
-        --line: #d8d3c8;
-        --card: #fffdf8;
-      }
-
-      @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #161513;
-          --ink: #f3efe6;
-          --muted: #b0aaa0;
-          --line: #3a372f;
-          --card: #1f1d1a;
+            color-scheme: light dark;
+            --bg: #f6f4ef;
+            --ink: #1c1b18;
+            --muted: #5c5850;
+            --line: #d8d3c8;
+            --card: #fffdf8;
         }
-      }
 
-      * {
-        box-sizing: border-box;
-      }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #161513;
+                --ink: #f3efe6;
+                --muted: #b0aaa0;
+                --line: #3a372f;
+                --card: #1f1d1a;
+            }
+        }
 
-      body {
-        margin: 0;
-        font-family: Georgia, "Times New Roman", serif;
-        background: var(--bg);
-        color: var(--ink);
-        line-height: 1.55;
-      }
+        * {
+            box-sizing: border-box;
+        }
 
-      main {
-        max-width: 48rem;
-        margin: 0 auto;
-        padding: 3rem 1.25rem 2rem;
-      }
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.55;
+        }
 
-      footer {
-        max-width: 48rem;
-        margin: 0 auto;
-        padding: 0 1.25rem 3rem;
-        font-size: 0.85rem;
-      }
+        main {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 3rem 1.25rem 2rem;
+        }
 
-      p,
-      li {
-        color: var(--ink);
-      }
+        footer {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 0 1.25rem 3rem;
+            font-size: 0.85rem;
+        }
 
-      .muted {
-        color: var(--muted);
-      }
+        p,
+        li {
+            color: var(--ink);
+        }
 
-      a {
-        color: inherit;
-      }
+        .muted {
+            color: var(--muted);
+        }
 
-      h1 {
-        font-size: 1.75rem;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-        margin: 0 0 0.5rem;
-      }
+        a {
+            color: inherit;
+        }
 
-      h2 {
-        font-size: 1.1rem;
-        margin: 0 0 0.6rem;
-      }
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin: 0 0 0.5rem;
+        }
 
-      header p {
-        margin: 0;
-      }
+        h2 {
+            font-size: 1.1rem;
+            margin: 0 0 0.6rem;
+        }
 
-      section {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        padding: 1.1rem 1.15rem 1.2rem;
-        margin-top: 1.25rem;
-      }
+        header p {
+            margin: 0;
+        }
 
-      ul {
-        margin: 0.4rem 0 0;
-        padding-left: 1.2rem;
-      }
+        section {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 1.1rem 1.15rem 1.2rem;
+            margin-top: 1.25rem;
+        }
 
-      li + li {
-        margin-top: 0.35rem;
-      }
+        ul {
+            margin: 0.4rem 0 0;
+            padding-left: 1.2rem;
+        }
 
-      .legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.45rem 1rem;
-        margin: 0.75rem 0 0;
-        font-size: 0.85rem;
-        color: var(--muted);
-      }
+        li+li {
+            margin-top: 0.35rem;
+        }
 
-      .swatch {
-        display: inline-block;
-        width: 1.1rem;
-        height: 0.15rem;
-        margin-right: 0.4rem;
-        vertical-align: 0.2rem;
-        background: var(--ink);
-      }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem 1rem;
+            margin: 0.75rem 0 0;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
 
-      .swatch.bridge {
-        background: repeating-linear-gradient(
-          to right,
-          var(--ink) 0 4px,
-          transparent 4px 7px
-        );
-      }
+        .swatch {
+            display: inline-block;
+            width: 1.1rem;
+            height: 0.15rem;
+            margin-right: 0.4rem;
+            vertical-align: 0.2rem;
+            background: var(--ink);
+        }
 
-      .dag-board {
-        position: relative;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 1.5rem 1.1rem;
-        margin-top: 1rem;
-      }
+        .swatch.bridge {
+            background: repeating-linear-gradient(to right,
+                    var(--ink) 0 4px,
+                    transparent 4px 7px);
+        }
 
-      .dag-lines {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .node {
-        position: relative;
-        z-index: 1;
-        display: block;
-        width: 100%;
-        padding: 0;
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        overflow: hidden;
-        background: var(--card);
-        color: inherit;
-        font: inherit;
-        text-align: left;
-        cursor: pointer;
-      }
-
-      .node:hover,
-      .node:focus-visible {
-        outline: 2px solid var(--ink);
-        outline-offset: 2px;
-      }
-
-      .node.bridge {
-        border-style: dashed;
-      }
-
-      .node img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-      }
-
-      .node h3 {
-        font-size: 0.88rem;
-        font-weight: 600;
-        margin: 0.45rem 0.55rem 0.1rem;
-      }
-
-      .node p {
-        font-size: 0.75rem;
-        color: var(--muted);
-        margin: 0 0.55rem 0.55rem;
-      }
-
-      .n-group {
-        grid-column: 1;
-        grid-row: 1;
-      }
-
-      .n-escrow {
-        grid-column: 1;
-        grid-row: 3;
-      }
-
-      .n-testnet {
-        grid-column: 2;
-        grid-row: 2;
-      }
-
-      .n-live {
-        grid-column: 3;
-        grid-row: 2;
-      }
-
-      .n-design {
-        grid-column: 3;
-        grid-row: 1;
-      }
-
-      @media (max-width: 640px) {
         .dag-board {
-          grid-template-columns: 1fr;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 1.5rem 1.1rem;
+            margin-top: 1rem;
         }
 
         .dag-lines {
-          display: none;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .n-group,
-        .n-escrow,
-        .n-testnet,
-        .n-live,
+        .node {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--card);
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .node:hover,
+        .node:focus-visible {
+            outline: 2px solid var(--ink);
+            outline-offset: 2px;
+        }
+
+        .node.bridge {
+            border-style: dashed;
+        }
+
+        .node img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        .node h3 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin: 0.45rem 0.55rem 0.1rem;
+        }
+
+        .node p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin: 0 0.55rem 0.55rem;
+        }
+
+        .n-group {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .n-escrow {
+            grid-column: 1;
+            grid-row: 3;
+        }
+
+        .n-testnet {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .n-live {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
         .n-design {
-          grid-column: 1;
-          grid-row: auto;
+            grid-column: 3;
+            grid-row: 1;
         }
-      }
 
-      dialog {
-        position: relative;
-        width: min(40rem, calc(100vw - 2rem));
-        max-height: calc(100vh - 2rem);
-        padding: 0;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--card);
-        color: var(--ink);
-        overflow: auto;
-      }
+        @media (max-width: 640px) {
+            .dag-board {
+                grid-template-columns: 1fr;
+            }
 
-      dialog::backdrop {
-        background: rgba(22, 21, 19, 0.55);
-      }
+            .dag-lines {
+                display: none;
+            }
 
-      dialog img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-      }
+            .n-group,
+            .n-escrow,
+            .n-testnet,
+            .n-live,
+            .n-design {
+                grid-column: 1;
+                grid-row: auto;
+            }
+        }
 
-      dialog .sheet {
-        padding: 1rem 1.15rem 1.25rem;
-      }
+        dialog {
+            position: relative;
+            width: min(40rem, calc(100vw - 2rem));
+            max-height: calc(100vh - 2rem);
+            padding: 0;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--ink);
+            overflow: auto;
+        }
 
-      dialog h2 {
-        margin: 0 0 0.25rem;
-      }
+        dialog::backdrop {
+            background: rgba(22, 21, 19, 0.55);
+        }
 
-      dialog .close {
-        position: absolute;
-        top: 0.55rem;
-        right: 0.55rem;
-        width: 2rem;
-        height: 2rem;
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        background: var(--card);
-        color: var(--ink);
-        font-size: 1.1rem;
-        cursor: pointer;
-      }
+        dialog img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        dialog .sheet {
+            padding: 1rem 1.15rem 1.25rem;
+        }
+
+        dialog h2 {
+            margin: 0 0 0.25rem;
+        }
+
+        dialog .close {
+            position: absolute;
+            top: 0.55rem;
+            right: 0.55rem;
+            width: 2rem;
+            height: 2rem;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            background: var(--card);
+            color: var(--ink);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <main>
-      <header>
-        <h1>competency-graph</h1>
-        <p class="muted">
-          A shared language for checkable competence. Competency is a history of
-          participation and doing, not a badge. A field graph is a lens over
-          that history.
-        </p>
-      </header>
+        <header>
+            <h1>competency-graph</h1>
+            <p class="muted">
+                A shared language for checkable competence. Competency is a history of
+                participation and doing, not a badge. A field graph is a lens over
+                that history.
+            </p>
+        </header>
 
-      <section>
-        <h2>History</h2>
-        <p class="muted">Belongs to a person. Append-only. Not for sale.</p>
-        <ul>
-          <li>Participation — you showed up (inspectable).</li>
-          <li>Doing — you made something (inspectable).</li>
-          <li>No history → not a competency. Self-claim is not enough.</li>
-        </ul>
-        <p class="muted" id="example-blurb" style="margin: 1rem 0 0">
-          Example loaded from
-          <a href="history.json">history.json</a>
-          and
-          <a href="lens.json">lens.json</a>.
-        </p>
-        <div class="legend">
-          <span><i class="swatch"></i>Grew from this deed</span>
-          <span><i class="swatch bridge"></i>Also used in another field</span>
-        </div>
-        <div
-          class="dag-board"
-          role="group"
-          aria-label="Mina building a Web3 peer-to-peer real estate fulfillment system. Click a deed to open details."
-        >
-          <svg class="dag-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <marker
-                id="arrow"
-                viewBox="0 0 10 10"
-                refX="9"
-                refY="5"
-                markerWidth="6"
-                markerHeight="6"
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-              </marker>
-            </defs>
-            <line x1="16" y1="16" x2="42" y2="48" stroke="currentColor" stroke-width="0.6" marker-end="url(#arrow)" />
-            <line x1="16" y1="84" x2="42" y2="58" stroke="currentColor" stroke-width="0.6" marker-end="url(#arrow)" />
-            <line x1="58" y1="50" x2="74" y2="50" stroke="currentColor" stroke-width="0.6" marker-end="url(#arrow)" />
-            <line
-              x1="58"
-              y1="46"
-              x2="78"
-              y2="18"
-              stroke="currentColor"
-              stroke-width="0.6"
-              stroke-dasharray="1.4 1.1"
-              marker-end="url(#arrow)"
-            />
-          </svg>
-        </div>
-      </section>
+        <section>
+            <h2>History</h2>
+            <p class="muted">Belongs to a person. Append-only. Not for sale.</p>
+            <ul>
+                <li>Participation — you showed up (inspectable).</li>
+                <li>Doing — you made something (inspectable).</li>
+                <li>No history → not a competency. Self-claim is not enough.</li>
+            </ul>
+            <p class="muted" id="example-blurb" style="margin: 1rem 0 0">
+                Example loaded from
+                <a href="history.json">history.json</a>
+                and
+                <a href="lens.json">lens.json</a>.
+            </p>
+            <div class="legend">
+                <span><i class="swatch"></i>Grew from this deed</span>
+                <span><i class="swatch bridge"></i>Also used in another field</span>
+            </div>
+            <div class="dag-board" role="group"
+                aria-label="Mina building a Web3 peer-to-peer real estate fulfillment system. Click a deed to open details.">
+                <svg class="dag-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                            orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                        </marker>
+                    </defs>
+                    <line x1="16" y1="16" x2="42" y2="48" stroke="currentColor" stroke-width="0.6"
+                        marker-end="url(#arrow)" />
+                    <line x1="16" y1="84" x2="42" y2="58" stroke="currentColor" stroke-width="0.6"
+                        marker-end="url(#arrow)" />
+                    <line x1="58" y1="50" x2="74" y2="50" stroke="currentColor" stroke-width="0.6"
+                        marker-end="url(#arrow)" />
+                    <line x1="58" y1="46" x2="78" y2="18" stroke="currentColor" stroke-width="0.6"
+                        stroke-dasharray="1.4 1.1" marker-end="url(#arrow)" />
+                </svg>
+            </div>
+        </section>
 
-      <section>
-        <h2>Field graph</h2>
-        <p class="muted">Belongs to a domain. A lens, not a diploma.</p>
-        <ul>
-          <li>Anyone may publish a lens in JSON later.</li>
-          <li>A node is valid only if it names what history would satisfy it.</li>
-          <li>Edges: prerequisite (blocks) or bridge (does not block).</li>
-        </ul>
-        <ul id="lens-nodes"></ul>
-      </section>
+        <section>
+            <h2>Field graph</h2>
+            <p class="muted">Belongs to a domain. A lens, not a diploma.</p>
+            <ul>
+                <li>Anyone may publish a lens in JSON later.</li>
+                <li>A node is valid only if it names what history would satisfy it.</li>
+                <li>Edges: prerequisite (blocks) or bridge (does not block).</li>
+            </ul>
+            <ul id="lens-nodes"></ul>
+        </section>
     </main>
 
     <footer>
-      <p class="muted">Last modified: <time id="last-modified"></time></p>
+        <p class="muted">Last modified: <time id="last-modified"></time></p>
     </footer>
 
     <dialog id="deed-window" aria-labelledby="deed-title">
-      <button type="button" class="close" aria-label="Close">&times;</button>
-      <img id="deed-image" alt="" />
-      <div class="sheet">
-        <h2 id="deed-title"></h2>
-        <p class="muted" id="deed-kind"></p>
-        <p id="deed-story"></p>
-        <p class="muted" id="deed-proof"></p>
-      </div>
+        <button type="button" class="close" aria-label="Close">&times;</button>
+        <img id="deed-image" alt="" />
+        <div class="sheet">
+            <h2 id="deed-title"></h2>
+            <p class="muted" id="deed-kind"></p>
+            <p id="deed-story"></p>
+            <p class="muted" id="deed-proof"></p>
+        </div>
     </dialog>
 
     <script>
-      const windowEl = document.getElementById("deed-window");
-      const imageEl = document.getElementById("deed-image");
-      const titleEl = document.getElementById("deed-title");
-      const kindEl = document.getElementById("deed-kind");
-      const storyEl = document.getElementById("deed-story");
-      const proofEl = document.getElementById("deed-proof");
-      const boardEl = document.querySelector(".dag-board");
-      const blurbEl = document.getElementById("example-blurb");
-      const lensListEl = document.getElementById("lens-nodes");
+        const windowEl = document.getElementById("deed-window");
+        const imageEl = document.getElementById("deed-image");
+        const titleEl = document.getElementById("deed-title");
+        const kindEl = document.getElementById("deed-kind");
+        const storyEl = document.getElementById("deed-story");
+        const proofEl = document.getElementById("deed-proof");
+        const boardEl = document.querySelector(".dag-board");
+        const blurbEl = document.getElementById("example-blurb");
+        const lensListEl = document.getElementById("lens-nodes");
 
-      function openDeed(node) {
-        titleEl.textContent = node.dataset.title;
-        kindEl.textContent = node.dataset.kind;
-        storyEl.textContent = node.dataset.story;
-        proofEl.textContent = "Inspectable: " + node.dataset.proof;
-        imageEl.src = node.dataset.image;
-        imageEl.alt = node.dataset.alt;
-        windowEl.showModal();
-      }
-
-      function renderHistory(history) {
-        const name = history.person && history.person.name ? history.person.name : "Someone";
-        blurbEl.insertAdjacentText(
-          "afterbegin",
-          name + " — " + history.title + ". "
-        );
-        boardEl.setAttribute(
-          "aria-label",
-          name + " — " + history.title + ". Click a deed to open details."
-        );
-
-        history.entries.forEach(function (entry) {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "node " + entry.slot + (entry.bridge ? " bridge" : "");
-          button.dataset.title = entry.title;
-          button.dataset.kind = entry.summary;
-          button.dataset.proof = entry.proof.acceptance;
-          button.dataset.story = entry.story;
-          button.dataset.image = entry.image;
-          button.dataset.alt = entry.alt;
-
-          const img = document.createElement("img");
-          img.src = entry.image;
-          img.alt = entry.alt;
-
-          const heading = document.createElement("h3");
-          heading.textContent = entry.title;
-
-          const summary = document.createElement("p");
-          summary.textContent = entry.summary;
-
-          button.appendChild(img);
-          button.appendChild(heading);
-          button.appendChild(summary);
-          button.addEventListener("click", function () {
-            openDeed(button);
-          });
-          boardEl.appendChild(button);
-        });
-      }
-
-      function renderLens(lens) {
-        lens.nodes.forEach(function (node) {
-          const item = document.createElement("li");
-          item.textContent =
-            node.title + " — " + node.competency;
-          lensListEl.appendChild(item);
-        });
-      }
-
-      Promise.all([
-        fetch("history.json").then(function (response) {
-          if (!response.ok) {
-            throw new Error("history.json");
-          }
-          return response.json();
-        }),
-        fetch("lens.json").then(function (response) {
-          if (!response.ok) {
-            throw new Error("lens.json");
-          }
-          return response.json();
-        }),
-      ])
-        .then(function (files) {
-          renderHistory(files[0]);
-          renderLens(files[1]);
-        })
-        .catch(function () {
-          blurbEl.textContent =
-            "Could not load history.json. Serve this folder with a local server, or open the GitHub Pages demo.";
-        });
-
-      windowEl.querySelector(".close").addEventListener("click", function () {
-        windowEl.close();
-      });
-
-      windowEl.addEventListener("click", function (event) {
-        if (event.target === windowEl) {
-          windowEl.close();
+        function openDeed(node) {
+            titleEl.textContent = node.dataset.title;
+            kindEl.textContent = node.dataset.kind;
+            storyEl.textContent = node.dataset.story;
+            proofEl.textContent = "Inspectable: " + node.dataset.proof;
+            imageEl.src = node.dataset.image;
+            imageEl.alt = node.dataset.alt;
+            windowEl.showModal();
         }
-      });
 
-      const timeEl = document.getElementById("last-modified");
+        function renderHistory(history) {
+            const name = history.person && history.person.name ? history.person.name : "Someone";
+            blurbEl.insertAdjacentText(
+                "afterbegin",
+                name + " — " + history.title + ". "
+            );
+            boardEl.setAttribute(
+                "aria-label",
+                name + " — " + history.title + ". Click a deed to open details."
+            );
 
-      function showModified(date) {
-        timeEl.dateTime = date.toISOString();
-        timeEl.textContent = date.toLocaleString(undefined, {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZoneName: "short",
+            history.entries.forEach(function (entry) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "node " + entry.slot + (entry.bridge ? " bridge" : "");
+                button.dataset.title = entry.title;
+                button.dataset.kind = entry.summary;
+                button.dataset.proof = entry.proof.acceptance;
+                button.dataset.story = entry.story;
+                button.dataset.image = entry.image;
+                button.dataset.alt = entry.alt;
+
+                const img = document.createElement("img");
+                img.src = entry.image;
+                img.alt = entry.alt;
+
+                const heading = document.createElement("h3");
+                heading.textContent = entry.title;
+
+                const summary = document.createElement("p");
+                summary.textContent = entry.summary;
+
+                button.appendChild(img);
+                button.appendChild(heading);
+                button.appendChild(summary);
+                button.addEventListener("click", function () {
+                    openDeed(button);
+                });
+                boardEl.appendChild(button);
+            });
+        }
+
+        function renderLens(lens) {
+            lens.nodes.forEach(function (node) {
+                const item = document.createElement("li");
+                item.textContent =
+                    node.title + " — " + node.competency;
+                lensListEl.appendChild(item);
+            });
+        }
+
+        Promise.all([
+            fetch("history.json").then(function (response) {
+                if (!response.ok) {
+                    throw new Error("history.json");
+                }
+                return response.json();
+            }),
+            fetch("lens.json").then(function (response) {
+                if (!response.ok) {
+                    throw new Error("lens.json");
+                }
+                return response.json();
+            }),
+        ])
+            .then(function (files) {
+                renderHistory(files[0]);
+                renderLens(files[1]);
+            })
+            .catch(function () {
+                blurbEl.textContent =
+                    "Could not load history.json. Serve this folder with a local server, or open the GitHub Pages demo.";
+            });
+
+        windowEl.querySelector(".close").addEventListener("click", function () {
+            windowEl.close();
         });
-      }
 
-      showModified(new Date(document.lastModified));
+        windowEl.addEventListener("click", function (event) {
+            if (event.target === windowEl) {
+                windowEl.close();
+            }
+        });
 
-      fetch(
-        "https://api.github.com/repos/repreit/competency-graph/commits?per_page=1"
-      )
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (commits) {
-          if (commits[0] && commits[0].commit && commits[0].commit.committer) {
-            showModified(new Date(commits[0].commit.committer.date));
-          }
-        })
-        .catch(function () {});
+        const timeEl = document.getElementById("last-modified");
+
+        function showModified(date) {
+            timeEl.dateTime = date.toISOString();
+            timeEl.textContent = date.toLocaleString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                timeZoneName: "short",
+            });
+        }
+
+        showModified(new Date(document.lastModified));
+
+        fetch(
+            "https://api.github.com/repos/repreit/competency-graph/commits?per_page=1"
+        )
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (commits) {
+                if (commits[0] && commits[0].commit && commits[0].commit.committer) {
+                    showModified(new Date(commits[0].commit.committer.date));
+                }
+            })
+            .catch(function () { });
     </script>
-  </body>
+</body>
+
 </html>
