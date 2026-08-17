@@ -457,7 +457,6 @@
         border: 1px solid var(--line);
         border-radius: 8px;
         box-shadow: 0 10px 28px rgba(28, 27, 24, 0.16);
-        pointer-events: none;
       }
 
       .clip-bubble .transport {
@@ -467,12 +466,7 @@
         z-index: 2;
         width: 1.7rem;
         height: 1.7rem;
-        pointer-events: auto;
         box-shadow: 0 2px 8px rgba(28, 27, 24, 0.18);
-      }
-
-      .clip-bubble.is-playing {
-        pointer-events: auto;
       }
 
       .clip-bubble[hidden] {
@@ -746,7 +740,7 @@
             <h2>How does this change the way people spend time?</h2>
             <p class="muted">
                 Same need to act. Different object. Different cut of time.
-                Hover or click a clip.
+                Click a clip.
             </p>
             <div class="time-scene">
                 <h3>Entrust work</h3>
@@ -952,6 +946,7 @@
             }
             bubbleClip = null;
             bubbleEl.hidden = true;
+            bubbleTransportEl.hidden = true;
             document.body.classList.remove("timeline-focus");
             document.querySelectorAll(".time-scene.is-active").forEach(function (scene) {
                 scene.classList.remove("is-active");
@@ -999,6 +994,7 @@
                 bubbleImg.removeAttribute("src");
             }
             bubbleEl.hidden = false;
+            bubbleTransportEl.hidden = false;
             placeClipBubble(clip);
         }
 
@@ -1118,21 +1114,6 @@
             });
 
         document.querySelectorAll(".clip").forEach(function (clip) {
-            clip.addEventListener("pointerenter", function (event) {
-                if (event.pointerType === "mouse") {
-                    if (playbackLocksClip(clip)) {
-                        return;
-                    }
-                    showClipBubble(clip);
-                }
-            });
-            clip.addEventListener("focus", function () {
-                if (playbackLocksClip(clip)) {
-                    return;
-                }
-                showClipBubble(clip);
-            });
-            clip.addEventListener("blur", hideClipBubble);
             clip.addEventListener("click", function (event) {
                 if (playbackLocksClip(clip)) {
                     event.preventDefault();
@@ -1202,8 +1183,8 @@
                 button.setAttribute("aria-pressed", playing ? "true" : "false");
                 button.setAttribute("aria-label", label);
             });
-            bubbleTransportEl.hidden = !playback;
-            bubbleEl.classList.toggle("is-playing", Boolean(playback));
+            bubbleTransportEl.hidden = bubbleEl.hidden;
+            bubbleEl.classList.toggle("is-playing", Boolean(playback) && !playback.paused);
         }
 
         function stopPlayback() {
@@ -1220,9 +1201,9 @@
             playback = null;
             button.setAttribute("aria-pressed", "false");
             button.setAttribute("aria-label", "Play this timeline");
-            bubbleTransportEl.hidden = true;
+            bubbleTransportEl.hidden = bubbleEl.hidden;
             bubbleTransportEl.setAttribute("aria-pressed", "false");
-            bubbleTransportEl.setAttribute("aria-label", "Pause");
+            bubbleTransportEl.setAttribute("aria-label", "Play this timeline");
             bubbleEl.classList.remove("is-playing");
         }
 
@@ -1395,23 +1376,22 @@
                 stopPlayback();
                 hideClipBubble();
             });
-
-            edit.addEventListener("pointerleave", function (event) {
-                if (event.pointerType === "mouse") {
-                    hideClipBubble();
-                }
-            });
         });
 
         bubbleTransportEl.addEventListener("click", function (event) {
             event.stopPropagation();
-            if (!playback) {
-                return;
+            const edit = playback
+                ? playback.edit
+                : bubbleClip && bubbleClip.closest(".time-edit");
+            if (edit) {
+                togglePlayback(edit);
             }
-            togglePlayback(playback.edit);
         });
 
         document.addEventListener("pointerdown", function (event) {
+            if (event.target.closest(".clip-bubble")) {
+                return;
+            }
             if (isPlaybackUi(event.target)) {
                 return;
             }
