@@ -16,13 +16,13 @@ Two seats. Both have to exist.
 
 The graph is the language between them. Other fields can use the same format later. This first graph is that Ethereum / web3 context.
 
-**When this is used:** a requester used to ask for a school name, a resume, a portfolio of claims. That is the old filter. This graph is for the moment that is not enough — inspect what the builder actually did, then act. Not hiring in the old sense. Entrusting the next piece of work.
+**When this is used:** a requester used to ask for a school name, a resume, a portfolio of claims. That is the old filter. This graph is for the moment that is not enough — inspect what the builder actually did, then act: fund, collaborate, or entrust the next piece of work.
 
 ## Why this exists
 
-One team cannot write every field (nursing, Solidity, design, law, real estate). The public good is the **format**, plus one reference viewer. Anyone can publish a tree later as JSON.
+One team cannot write every field (nursing, Solidity, design, law, real estate). The public good is the **format**, plus one reference viewer. Anyone can publish a history, and a field as a filter, later as JSON.
 
-This is closer to Vitalik’s history-you-cannot-sell than to a skill tree. Soul or worldview may be inferred from results. They are not labels in the format. Personality is not represented.
+This is closer to Vitalik’s history-you-cannot-sell than to a ladder of badges. Soul or worldview may be inferred from results. They are not labels in the format. Personality is not represented.
 
 ## Format (the MVP)
 
@@ -42,7 +42,7 @@ Optional later: `{ easUid?, did? }` on a history entry. No wallet in this MVP.
 
 ## Example
 
-Mina building a Web3 peer-to-peer real estate fulfillment system. The page loads her history from JSON. Click a deed for the photo and the proof. Pick a field to see which deeds count there.
+Mina’s history. The page loads her deeds from JSON. Click a deed for the photo and the proof. Pick a field to see which deeds count there.
 
 ## Run locally
 

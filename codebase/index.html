@@ -134,6 +134,8 @@
 
       .time-scene {
         margin-top: 1.4rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         transition: filter 0.22s ease, opacity 0.22s ease;
         counter-increment: situation;
       }
@@ -170,6 +172,7 @@
         --lane: color-mix(in srgb, var(--ink) 7%, var(--bg));
         position: relative;
         z-index: 3;
+        min-width: 40rem;
         margin-top: 0.45rem;
         padding: 0.4rem 0.45rem 0.5rem;
         border: 1px solid var(--line);
@@ -543,6 +546,54 @@
             margin-top: 0.35rem;
         }
 
+        .field-map {
+            margin: 0.85rem 0 0;
+            padding: 0.7rem 0.85rem 0.8rem;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+        }
+
+        .field-map[hidden] {
+            display: none;
+        }
+
+        .field-map h3 {
+            margin: 0 0 0.15rem;
+            font-size: 0.88rem;
+        }
+
+        .field-map .lead {
+            margin: 0 0 0.55rem;
+            font-size: 0.8rem;
+        }
+
+        .field-map ol {
+            margin: 0;
+            padding-left: 1.15rem;
+        }
+
+        .field-map .ask {
+            display: block;
+        }
+
+        .field-map .hit,
+        .field-map .open {
+            display: block;
+            margin-top: 0.15rem;
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .field-map .deed-link {
+            padding: 0;
+            border: 0;
+            background: none;
+            color: inherit;
+            font: inherit;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         .legend {
             display: flex;
             flex-wrap: wrap;
@@ -595,13 +646,16 @@
                     transparent 4px 7px);
         }
 
+        .dag-scroll {
+            overflow-x: auto;
+            margin-top: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
         .dag-board {
             position: relative;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: auto auto auto;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            min-width: 42rem;
+            min-height: 12rem;
         }
 
         .dag-lines {
@@ -629,6 +683,10 @@
             font: inherit;
             text-align: left;
             cursor: pointer;
+        }
+
+        .node.is-hub {
+            border-color: var(--ink);
         }
 
         .node:hover,
@@ -662,50 +720,6 @@
             font-size: 0.75rem;
             color: var(--muted);
             margin: 0 0.55rem 0.55rem;
-        }
-
-        .n-group {
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        .n-escrow {
-            grid-column: 1;
-            grid-row: 3;
-        }
-
-        .n-testnet {
-            grid-column: 2;
-            grid-row: 2;
-        }
-
-        .n-live {
-            grid-column: 3;
-            grid-row: 2;
-        }
-
-        .n-design {
-            grid-column: 3;
-            grid-row: 1;
-        }
-
-        @media (max-width: 640px) {
-            .dag-board {
-                grid-template-columns: 1fr;
-            }
-
-            .dag-lines {
-                display: none;
-            }
-
-            .n-group,
-            .n-escrow,
-            .n-testnet,
-            .n-live,
-            .n-design {
-                grid-column: 1;
-                grid-row: auto;
-            }
         }
 
         dialog {
@@ -777,7 +791,7 @@
                 Click a clip.
             </p>
             <div class="time-scene">
-                <h3>Entrust work</h3>
+                <h3>Entrust or collaborate</h3>
                 <p class="muted">About one minute — the first sitting before someone is invited or passed over.</p>
                 <div class="time-edit">
                     <div class="ruler" aria-hidden="true">
@@ -792,15 +806,16 @@
                             <button type="button" class="clip" style="flex: 1" data-title="School" data-kind="Before · ~6 s" data-story="A glance at a school name. Recruiters’ first pass is measured in seconds. The paper does not open." data-image="images/clip-school.jpg" data-alt="A diploma folder on a wooden desk">School</button>
                             <button type="button" class="clip" style="flex: 5" data-title="Resume" data-kind="Before · ~30 s" data-story="Most of the sitting. Titles, dates, keywords. Typical first-pass resume time is about half a minute." data-image="images/clip-resume.jpg" data-alt="A printed resume on a wooden desk">Resume</button>
                             <button type="button" class="clip" style="flex: 3" data-title="Claims" data-kind="Before · ~18 s" data-story="A portfolio or GitHub, if they open it. Often scanned in under a minute with the resume, still as claims." data-image="images/clip-claims.jpg" data-alt="A laptop showing a portfolio grid, barely glanced at">Claims</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="Guess" data-kind="Before · leftover" data-story="Fit or no-fit. Then the requester acts on paper, not on work." data-image="images/clip-guess.jpg" data-alt="A resume on a laptop, cursor over pass">Guess</button>
+                            <button type="button" class="clip" style="flex: 1" data-title="Guess" data-kind="Before · leftover" data-story="Fit or no-fit. Then the requester acts on a profile, not on work." data-image="images/clip-guess.jpg" data-alt="A resume on a laptop, cursor over pass">Guess</button>
                         </div>
                     </div>
                     <div class="track">
                         <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~6 s" data-story="Open the graph. Same one-minute sitting. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
-                            <button type="button" class="clip after" style="flex: 7" data-title="Inspect deeds" data-kind="After · ~42 s" data-story="This is where the minute now goes. Follow participation and doing. Open an artifact, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting an artifact of work on a laptop">Inspect deeds</button>
-                            <button type="button" class="clip after" style="flex: 2" data-title="Entrust" data-kind="After · ~12 s" data-story="If the trail is there, the requester can entrust the next piece of work. Not hiring in the old sense." data-image="images/clip-entrust.jpg" data-alt="Assigning the next piece of work on a laptop">Entrust</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~6 s" data-story="Open the graph. Same one-minute sitting. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a history on a laptop">Open</button>
+                            <button type="button" class="clip after" style="flex: 6" data-title="Inspect deeds" data-kind="After · ~36 s" data-story="This is where the minute now goes. Follow participation and doing. Open an artifact, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting an artifact of work on a laptop">Inspect deeds</button>
+                            <button type="button" class="clip after" style="flex: 1.5" data-title="Entrust" data-kind="After · ~9 s" data-story="If the trail is there, the requester can entrust the next piece of work. Not a spectator." data-image="images/clip-entrust.jpg" data-alt="Assigning the next piece of work on a laptop">Entrust</button>
+                            <button type="button" class="clip after" style="flex: 1.5" data-title="Collaborate" data-kind="After · ~9 s" data-story="Or sit down on the same work. A collaborator inspects the trail, then builds with them — not from a resume." data-image="images/clip-collaborate.jpg" data-alt="Two people inspecting the same trail of work on a laptop">Collaborate</button>
                         </div>
                     </div>
                 </div>
@@ -827,8 +842,8 @@
                     <div class="track">
                         <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~20 m" data-story="Open the graph. Same three hours. Different object: a trail a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a folder of inspectable work">Open</button>
-                            <button type="button" class="clip after" style="flex: 7" data-title="Follow the trail" data-kind="After · ~2 h" data-story="This is where the hours now go. Participation and doing, in order. If it is not there, it is not a competency." data-image="images/clip-follow.jpg" data-alt="A hand tracing a trail of deeds on a large screen">Follow the trail</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~20 m" data-story="Open the graph. Same three hours. Different object: a trail a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a history on a laptop">Open</button>
+                            <button type="button" class="clip after" style="flex: 7" data-title="Follow the trail" data-kind="After · ~2 h" data-story="This is where the hours now go. Follow participation and doing. If it is not there, it is not a competency." data-image="images/clip-follow.jpg" data-alt="A hand tracing a trail of deeds on a large screen">Follow the trail</button>
                             <button type="button" class="clip after" style="flex: 2" data-title="Fund" data-kind="After · ~35 m" data-story="If the trail is there, the requester can fund the next piece of work. Not a spectator. Not a prize for a slide deck." data-image="images/clip-fund.jpg" data-alt="Confirming an Ethereum transfer on a laptop">Fund</button>
                         </div>
                     </div>
@@ -855,8 +870,8 @@
                     <div class="track">
                         <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open a filter" data-kind="After · a sitting" data-story="Open a field. See what history would count here. Not a diploma. A map of what to do next." data-image="images/clip-filter.jpg" data-alt="A printed field map of connected nodes">Open a filter</button>
-                            <button type="button" class="clip after" style="flex: 8" data-title="Do inspectable work" data-kind="After · ~5 mo" data-story="Show up. Ship. Leave artifacts a stranger can open. This is where the months now go." data-image="images/clip-doing.jpg" data-alt="Hands doing inspectable work at a table">Do inspectable work</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open a filter" data-kind="After · a sitting" data-story="Open a field. See what history would count here. Not a diploma. A map of what to do next." data-image="images/clip-filter.jpg" data-alt="Opening a field filter on a laptop">Open a filter</button>
+                            <button type="button" class="clip after" style="flex: 8" data-title="Do inspectable work" data-kind="After · ~5 mo" data-story="Show up. Ship. Leave artifacts a stranger can open. This is where the months now go." data-image="images/clip-doing.jpg" data-alt="Hands shipping inspectable work on a laptop">Do inspectable work</button>
                             <button type="button" class="clip after" style="flex: 1" data-title="Leave a trail" data-kind="After · leftover" data-story="The next deed is now on the graph. A requester can later inspect it, then act." data-image="images/clip-trail.jpg" data-alt="A new node added to a digital trail of deeds">Leave a trail</button>
                         </div>
                     </div>
@@ -879,13 +894,16 @@
                 <a href="filter.json">filter.json</a>.
             </p>
             <div class="filters" id="history-filters" role="group" aria-label="Filter this history"></div>
+            <div class="field-map" id="field-map" hidden></div>
             <div class="legend">
                 <span><i class="swatch"></i>Linked</span>
                 <span><i class="swatch bridge"></i>Also used in another field</span>
             </div>
-            <div class="dag-board" role="group"
-                aria-label="Mina building a Web3 peer-to-peer real estate fulfillment system. Click a deed to open details.">
-                <svg class="dag-lines" aria-hidden="true"></svg>
+            <div class="dag-scroll">
+                <div class="dag-board" role="group"
+                    aria-label="Mina. Click a deed to open details.">
+                    <svg class="dag-lines" aria-hidden="true"></svg>
+                </div>
             </div>
         </section>
     </main>
@@ -945,6 +963,7 @@
         const filtersEl = document.getElementById("history-filters");
         let filters = [];
         let historyEdges = [];
+        let historyEntries = [];
 
         const bubbleEl = document.getElementById("clip-bubble");
         const bubbleImg = document.getElementById("clip-bubble-image");
@@ -1052,20 +1071,21 @@
         }
 
         function renderHistory(history) {
+            historyEntries = history.entries || [];
             const name = history.person && history.person.name ? history.person.name : "Someone";
             blurbEl.insertAdjacentText(
                 "afterbegin",
-                name + " — " + history.title + ". "
+                name + ". "
             );
             boardEl.setAttribute(
                 "aria-label",
-                name + " — " + history.title + ". Click a deed to open details."
+                name + ". Click a deed to open details."
             );
 
             history.entries.forEach(function (entry) {
                 const button = document.createElement("button");
                 button.type = "button";
-                button.className = "node " + entry.slot + (entry.bridge ? " bridge" : "");
+                button.className = "node" + (entry.bridge ? " bridge" : "");
                 button.dataset.entryId = entry.id;
                 button.dataset.title = entry.title;
                 button.dataset.kind = entry.summary;
@@ -1094,7 +1114,82 @@
             });
             historyEdges = history.edges || [];
             boardEl.querySelectorAll(".node img").forEach(function (img) {
-                img.addEventListener("load", drawDagLines);
+                img.addEventListener("load", layoutNetwork);
+            });
+            layoutNetwork();
+        }
+
+        let layoutWidth = 0;
+
+        function layoutNetwork() {
+            const nodes = Array.prototype.slice.call(boardEl.querySelectorAll(".node"));
+            nodes.forEach(function (node) {
+                node.classList.remove("is-hub");
+            });
+            if (!nodes.length) {
+                boardEl.style.height = "";
+                layoutWidth = boardEl.clientWidth;
+                drawDagLines();
+                return;
+            }
+
+            const degree = {};
+            nodes.forEach(function (node, index) {
+                degree[node.dataset.entryId] = 0;
+                node.dataset.order = String(index);
+            });
+            historyEdges.forEach(function (edge) {
+                const ends = edge.nodes || [edge.from, edge.to];
+                if (Object.prototype.hasOwnProperty.call(degree, ends[0])) {
+                    degree[ends[0]] += 1;
+                }
+                if (Object.prototype.hasOwnProperty.call(degree, ends[1])) {
+                    degree[ends[1]] += 1;
+                }
+            });
+            nodes.sort(function (a, b) {
+                const byDeg = degree[b.dataset.entryId] - degree[a.dataset.entryId];
+                if (byDeg !== 0) {
+                    return byDeg;
+                }
+                return Number(a.dataset.order) - Number(b.dataset.order);
+            });
+
+            const width = boardEl.clientWidth;
+            const hub = nodes[0];
+            const rest = nodes.slice(1);
+            const hubW = Math.min(240, Math.max(176, width * 0.3));
+            const nodeW = Math.min(200, Math.max(148, width * 0.24));
+            hub.classList.add("is-hub");
+            hub.style.position = "absolute";
+            hub.style.width = hubW + "px";
+            rest.forEach(function (node) {
+                node.style.position = "absolute";
+                node.style.width = nodeW + "px";
+            });
+
+            const hubH = hub.offsetHeight;
+            let maxRest = 0;
+            rest.forEach(function (node) {
+                maxRest = Math.max(maxRest, node.offsetHeight);
+            });
+            const radius = Math.max(hubW, hubH) / 2 + Math.max(nodeW, maxRest) / 2 + 40;
+            const boardH = Math.max(hubH, radius * 2 + maxRest) + 32;
+            boardEl.style.height = boardH + "px";
+            layoutWidth = width;
+
+            const cx = width / 2;
+            const cy = boardH / 2;
+            hub.style.left = cx - hubW / 2 + "px";
+            hub.style.top = cy - hubH / 2 + "px";
+            rest.forEach(function (node, index) {
+                const angle = -Math.PI / 2 + (2 * Math.PI * index) / rest.length;
+                const w = nodeW;
+                const h = node.offsetHeight;
+                const x = cx + Math.cos(angle) * radius - w / 2;
+                const y = cy + Math.sin(angle) * radius - h / 2;
+                node.style.left = Math.max(0, Math.min(x, width - w)) + "px";
+                node.style.top = Math.max(0, Math.min(y, boardH - h)) + "px";
             });
             drawDagLines();
         }
@@ -1125,11 +1220,6 @@
         function drawDagLines() {
             const svg = boardEl.querySelector(".dag-lines");
             if (!svg) {
-                return;
-            }
-            if (window.matchMedia("(max-width: 640px)").matches) {
-                svg.replaceChildren();
-                svg.removeAttribute("viewBox");
                 return;
             }
             const boardRect = boardEl.getBoundingClientRect();
@@ -1173,6 +1263,9 @@
                 if (edge.type === "bridge") {
                     line.setAttribute("stroke-dasharray", "5 4");
                 }
+                if (from.classList.contains("is-out") || to.classList.contains("is-out")) {
+                    line.setAttribute("opacity", "0.28");
+                }
                 svg.appendChild(line);
             });
         }
@@ -1198,6 +1291,65 @@
             filtersEl.querySelectorAll("button").forEach(function (button) {
                 button.setAttribute("aria-pressed", button.dataset.filterId === String(filterId) ? "true" : "false");
             });
+            renderFieldMap(filter);
+            drawDagLines();
+        }
+
+        function renderFieldMap(filter) {
+            const mapEl = document.getElementById("field-map");
+            if (!filter) {
+                mapEl.hidden = true;
+                mapEl.replaceChildren();
+                return;
+            }
+            mapEl.hidden = false;
+            mapEl.replaceChildren();
+            const heading = document.createElement("h3");
+            heading.textContent = filter.title;
+            mapEl.appendChild(heading);
+            const lead = document.createElement("p");
+            lead.className = "muted lead";
+            lead.textContent = "What counts here. Not a diploma.";
+            mapEl.appendChild(lead);
+            const list = document.createElement("ol");
+            (filter.nodes || []).forEach(function (node) {
+                const item = document.createElement("li");
+                const ask = document.createElement("span");
+                ask.className = "ask";
+                ask.textContent = node.competency || node.title;
+                item.appendChild(ask);
+                const ids = node.historySatisfies || [];
+                const hits = historyEntries.filter(function (entry) {
+                    return ids.indexOf(entry.id) !== -1;
+                });
+                const note = document.createElement("span");
+                if (hits.length) {
+                    note.className = "hit";
+                    note.appendChild(document.createTextNode("In this history: "));
+                    hits.forEach(function (entry, index) {
+                        if (index) {
+                            note.appendChild(document.createTextNode(", "));
+                        }
+                        const link = document.createElement("button");
+                        link.type = "button";
+                        link.className = "deed-link";
+                        link.textContent = entry.title;
+                        link.addEventListener("click", function () {
+                            const deed = boardEl.querySelector('.node[data-entry-id="' + entry.id + '"]');
+                            if (deed) {
+                                openDeed(deed);
+                            }
+                        });
+                        note.appendChild(link);
+                    });
+                } else {
+                    note.className = "open";
+                    note.textContent = "Not in this history yet.";
+                }
+                item.appendChild(note);
+                list.appendChild(item);
+            });
+            mapEl.appendChild(list);
         }
 
         function renderFilters(list) {
@@ -1250,7 +1402,13 @@
             });
 
         if (window.ResizeObserver) {
-            new ResizeObserver(drawDagLines).observe(boardEl);
+            new ResizeObserver(function () {
+                if (boardEl.clientWidth !== layoutWidth) {
+                    layoutNetwork();
+                } else {
+                    drawDagLines();
+                }
+            }).observe(boardEl);
         }
 
         document.querySelectorAll(".clip").forEach(function (clip) {
@@ -1575,7 +1733,7 @@
         }, { passive: true });
 
         window.addEventListener("resize", function () {
-            drawDagLines();
+            layoutNetwork();
             if (bubbleClip) {
                 placeClipBubble(bubbleClip);
             }

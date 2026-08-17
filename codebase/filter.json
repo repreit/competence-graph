@@ -28,12 +28,13 @@
           "title": "Complete a live P2P fulfillment",
           "competency": "Can finish a real deal: deposit, inspect, hand over keys, release funds.",
           "historySatisfies": ["live-fulfillment"]
+        },
+        {
+          "id": "repeat-live-fulfillment",
+          "title": "Repeat a live fulfillment",
+          "competency": "Can finish another real deal on a new property, not a one-off.",
+          "historySatisfies": []
         }
-      ],
-      "edges": [
-        { "nodes": ["title-escrow-practice", "run-testnet-listing"] },
-        { "nodes": ["write-escrow", "run-testnet-listing"] },
-        { "nodes": ["run-testnet-listing", "complete-fulfillment"] }
       ]
     },
     {
@@ -47,8 +48,7 @@
           "competency": "Can show the deal steps in a design a merchant or buyer can follow.",
           "historySatisfies": ["listing-ux"]
         }
-      ],
-      "edges": []
+      ]
     }
   ]
 }

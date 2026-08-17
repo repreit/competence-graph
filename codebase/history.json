@@ -3,7 +3,6 @@
     "id": "mina",
     "name": "Mina"
   },
-  "title": "Web3 peer-to-peer real estate fulfillment",
   "entries": [
     {
       "id": "working-group",
@@ -16,8 +15,7 @@
         "type": "other",
         "acceptance": "Attendance notes and the public working-group agenda."
       },
-      "story": "Mina sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds.",
-      "slot": "n-group"
+      "story": "Mina sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds."
     },
     {
       "id": "escrow-pr",
@@ -30,8 +28,7 @@
         "type": "pull_request",
         "acceptance": "A public pull request: deposit, inspection window, release to seller."
       },
-      "story": "She wrote the contract that holds buyer funds until inspection and handover. A stranger can open the PR and read the rules.",
-      "slot": "n-escrow"
+      "story": "She wrote the contract that holds buyer funds until inspection and handover. A stranger can open the PR and read the rules."
     },
     {
       "id": "testnet-listing",
@@ -44,8 +41,7 @@
         "type": "deployed_contract",
         "acceptance": "A testnet listing and a lock-deposit transaction."
       },
-      "story": "The working group and the escrow PR made a test listing possible: a house, a deposit button, no platform as middleman.",
-      "slot": "n-testnet"
+      "story": "The working group and the escrow PR made a test listing possible: a house, a deposit button, no platform as middleman."
     },
     {
       "id": "live-fulfillment",
@@ -58,8 +54,7 @@
         "type": "deployed_contract",
         "acceptance": "A mainnet fulfillment transaction and a recorded key handover."
       },
-      "story": "A real deal completed: deposit locked, inspection passed, keys handed over, funds released.",
-      "slot": "n-live"
+      "story": "A real deal completed: deposit locked, inspection passed, keys handed over, funds released."
     },
     {
       "id": "listing-ux",
@@ -73,7 +68,6 @@
         "acceptance": "Wireframes for listing, deposit, inspection, and handover."
       },
       "story": "The same fulfillment work also produced a design trail. It is a bridge into another field.",
-      "slot": "n-design",
       "bridge": true
     }
   ],
