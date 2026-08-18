@@ -38,8 +38,6 @@ This is closer to Vitalik’s history-you-cannot-sell than to a ladder of creden
 
 **Edges:** a link, not an unlock. The structure is a network.
 
-A deed may carry `extra` for the viewer. It is not the format.
-
 Optional later: `{ easUid?, did? }` on a deed. No wallet in this MVP.
 
 ## Example
