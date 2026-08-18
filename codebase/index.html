@@ -565,13 +565,8 @@
         }
 
         .filter-map h3 {
-            margin: 0 0 0.15rem;
+            margin: 0 0 0.45rem;
             font-size: 0.88rem;
-        }
-
-        .filter-map .lead {
-            margin: 0 0 0.55rem;
-            font-size: 0.8rem;
         }
 
         .filter-map ol {
@@ -1346,10 +1341,6 @@
             const heading = document.createElement("h3");
             heading.textContent = filter.title;
             mapEl.appendChild(heading);
-            const lead = document.createElement("p");
-            lead.className = "muted lead";
-            lead.textContent = "What counts here. Not a credential.";
-            mapEl.appendChild(lead);
             const list = document.createElement("ol");
             (filter.nodes || []).forEach(function (node) {
                 const item = document.createElement("li");
