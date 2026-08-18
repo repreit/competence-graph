@@ -79,8 +79,7 @@
         fill: currentColor;
       }
 
-        p,
-        li {
+        p {
             color: var(--ink);
         }
 
@@ -553,15 +552,6 @@
             overflow: visible;
         }
 
-        ul {
-            margin: 0.4rem 0 0;
-            padding-left: 1.2rem;
-        }
-
-        li+li {
-            margin-top: 0.35rem;
-        }
-
         .filter-map {
             margin: 0.85rem 0 0;
             padding: 0.7rem 0.85rem 0.8rem;
@@ -912,13 +902,7 @@
 
         <section>
             <h2>How does this actually work?</h2>
-            <p class="muted">A Builder accumulates a history. A Requester opens it, then acts. Two histories. Same filters. A filter does not issue a title. It says which deeds count here.</p>
-            <ul>
-                <li>Participation — you showed up (inspectable).</li>
-                <li>Doing — you made something (inspectable).</li>
-                <li>No history → not competence. Self-claim is not enough.</li>
-            </ul>
-            <p class="muted" id="example-blurb" style="margin: 1rem 0 0">
+            <p class="muted" id="example-blurb">
                 Example loaded from
                 <a href="history.json">history.json</a>
                 and
