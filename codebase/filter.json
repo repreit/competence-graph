@@ -3,7 +3,7 @@
     {
       "id": "web3-p2p-real-estate-fulfillment",
       "title": "Web3 P2P real estate fulfillment",
-      "summary": "A field is a filter over a history. It does not issue a title. It says which deeds count here.",
+      "summary": "A filter over a history. It does not issue a title. It says which deeds count here.",
       "nodes": [
         {
           "id": "title-escrow-practice",
@@ -35,7 +35,7 @@
     {
       "id": "listing-handover-design",
       "title": "Listing and handover design",
-      "summary": "A field is a filter over a history. It does not issue a title. It says which deeds count here.",
+      "summary": "A filter over a history. It does not issue a title. It says which deeds count here.",
       "nodes": [
         {
           "id": "handover-ux",

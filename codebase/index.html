@@ -562,45 +562,45 @@
             margin-top: 0.35rem;
         }
 
-        .field-map {
+        .filter-map {
             margin: 0.85rem 0 0;
             padding: 0.7rem 0.85rem 0.8rem;
             border: 1px solid var(--line);
             border-radius: 6px;
         }
 
-        .field-map[hidden] {
+        .filter-map[hidden] {
             display: none;
         }
 
-        .field-map h3 {
+        .filter-map h3 {
             margin: 0 0 0.15rem;
             font-size: 0.88rem;
         }
 
-        .field-map .lead {
+        .filter-map .lead {
             margin: 0 0 0.55rem;
             font-size: 0.8rem;
         }
 
-        .field-map ol {
+        .filter-map ol {
             margin: 0;
             padding-left: 1.15rem;
         }
 
-        .field-map .ask {
+        .filter-map .ask {
             display: block;
         }
 
-        .field-map .hit,
-        .field-map .open {
+        .filter-map .hit,
+        .filter-map .open {
             display: block;
             margin-top: 0.15rem;
             font-size: 0.78rem;
             color: var(--muted);
         }
 
-        .field-map .deed-link {
+        .filter-map .deed-link {
             padding: 0;
             border: 0;
             background: none;
@@ -675,19 +675,19 @@
                     transparent 4px 7px);
         }
 
-        .dag-scroll {
+        .network-scroll {
             overflow-x: auto;
             margin-top: 1rem;
             -webkit-overflow-scrolling: touch;
         }
 
-        .dag-board {
+        .network-board {
             position: relative;
             min-width: 42rem;
             min-height: 12rem;
         }
 
-        .dag-lines {
+        .network-lines {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -901,7 +901,7 @@
                     <div class="track">
                         <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open a field" data-kind="After · a sitting" data-story="Open a field. See which deeds would count here. Not a title. A map of what to do next." data-image="images/clip-filter.jpg" data-alt="Opening a field on a laptop">Open a field</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open a filter" data-kind="After · a sitting" data-story="Open a filter. See which deeds would count here. Not a title. A map of what to do next." data-image="images/clip-filter.jpg" data-alt="Opening a filter on a laptop">Open a filter</button>
                             <button type="button" class="clip after" style="flex: 8" data-title="Leave deeds" data-kind="After · ~5 mo" data-story="Show up. Ship. Leave deeds a stranger can inspect. This is where the months now go." data-image="images/clip-doing.jpg" data-alt="Hands leaving inspectable deeds on a laptop">Leave deeds</button>
                             <button type="button" class="clip after" style="flex: 1" data-title="Deed" data-kind="After · leftover" data-story="The next deed is now in the history. A Requester can later inspect it, then act." data-image="images/clip-trail.jpg" data-alt="A new deed added to a history">Deed</button>
                         </div>
@@ -912,7 +912,7 @@
 
         <section>
             <h2>How does this actually work?</h2>
-            <p class="muted">A Builder accumulates a history. A Requester opens it, then acts. Two histories. Same fields. A field does not issue a title. It says which deeds count here.</p>
+            <p class="muted">A Builder accumulates a history. A Requester opens it, then acts. Two histories. Same filters. A filter does not issue a title. It says which deeds count here.</p>
             <ul>
                 <li>Participation — you showed up (inspectable).</li>
                 <li>Doing — you made something (inspectable).</li>
@@ -926,17 +926,17 @@
             </p>
             <p class="chip-kicker">Person</p>
             <div class="filters" id="people" role="group" aria-label="Whose history"></div>
-            <p class="chip-kicker">Field</p>
-            <div class="filters" id="history-filters" role="group" aria-label="Field over this history"></div>
-            <div class="field-map" id="field-map" hidden></div>
+            <p class="chip-kicker">Filter</p>
+            <div class="filters" id="history-filters" role="group" aria-label="Filter over this history"></div>
+            <div class="filter-map" id="filter-map" hidden></div>
             <div class="legend">
                 <span><i class="swatch"></i>Linked</span>
-                <span><i class="swatch bridge"></i>Also used in another field</span>
+                <span><i class="swatch bridge"></i>Also used in another filter</span>
             </div>
-            <div class="dag-scroll">
-                <div class="dag-board" role="group"
+            <div class="network-scroll">
+                <div class="network-board" role="group"
                     aria-label="Mina. Click a deed to open details.">
-                    <svg class="dag-lines" aria-hidden="true"></svg>
+                    <svg class="network-lines" aria-hidden="true"></svg>
                 </div>
             </div>
         </section>
@@ -992,7 +992,7 @@
         const kindEl = document.getElementById("deed-kind");
         const storyEl = document.getElementById("deed-story");
         const proofEl = document.getElementById("deed-proof");
-        const boardEl = document.querySelector(".dag-board");
+        const boardEl = document.querySelector(".network-board");
         const blurbEl = document.getElementById("example-blurb");
         const peopleEl = document.getElementById("people");
         const filtersEl = document.getElementById("history-filters");
@@ -1197,7 +1197,7 @@
             if (!nodes.length) {
                 boardEl.style.height = "";
                 layoutWidth = boardEl.clientWidth;
-                drawDagLines();
+                drawNetworkLines();
                 return;
             }
 
@@ -1259,7 +1259,7 @@
                 node.style.left = Math.max(0, Math.min(x, width - w)) + "px";
                 node.style.top = Math.max(0, Math.min(y, boardH - h)) + "px";
             });
-            drawDagLines();
+            drawNetworkLines();
         }
 
         function boxOf(el, boardRect) {
@@ -1285,8 +1285,8 @@
             return { x: rect.cx + dx * t, y: rect.cy + dy * t };
         }
 
-        function drawDagLines() {
-            const svg = boardEl.querySelector(".dag-lines");
+        function drawNetworkLines() {
+            const svg = boardEl.querySelector(".network-lines");
             if (!svg) {
                 return;
             }
@@ -1360,12 +1360,12 @@
             filtersEl.querySelectorAll("button").forEach(function (button) {
                 button.setAttribute("aria-pressed", button.dataset.filterId === String(activeFilterId) ? "true" : "false");
             });
-            renderFieldMap(filter);
-            drawDagLines();
+            renderFilterMap(filter);
+            drawNetworkLines();
         }
 
-        function renderFieldMap(filter) {
-            const mapEl = document.getElementById("field-map");
+        function renderFilterMap(filter) {
+            const mapEl = document.getElementById("filter-map");
             if (!filter) {
                 mapEl.hidden = true;
                 mapEl.replaceChildren();
@@ -1484,7 +1484,7 @@
                 if (boardEl.clientWidth !== layoutWidth) {
                     layoutNetwork();
                 } else {
-                    drawDagLines();
+                    drawNetworkLines();
                 }
             }).observe(boardEl);
         }
