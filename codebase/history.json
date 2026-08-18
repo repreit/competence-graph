@@ -62,14 +62,14 @@
           "id": "listing-ux",
           "kind": "doing",
           "title": "Listing and handover UX",
-          "summary": "design · another field",
+          "summary": "doing · another field",
           "image": "images/deed-listing-design.jpg",
           "alt": "Paper wireframes of a property listing and fulfillment steps",
           "proof": {
             "type": "design",
             "acceptance": "Wireframes for listing, deposit, inspection, and handover."
           },
-          "story": "The same fulfillment also produced design deeds. It is a bridge into another field.",
+          "story": "The same fulfillment also left deeds that count in another field. It is a bridge.",
           "bridge": true
         }
       ],
