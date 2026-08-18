@@ -1385,7 +1385,7 @@
                 const item = document.createElement("li");
                 const ask = document.createElement("span");
                 ask.className = "ask";
-                ask.textContent = node.competency || node.title;
+                ask.textContent = node.ask || node.title;
                 item.appendChild(ask);
                 const ids = node.historySatisfies || [];
                 const hits = historyEntries.filter(function (entry) {
