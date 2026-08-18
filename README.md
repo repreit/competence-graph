@@ -2,7 +2,7 @@
 
 A shared language for **inspectable competence**.
 
-Competence is a **history** of **deeds** — not a title, not a course completion. A **filter** over that history does not issue a title. It says which deeds count here.
+Competence is a **history** of **deeds** — not a credential, not a course completion. A **filter** over that history does not issue a credential. It says which deeds count here.
 
 Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
 
@@ -10,7 +10,7 @@ Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/co
 
 Two seats. Both have to exist.
 
-**Builder** — participates, ships, and accumulates a history. Someone who cares about Ethereum and web3, and wants professional competence — not a course title. They work at home or wherever they learn. They need income, a map of the new landscape, and room for another dream.
+**Builder** — participates, ships, and accumulates a history. Someone who cares about Ethereum and web3, and wants professional competence — not a certificate. They work at home or wherever they learn. They need income, a map of the new landscape, and room for another dream.
 
 **Requester** — opens that history in order to act: fund or entrust the next piece of work. A protocol, a grant, a DAO, or a collaborator. Not a spectator. Not an employer in the old sense.
 
@@ -22,7 +22,7 @@ The page is how a history is seen. Other filters can use the same format later. 
 
 One team cannot write every filter (nursing, Solidity, design, law, real estate). The public good is the **format**, plus one reference viewer. Anyone can publish a history, and a filter, later as JSON.
 
-This is closer to Vitalik’s history-you-cannot-sell than to a ladder of titles. Soul or worldview may be inferred from results. They are not labels in the format. Personality is not represented.
+This is closer to Vitalik’s history-you-cannot-sell than to a ladder of credentials. Soul or worldview may be inferred from results. They are not labels in the format. Personality is not represented.
 
 ## Format (the MVP)
 

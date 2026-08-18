@@ -9,15 +9,15 @@
         {
           "id": "working-group",
           "kind": "participation",
-          "title": "Title and escrow working group",
+          "title": "Escrow and closing working group",
           "summary": "participation",
-          "image": "images/deed-title-group.jpg",
+          "image": "images/deed-closing-group.jpg",
           "alt": "People at a table with floor plans and a peer-to-peer property deal sketch",
           "proof": {
             "type": "other",
             "acceptance": "Attendance notes and the public working-group agenda."
           },
-          "story": "Sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds."
+          "story": "Sat with closing clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds."
         },
         {
           "id": "escrow-pr",
@@ -89,7 +89,7 @@
         {
           "id": "closings-desk",
           "kind": "participation",
-          "title": "Title clerk at live closings",
+          "title": "Clerk at live closings",
           "summary": "participation",
           "image": "images/deed-closings-desk.jpg",
           "alt": "A desk of closing folders, a stamp, and a house key",
@@ -97,7 +97,7 @@
             "type": "other",
             "acceptance": "Closing files and a public log of which deals the clerk sat."
           },
-          "story": "Sat the desk at live closings: title, escrow, keys. The map of a deal came from the room, not from a course."
+          "story": "Sat the desk at live closings: escrow, keys. The map of a deal came from the room, not from a course."
         },
         {
           "id": "live-operator",
