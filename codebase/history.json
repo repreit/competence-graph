@@ -23,7 +23,7 @@
           "id": "escrow-pr",
           "kind": "doing",
           "title": "Property escrow contract PR",
-          "summary": "doing · github.com/…",
+          "summary": "doing · pull request",
           "image": "images/deed-property-escrow-pr.jpg",
           "alt": "Laptop showing a property escrow contract pull request",
           "proof": {
@@ -36,7 +36,7 @@
           "id": "testnet-listing",
           "kind": "doing",
           "title": "Testnet P2P listing",
-          "summary": "doing · 0x8f2a…",
+          "summary": "doing · transaction",
           "image": "images/deed-testnet-listing.jpg",
           "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action",
           "proof": {
@@ -49,7 +49,7 @@
           "id": "live-fulfillment",
           "kind": "doing",
           "title": "Live P2P fulfillment",
-          "summary": "doing · etherscan",
+          "summary": "doing · transaction",
           "image": "images/deed-live-fulfillment.jpg",
           "alt": "Keys and a tablet showing fulfillment complete",
           "proof": {
@@ -103,7 +103,7 @@
           "id": "live-operator",
           "kind": "doing",
           "title": "Live P2P fulfillment, on site",
-          "summary": "doing · etherscan",
+          "summary": "doing · transaction",
           "image": "images/deed-live-operator.jpg",
           "alt": "Keys handed over at a house door, tablet in hand",
           "proof": {
@@ -116,7 +116,7 @@
           "id": "second-live",
           "kind": "doing",
           "title": "Second live fulfillment",
-          "summary": "doing · etherscan",
+          "summary": "doing · transaction",
           "image": "images/deed-second-live.jpg",
           "alt": "Keys handed over on a brick townhouse stoop",
           "proof": {
