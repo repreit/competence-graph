@@ -3,7 +3,7 @@
     {
       "person": {
         "id": "mina",
-        "name": "Mina"
+        "address": "0xa71c0e8f4d2b91e6c3d847a5f1b0e9c2d6a84f31"
       },
       "entries": [
         {
@@ -17,7 +17,7 @@
             "type": "other",
             "acceptance": "Attendance notes and the public working-group agenda."
           },
-          "story": "Mina sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds."
+          "story": "Sat with title clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds."
         },
         {
           "id": "escrow-pr",
@@ -30,7 +30,7 @@
             "type": "pull_request",
             "acceptance": "A public pull request: deposit, inspection window, release to seller."
           },
-          "story": "She wrote the contract that holds buyer funds until inspection and handover. A stranger can inspect the PR and read the rules."
+          "story": "Wrote the contract that holds buyer funds until inspection and handover. A stranger can inspect the PR and read the rules."
         },
         {
           "id": "testnet-listing",
@@ -83,7 +83,7 @@
     {
       "person": {
         "id": "hana",
-        "name": "Hana"
+        "address": "0x3e9b17dc5a48f20e6b1d94c8a7f2e5b0c4d83a16"
       },
       "entries": [
         {
@@ -97,7 +97,7 @@
             "type": "other",
             "acceptance": "Closing files and a public log of which deals the clerk sat."
           },
-          "story": "Hana sat the desk at live closings: title, escrow, keys. The map of a deal came from the room, not from a course."
+          "story": "Sat the desk at live closings: title, escrow, keys. The map of a deal came from the room, not from a course."
         },
         {
           "id": "live-operator",
@@ -110,7 +110,7 @@
             "type": "deployed_contract",
             "acceptance": "A mainnet fulfillment transaction and a recorded key handover."
           },
-          "story": "Hana ran a real peer-to-peer deal on site: deposit locked, inspection passed, keys handed over, funds released. Did not write the contract."
+          "story": "Ran a real peer-to-peer deal on site: deposit locked, inspection passed, keys handed over, funds released. Did not write the contract."
         },
         {
           "id": "second-live",

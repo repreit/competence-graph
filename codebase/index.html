@@ -107,12 +107,13 @@
         margin: 0;
       }
 
-      header .mark {
+      .mark {
         font-size: 0.72rem;
         font-weight: 500;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--muted);
+        margin: 0 0 0.35rem;
       }
 
       header p + p {
@@ -629,6 +630,12 @@
             margin-top: 1rem;
         }
 
+        .filters button.address {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.75rem;
+            letter-spacing: -0.03em;
+        }
+
         .filters button {
             padding: 0.28rem 0.65rem;
             border: 1px solid var(--line);
@@ -901,15 +908,10 @@
         </section>
 
         <section>
-            <h2>How does this actually work?</h2>
-            <p class="muted" id="example-blurb">
-                Example loaded from
-                <a href="history.json">history.json</a>
-                and
-                <a href="filter.json">filter.json</a>.
-            </p>
-            <p class="chip-kicker">Person</p>
-            <div class="filters" id="people" role="group" aria-label="Whose history"></div>
+            <h2>What if we could look at a history this way?</h2>
+            <p class="muted" id="example-blurb" hidden></p>
+            <p class="chip-kicker">Address</p>
+            <div class="filters" id="people" role="group" aria-label="Which address"></div>
             <p class="chip-kicker">Filter</p>
             <div class="filters" id="history-filters" role="group" aria-label="Filter over this history"></div>
             <div class="filter-map" id="filter-map" hidden></div>
@@ -919,7 +921,7 @@
             </div>
             <div class="network-scroll">
                 <div class="network-board" role="group"
-                    aria-label="Mina. Click a deed to open details.">
+                    aria-label="Click a deed to open details.">
                     <svg class="network-lines" aria-hidden="true"></svg>
                 </div>
             </div>
@@ -1092,12 +1094,29 @@
             window.scrollTo(0, Math.abs(parseInt(top || "0", 10)));
         }
 
+        function shortAddress(address) {
+            if (!address) {
+                return "";
+            }
+            if (address.length < 12) {
+                return address;
+            }
+            return address.slice(0, 6) + "…" + address.slice(-4);
+        }
+
+        function personLabel(person) {
+            if (!person) {
+                return "Unknown";
+            }
+            return shortAddress(person.address) || person.name || "Unknown";
+        }
+
         function renderHistory(history) {
             historyEntries = history.entries || [];
-            const name = history.person && history.person.name ? history.person.name : "Someone";
+            const label = personLabel(history.person);
             boardEl.setAttribute(
                 "aria-label",
-                name + ". Click a deed to open details."
+                label + ". Click a deed to open details."
             );
             boardEl.querySelectorAll(".node").forEach(function (node) {
                 node.remove();
@@ -1161,8 +1180,12 @@
                 const person = history.person || {};
                 const button = document.createElement("button");
                 button.type = "button";
+                button.className = person.address ? "address" : "";
                 button.dataset.personId = person.id || "";
-                button.textContent = person.name || "Someone";
+                button.textContent = personLabel(person);
+                if (person.address) {
+                    button.title = person.address;
+                }
                 button.setAttribute("aria-pressed", "false");
                 button.addEventListener("click", function () {
                     showPerson(person.id);
@@ -1448,19 +1471,14 @@
             .then(function (files) {
                 const data = files[0];
                 histories = Array.isArray(data.histories) ? data.histories : [data];
-                const names = histories.map(function (history) {
-                    return history.person && history.person.name;
-                }).filter(Boolean);
-                if (names.length) {
-                    blurbEl.insertAdjacentText("afterbegin", names.join(" and ") + ". ");
-                }
                 renderPeople(histories);
                 renderFilters(files[1].filters || []);
                 showPerson(histories[0] && histories[0].person && histories[0].person.id);
             })
             .catch(function () {
+                blurbEl.hidden = false;
                 blurbEl.textContent =
-                    "Could not load history.json. Serve this folder with a local server, or open the GitHub Pages demo.";
+                    "Could not load this example. Serve this folder with a local server, or open the GitHub Pages demo.";
             });
 
         if (window.ResizeObserver) {
