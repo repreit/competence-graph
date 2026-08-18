@@ -2,7 +2,7 @@
 
 A shared language for **checkable competence**.
 
-Competency is a history of participation and doing — not a badge, not a course completion. A **field** is a filter over that history. It does not issue a title.
+Competence is a **history** of **deeds** — not a badge, not a course completion. A **field** is a filter over that history. It does not issue a title.
 
 Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
 
@@ -14,9 +14,9 @@ Two seats. Both have to exist.
 
 **Requester** — inspects that history in order to act: fund or entrust the next piece of work. A protocol, a grant, a DAO, or a collaborator. Not a spectator. Not an employer in the old sense.
 
-The graph is the language between them. Other fields can use the same format later. This first graph is that Ethereum / web3 context.
+The graph is how a history is seen. Other fields can use the same format later. This first graph is that Ethereum / web3 context.
 
-**When this is used:** a requester used to ask for a school name, a resume, a portfolio of claims. That is the old filter. This graph is for the moment that is not enough — inspect what the builder actually did, then act: fund or entrust the next piece of work.
+**When this is used:** a requester used to ask for a school name, a resume, a portfolio of claims. That is the old sitting. This graph is for the moment that is not enough — inspect the deeds, then act: fund or entrust the next piece of work.
 
 ## Why this exists
 
@@ -29,20 +29,20 @@ This is closer to Vitalik’s history-you-cannot-sell than to a ladder of badges
 | File | What it is |
 |---|---|
 | [`codebase/history.json`](codebase/history.json) | Append-only deeds, one history per person |
-| [`codebase/filter.json`](codebase/filter.json) | Fields as filters: which history counts here |
+| [`codebase/filter.json`](codebase/filter.json) | Fields: which deeds count here |
 | [`codebase/index.html`](codebase/index.html) | Reference viewer (no framework) |
 
-**History entry:** inspectable participation or doing. No inspectable proof → not an entry.
+**Deed:** inspectable participation or doing. No inspectable proof → not a deed.
 
-**Filter node:** illegal without saying what history would satisfy it.
+**Field:** illegal without saying which deeds would count.
 
 **Edges:** a link, not an unlock. `bridge` marks a cross-field link. The structure is a network.
 
-Optional later: `{ easUid?, did? }` on a history entry. No wallet in this MVP.
+Optional later: `{ easUid?, did? }` on a deed. No wallet in this MVP.
 
 ## Example
 
-Mina and Hana. Two histories, same field filters. Click a deed for the photo and the proof. Pick a person, then a field, to see which deeds count there.
+Mina and Hana. Two histories, same fields. Click a deed for the photo and the proof. Pick a person, then a field, to see which deeds count there.
 
 ## Run locally
 
