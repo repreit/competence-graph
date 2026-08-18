@@ -873,7 +873,7 @@
                                 data-alt="Hands opening a history on a laptop">Open</button>
                             <button type="button" class="clip after" style="flex: 7" data-title="Follow the history"
                                 data-kind="After · ~2 h"
-                                data-story="This is where the hours now go. Follow the history. If the deeds are not there, it is not competence."
+                                data-story="This is where the hours now go. If the deeds are not there, it is not competence."
                                 data-image="images/clip-follow.jpg"
                                 data-alt="A hand tracing a history of deeds on a large screen">Follow the
                                 history</button>
@@ -1846,20 +1846,34 @@
             });
         }
 
-        showModified(new Date(document.lastModified));
+        function showModifiedError() {
+            timeEl.removeAttribute("datetime");
+            timeEl.textContent = "could not load from GitHub";
+        }
 
         fetch(
             "https://api.github.com/repos/repreit/competency-graph/commits?per_page=1"
         )
             .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("github");
+                }
                 return response.json();
             })
             .then(function (commits) {
-                if (commits[0] && commits[0].commit && commits[0].commit.committer) {
-                    showModified(new Date(commits[0].commit.committer.date));
+                if (
+                    !Array.isArray(commits) ||
+                    !commits[0] ||
+                    !commits[0].commit ||
+                    !commits[0].commit.committer
+                ) {
+                    throw new Error("github");
                 }
+                showModified(new Date(commits[0].commit.committer.date));
             })
-            .catch(function () { });
+            .catch(function () {
+                showModifiedError();
+            });
     </script>
 </body>
 

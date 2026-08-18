@@ -34,7 +34,7 @@ This is closer to Vitalik’s history-you-cannot-sell than to a ladder of creden
 
 **Deed:** inspectable. No inspectable proof → not a deed.
 
-**Filter:** illegal without saying which deeds would count.
+**Filter:** it says which deeds count here. Without that, it is not a filter.
 
 **Edges:** a link, not an unlock. The structure is a network.
 
