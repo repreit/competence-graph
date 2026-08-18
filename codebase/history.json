@@ -30,7 +30,7 @@
             "type": "pull_request",
             "acceptance": "A public pull request: deposit, inspection window, release to seller."
           },
-          "story": "She wrote the contract that holds buyer funds until inspection and handover. A stranger can open the PR and read the rules."
+          "story": "She wrote the contract that holds buyer funds until inspection and handover. A stranger can inspect the PR and read the rules."
         },
         {
           "id": "testnet-listing",
