@@ -601,15 +601,6 @@
             cursor: pointer;
         }
 
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem 1rem;
-            margin: 0.75rem 0 0;
-            font-size: 0.85rem;
-            color: var(--muted);
-        }
-
         .filters {
             display: flex;
             flex-wrap: wrap;
@@ -624,10 +615,6 @@
             letter-spacing: 0.06em;
             text-transform: uppercase;
             color: var(--muted);
-        }
-
-        .chip-kicker:first-of-type {
-            margin-top: 1rem;
         }
 
         .filters button.address {
@@ -655,21 +642,6 @@
         .filters button:focus-visible {
             outline: 2px solid var(--ink);
             outline-offset: 2px;
-        }
-
-        .swatch {
-            display: inline-block;
-            width: 1.1rem;
-            height: 0.15rem;
-            margin-right: 0.4rem;
-            vertical-align: 0.2rem;
-            background: var(--ink);
-        }
-
-        .swatch.bridge {
-            background: repeating-linear-gradient(to right,
-                    var(--ink) 0 4px,
-                    transparent 4px 7px);
         }
 
         .network-scroll {
@@ -719,10 +691,6 @@
         .node:focus-visible {
             outline: 2px solid var(--ink);
             outline-offset: 2px;
-        }
-
-        .node.bridge {
-            border-style: dashed;
         }
 
         .node.is-out {
@@ -842,7 +810,7 @@
                         <span class="track-name">After</span>
                         <div class="clips">
                             <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~6 s" data-story="Open the history. Same one-minute sitting. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a history on a laptop">Open</button>
-                            <button type="button" class="clip after" style="flex: 6" data-title="Inspect deeds" data-kind="After · ~36 s" data-story="This is where the minute now goes. Follow participation and doing. Inspect a deed, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting a deed on a laptop">Inspect deeds</button>
+                            <button type="button" class="clip after" style="flex: 6" data-title="Inspect deeds" data-kind="After · ~36 s" data-story="This is where the minute now goes. Inspect a deed, not a school name." data-image="images/clip-inspect.jpg" data-alt="Hands inspecting a deed on a laptop">Inspect deeds</button>
                             <button type="button" class="clip after" style="flex: 3" data-title="Entrust" data-kind="After · leftover" data-story="If the deeds are there, the Requester can entrust the next piece of work. Not a spectator." data-image="images/clip-entrust.jpg" data-alt="Assigning the next piece of work on a laptop">Entrust</button>
                         </div>
                     </div>
@@ -871,7 +839,7 @@
                         <span class="track-name">After</span>
                         <div class="clips">
                             <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="After · ~20 m" data-story="Open the history. Same three hours. Different object: a history a stranger can inspect." data-image="images/clip-open.jpg" data-alt="Hands opening a history on a laptop">Open</button>
-                            <button type="button" class="clip after" style="flex: 7" data-title="Follow the history" data-kind="After · ~2 h" data-story="This is where the hours now go. Follow participation and doing. If the deeds are not there, it is not competence." data-image="images/clip-follow.jpg" data-alt="A hand tracing a history of deeds on a large screen">Follow the history</button>
+                            <button type="button" class="clip after" style="flex: 7" data-title="Follow the history" data-kind="After · ~2 h" data-story="This is where the hours now go. Follow the history. If the deeds are not there, it is not competence." data-image="images/clip-follow.jpg" data-alt="A hand tracing a history of deeds on a large screen">Follow the history</button>
                             <button type="button" class="clip after" style="flex: 2" data-title="Fund" data-kind="After · ~35 m" data-story="If the deeds are there, the Requester can fund the next piece of work. Not a spectator. Not a prize for a slide deck." data-image="images/clip-fund.jpg" data-alt="Confirming an Ethereum transfer on a laptop">Fund</button>
                         </div>
                     </div>
@@ -911,14 +879,10 @@
             <h2>What if we could look at a history this way?</h2>
             <p class="muted" id="example-blurb" hidden></p>
             <p class="chip-kicker">Address</p>
-            <div class="filters" id="people" role="group" aria-label="Which address"></div>
+            <div class="filters" id="addresses" role="group" aria-label="Which address"></div>
             <p class="chip-kicker">Filter</p>
             <div class="filters" id="history-filters" role="group" aria-label="Filter over this history"></div>
             <div class="filter-map" id="filter-map" hidden></div>
-            <div class="legend">
-                <span><i class="swatch"></i>Linked</span>
-                <span><i class="swatch bridge"></i>Also used in another filter</span>
-            </div>
             <div class="network-scroll">
                 <div class="network-board" role="group"
                     aria-label="Click a deed to open details.">
@@ -965,7 +929,7 @@
         <img id="deed-image" alt="" />
         <div class="sheet">
             <h2 id="deed-title"></h2>
-            <p class="muted" id="deed-kind"></p>
+            <p class="muted" id="deed-note"></p>
             <p id="deed-story"></p>
             <p class="muted" id="deed-proof"></p>
         </div>
@@ -975,16 +939,16 @@
         const windowEl = document.getElementById("deed-window");
         const imageEl = document.getElementById("deed-image");
         const titleEl = document.getElementById("deed-title");
-        const kindEl = document.getElementById("deed-kind");
+        const noteEl = document.getElementById("deed-note");
         const storyEl = document.getElementById("deed-story");
         const proofEl = document.getElementById("deed-proof");
         const boardEl = document.querySelector(".network-board");
         const blurbEl = document.getElementById("example-blurb");
-        const peopleEl = document.getElementById("people");
+        const addressesEl = document.getElementById("addresses");
         const filtersEl = document.getElementById("history-filters");
         let filters = [];
         let histories = [];
-        let activePersonId = "";
+        let activeAddress = "";
         let activeFilterId = "";
         let historyEdges = [];
         let historyEntries = [];
@@ -1063,7 +1027,8 @@
 
         function openDeed(node) {
             titleEl.textContent = node.dataset.title;
-            kindEl.textContent = node.dataset.kind;
+            noteEl.textContent = node.dataset.note || "";
+            noteEl.hidden = !node.dataset.note;
             storyEl.textContent = node.dataset.story;
             proofEl.textContent = node.dataset.proof
                 ? "Inspectable: " + node.dataset.proof
@@ -1104,16 +1069,13 @@
             return address.slice(0, 6) + "…" + address.slice(-4);
         }
 
-        function personLabel(person) {
-            if (!person) {
-                return "Unknown";
-            }
-            return shortAddress(person.address) || person.name || "Unknown";
+        function extraNote(entry) {
+            return entry.extra && entry.extra.note ? entry.extra.note : "";
         }
 
         function renderHistory(history) {
             historyEntries = history.entries || [];
-            const label = personLabel(history.person);
+            const label = shortAddress(history.address) || "Unknown";
             boardEl.setAttribute(
                 "aria-label",
                 label + ". Click a deed to open details."
@@ -1122,14 +1084,16 @@
                 node.remove();
             });
 
-            history.entries.forEach(function (entry) {
+            (history.entries || []).forEach(function (entry) {
                 const button = document.createElement("button");
                 button.type = "button";
-                button.className = "node" + (entry.bridge ? " bridge" : "");
+                button.className = "node";
                 button.dataset.entryId = entry.id;
                 button.dataset.title = entry.title;
-                button.dataset.kind = entry.summary;
-                button.dataset.proof = entry.proof.acceptance;
+                button.dataset.note = extraNote(entry);
+                button.dataset.proof = entry.proof && entry.proof.acceptance
+                    ? entry.proof.acceptance
+                    : "";
                 button.dataset.story = entry.story;
                 button.dataset.image = entry.image;
                 button.dataset.alt = entry.alt;
@@ -1141,12 +1105,14 @@
                 const heading = document.createElement("h3");
                 heading.textContent = entry.title;
 
-                const summary = document.createElement("p");
-                summary.textContent = entry.summary;
-
                 button.appendChild(img);
                 button.appendChild(heading);
-                button.appendChild(summary);
+                const note = extraNote(entry);
+                if (note) {
+                    const noteLine = document.createElement("p");
+                    noteLine.textContent = note;
+                    button.appendChild(noteLine);
+                }
                 button.addEventListener("click", function () {
                     openDeed(button);
                 });
@@ -1159,38 +1125,38 @@
             layoutNetwork();
         }
 
-        function showPerson(personId) {
+        function showHistory(address) {
             const history = histories.find(function (item) {
-                return item.person && item.person.id === personId;
+                return item.address === address;
             }) || histories[0];
             if (!history) {
                 return;
             }
-            activePersonId = history.person.id;
-            peopleEl.querySelectorAll("button").forEach(function (button) {
-                button.setAttribute("aria-pressed", button.dataset.personId === activePersonId ? "true" : "false");
+            activeAddress = history.address || "";
+            addressesEl.querySelectorAll("button").forEach(function (button) {
+                button.setAttribute("aria-pressed", button.dataset.address === activeAddress ? "true" : "false");
             });
             renderHistory(history);
             applyFilter(activeFilterId);
         }
 
-        function renderPeople(list) {
-            peopleEl.replaceChildren();
+        function renderAddresses(list) {
+            addressesEl.replaceChildren();
             list.forEach(function (history) {
-                const person = history.person || {};
+                const address = history.address || "";
                 const button = document.createElement("button");
                 button.type = "button";
-                button.className = person.address ? "address" : "";
-                button.dataset.personId = person.id || "";
-                button.textContent = personLabel(person);
-                if (person.address) {
-                    button.title = person.address;
+                button.className = address ? "address" : "";
+                button.dataset.address = address;
+                button.textContent = shortAddress(address) || "Unknown";
+                if (address) {
+                    button.title = address;
                 }
                 button.setAttribute("aria-pressed", "false");
                 button.addEventListener("click", function () {
-                    showPerson(person.id);
+                    showHistory(address);
                 });
-                peopleEl.appendChild(button);
+                addressesEl.appendChild(button);
             });
         }
 
@@ -1214,7 +1180,7 @@
                 node.dataset.order = String(index);
             });
             historyEdges.forEach(function (edge) {
-                const ends = edge.nodes || [edge.from, edge.to];
+                const ends = edge.nodes || [];
                 if (Object.prototype.hasOwnProperty.call(degree, ends[0])) {
                     degree[ends[0]] += 1;
                 }
@@ -1308,7 +1274,7 @@
             svg.replaceChildren();
 
             historyEdges.forEach(function (edge) {
-                const ends = edge.nodes || [edge.from, edge.to];
+                const ends = edge.nodes || [];
                 const from = boardEl.querySelector('.node[data-entry-id="' + ends[0] + '"]');
                 const to = boardEl.querySelector('.node[data-entry-id="' + ends[1] + '"]');
                 if (!from || !to) {
@@ -1335,9 +1301,6 @@
                 line.setAttribute("stroke", "currentColor");
                 line.setAttribute("stroke-width", "2");
                 line.setAttribute("stroke-linecap", "round");
-                if (edge.type === "bridge") {
-                    line.setAttribute("stroke-dasharray", "5 4");
-                }
                 if (from.classList.contains("is-out") || to.classList.contains("is-out")) {
                     line.setAttribute("opacity", "0.28");
                 }
@@ -1392,7 +1355,7 @@
                 const item = document.createElement("li");
                 const ask = document.createElement("span");
                 ask.className = "ask";
-                ask.textContent = node.ask || node.title;
+                ask.textContent = node.ask || "";
                 item.appendChild(ask);
                 const ids = node.historySatisfies || [];
                 const hits = historyEntries.filter(function (entry) {
@@ -1470,10 +1433,10 @@
         ])
             .then(function (files) {
                 const data = files[0];
-                histories = Array.isArray(data.histories) ? data.histories : [data];
-                renderPeople(histories);
+                histories = data.histories || [];
+                renderAddresses(histories);
                 renderFilters(files[1].filters || []);
-                showPerson(histories[0] && histories[0].person && histories[0].person.id);
+                showHistory(histories[0] && histories[0].address);
             })
             .catch(function () {
                 blurbEl.hidden = false;

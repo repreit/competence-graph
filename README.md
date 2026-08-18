@@ -28,21 +28,23 @@ This is closer to Vitalik’s history-you-cannot-sell than to a ladder of creden
 
 | File | What it is |
 |---|---|
-| [`codebase/history.json`](codebase/history.json) | Append-only deeds, one history per person |
+| [`codebase/history.json`](codebase/history.json) | Append-only deeds, one history per address |
 | [`codebase/filter.json`](codebase/filter.json) | Filters: which deeds count here |
 | [`codebase/index.html`](codebase/index.html) | Reference viewer (no framework) |
 
-**Deed:** inspectable participation or doing. No inspectable proof → not a deed.
+**Deed:** inspectable. No inspectable proof → not a deed.
 
 **Filter:** illegal without saying which deeds would count.
 
-**Edges:** a link, not an unlock. `bridge` marks a cross-filter link. The structure is a network.
+**Edges:** a link, not an unlock. The structure is a network.
+
+A deed may carry `extra` for the viewer. It is not the format.
 
 Optional later: `{ easUid?, did? }` on a deed. No wallet in this MVP.
 
 ## Example
 
-Mina and Hana. Two histories, same filters. Click a deed for the photo and the proof. Pick a person, then a filter, to see which deeds count there.
+Two histories, same filters. Click a deed for the photo and the proof. Pick an address, then a filter, to see which deeds count there.
 
 ## Run locally
 
