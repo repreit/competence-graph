@@ -43,506 +43,506 @@
             padding: 3rem 1.25rem 2rem;
         }
 
-      footer {
-        max-width: 48rem;
-        margin: 0 auto;
-        padding: 0 1.25rem 3rem;
-        font-size: 0.85rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 1rem;
-      }
+        footer {
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 0 1.25rem 3rem;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 1rem;
+        }
 
-      footer p {
-        margin: 0;
-      }
+        footer p {
+            margin: 0;
+        }
 
-      footer p:last-child {
-        text-align: right;
-      }
+        footer p:last-child {
+            text-align: right;
+        }
 
-      footer a.github {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        text-decoration: none;
-      }
+        footer a.github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            text-decoration: none;
+        }
 
-      footer a.github:hover {
-        text-decoration: underline;
-      }
+        footer a.github:hover {
+            text-decoration: underline;
+        }
 
-      footer a.github svg {
-        width: 0.95rem;
-        height: 0.95rem;
-        fill: currentColor;
-      }
+        footer a.github svg {
+            width: 0.95rem;
+            height: 0.95rem;
+            fill: currentColor;
+        }
 
-        p {
+            p {
+                    color: var(--ink);
+            }
+
+            .muted {
+                    color: var(--muted);
+            }
+
+            a {
+                    color: inherit;
+            }
+
+            h1 {
+                    font-size: 1.75rem;
+                    font-weight: 600;
+                    letter-spacing: -0.02em;
+                    margin: 0 0 0.5rem;
+            }
+
+            h2 {
+                    font-size: 1.1rem;
+                    margin: 0 0 0.6rem;
+            }
+
+        header p {
+            margin: 0;
+        }
+
+        .mark {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0 0 0.35rem;
+        }
+
+        header p + p {
+            margin-top: 0.55rem;
+        }
+
+        .minutes > h2,
+        .minutes > p,
+        header,
+        footer,
+        main > section:not(.minutes) {
+            transition: filter 0.22s ease, opacity 0.22s ease;
+        }
+
+        .minutes {
+            counter-reset: situation;
+        }
+
+        .time-scene {
+            margin-top: 1.4rem;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            transition: filter 0.22s ease, opacity 0.22s ease;
+            counter-increment: situation;
+        }
+
+        .time-scene h3 {
+            font-size: 0.95rem;
+            margin: 0 0 0.15rem;
+        }
+
+        .time-scene h3::before {
+            content: counter(situation);
+            margin-right: 0.4rem;
+            color: var(--muted);
+            font-weight: 500;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .time-scene > p {
+            margin: 0 0 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        body:has(.time-scene:hover) :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
+        body:has(.clip:focus-visible) :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
+        body.timeline-focus :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
+        body:has(.time-scene:hover) .time-scene:not(:hover),
+        body.timeline-focus .time-scene:not(.is-active) {
+            filter: blur(7px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .time-edit {
+            --lane: color-mix(in srgb, var(--ink) 7%, var(--bg));
+            --gutter: 4.25rem;
+            position: relative;
+            z-index: 3;
+            min-width: 40rem;
+            margin-top: 0.45rem;
+            padding: 0.4rem 0.45rem 0.5rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: color-mix(in srgb, var(--ink) 3.5%, var(--card));
+            font-family: ui-sans-serif, system-ui, sans-serif;
+        }
+
+        .ruler {
+            display: flex;
+            align-items: stretch;
+            height: 1.35rem;
+            margin: 0 0 0.4rem;
+            color: var(--muted);
+            font-size: 0.62rem;
+            letter-spacing: 0.02em;
+        }
+
+        .ruler-gutter {
+            flex: 0 0 var(--gutter);
+            width: var(--gutter);
+            min-width: var(--gutter);
+            max-width: var(--gutter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .transport {
+            display: grid;
+            place-items: center;
+            width: 1.35rem;
+            height: 1.35rem;
+            padding: 0;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            background: var(--card);
+            color: var(--ink);
+            cursor: pointer;
+        }
+
+        .transport:hover,
+        .transport:focus-visible {
+            outline: 1px solid var(--ink);
+            outline-offset: 0;
+        }
+
+        .play-shape {
+            width: 0;
+            height: 0;
+            margin-left: 2px;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 7px solid currentColor;
+        }
+
+        .pause-shape {
+            display: none;
+            width: 8px;
+            height: 8px;
+            background:
+                linear-gradient(currentColor, currentColor) 0 0 / 2.5px 100% no-repeat,
+                linear-gradient(currentColor, currentColor) 100% 0 / 2.5px 100% no-repeat;
+        }
+
+        .transport[aria-pressed="true"] .play-shape {
+            display: none;
+        }
+
+        .transport[aria-pressed="true"] .pause-shape {
+            display: block;
+        }
+
+        .playhead {
+            position: absolute;
+            top: 0.4rem;
+            bottom: 0.5rem;
+            width: 2px;
+            margin-left: -1px;
+            background: var(--ink);
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        .playhead::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 6px solid var(--ink);
+        }
+
+        .playhead[hidden] {
+            display: none;
+        }
+
+        .time-edit.is-playing .track:not(.is-live) {
+            opacity: 0.38;
+        }
+
+        .time-edit.is-recut .track.is-live .track-name {
             color: var(--ink);
         }
 
-        .muted {
+        .time-edit.is-recut .track.is-live .clips {
+            animation: recut-in 0.9s ease;
+        }
+
+        .time-edit.is-recut .track.is-live .clip {
+            animation: recut-clips 0.9s ease;
+        }
+
+        @keyframes recut-in {
+            0% {
+                filter: brightness(1.55);
+                box-shadow: inset 0 0 0 1.5px var(--ink);
+            }
+            100% {
+                filter: none;
+                box-shadow: none;
+            }
+        }
+
+        @keyframes recut-clips {
+            0% {
+                transform: translateY(3px);
+                opacity: 0.35;
+            }
+            100% {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        .clip.is-on {
+            box-shadow: inset 0 0 0 1px var(--ink);
+            z-index: 1;
+        }
+
+        .ruler-scale {
+            position: relative;
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0 0.15rem 0 0;
+            background-image:
+                repeating-linear-gradient(
+                    to right,
+                    var(--line) 0 1px,
+                    transparent 1px 10%
+                ),
+                repeating-linear-gradient(
+                    to right,
+                    color-mix(in srgb, var(--ink) 18%, transparent) 0 1px,
+                    transparent 1px 2%
+                );
+            background-position: 0 100%, 0 100%;
+            background-size: 100% 9px, 100% 5px;
+            background-repeat: no-repeat;
+        }
+
+        .ruler-scale::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 1px;
+            height: 9px;
+            background: var(--line);
+        }
+
+        .track {
+            display: flex;
+            align-items: center;
+            min-height: 1.55rem;
+            margin-top: 3px;
+        }
+
+        .track-name {
+            flex: 0 0 var(--gutter);
+            width: var(--gutter);
+            min-width: var(--gutter);
+            max-width: var(--gutter);
+            display: flex;
+            align-items: center;
+            padding: 0 0.45rem 0 0.2rem;
+            font-size: 0.62rem;
+            font-weight: 650;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
             color: var(--muted);
+            overflow: hidden;
         }
 
-        a {
-            color: inherit;
+        .clips {
+            position: relative;
+            display: flex;
+            flex: 1;
+            min-width: 0;
+            gap: 2px;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 5px;
+            background: var(--lane);
         }
 
-        h1 {
-            font-size: 1.75rem;
+        .track:has(.clip.after) {
+            align-items: center;
+            min-height: 1.85rem;
+        }
+
+        .track:has(.clip.after) .track-name {
+            color: var(--ink);
+        }
+
+        .track:has(.clip.after) .clips {
+            background: color-mix(in srgb, var(--ink) 5%, var(--card));
+        }
+
+        .clip {
+            position: relative;
+            z-index: 1;
+            min-width: 0;
+            overflow: hidden;
+            height: 1.55rem;
+            padding: 0 0.4rem 0 0.55rem;
+            border: 0;
+            border-radius: 3px;
+            background:
+                repeating-linear-gradient(
+                    -55deg,
+                    transparent,
+                    transparent 3px,
+                    color-mix(in srgb, var(--ink) 5%, transparent) 3px,
+                    color-mix(in srgb, var(--ink) 5%, transparent) 4px
+                ),
+                color-mix(in srgb, var(--muted) 38%, var(--card));
+            color: var(--muted);
+            font: inherit;
+            font-size: 0.68rem;
             font-weight: 600;
-            letter-spacing: -0.02em;
-            margin: 0 0 0.5rem;
+            line-height: 1.55rem;
+            letter-spacing: 0.01em;
+            text-align: left;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
         }
 
-        h2 {
-            font-size: 1.1rem;
-            margin: 0 0 0.6rem;
+        .clip::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 3px;
+            background: color-mix(in srgb, var(--ink) 38%, transparent);
         }
 
-      header p {
-        margin: 0;
-      }
-
-      .mark {
-        font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin: 0 0 0.35rem;
-      }
-
-      header p + p {
-        margin-top: 0.55rem;
-      }
-
-      .minutes > h2,
-      .minutes > p,
-      header,
-      footer,
-      main > section:not(.minutes) {
-        transition: filter 0.22s ease, opacity 0.22s ease;
-      }
-
-      .minutes {
-        counter-reset: situation;
-      }
-
-      .time-scene {
-        margin-top: 1.4rem;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        transition: filter 0.22s ease, opacity 0.22s ease;
-        counter-increment: situation;
-      }
-
-      .time-scene h3 {
-        font-size: 0.95rem;
-        margin: 0 0 0.15rem;
-      }
-
-      .time-scene h3::before {
-        content: counter(situation);
-        margin-right: 0.4rem;
-        color: var(--muted);
-        font-weight: 500;
-        font-variant-numeric: tabular-nums;
-      }
-
-      .time-scene > p {
-        margin: 0 0 0.5rem;
-        font-size: 0.85rem;
-      }
-
-      body:has(.time-scene:hover) :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
-      body:has(.clip:focus-visible) :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
-      body.timeline-focus :is(header, footer, .minutes > :not(.time-scene), main > section:not(.minutes)),
-      body:has(.time-scene:hover) .time-scene:not(:hover),
-      body.timeline-focus .time-scene:not(.is-active) {
-        filter: blur(7px);
-        opacity: 0.4;
-        pointer-events: none;
-      }
-
-      .time-edit {
-        --lane: color-mix(in srgb, var(--ink) 7%, var(--bg));
-        --gutter: 4.25rem;
-        position: relative;
-        z-index: 3;
-        min-width: 40rem;
-        margin-top: 0.45rem;
-        padding: 0.4rem 0.45rem 0.5rem;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: color-mix(in srgb, var(--ink) 3.5%, var(--card));
-        font-family: ui-sans-serif, system-ui, sans-serif;
-      }
-
-      .ruler {
-        display: flex;
-        align-items: stretch;
-        height: 1.35rem;
-        margin: 0 0 0.4rem;
-        color: var(--muted);
-        font-size: 0.62rem;
-        letter-spacing: 0.02em;
-      }
-
-      .ruler-gutter {
-        flex: 0 0 var(--gutter);
-        width: var(--gutter);
-        min-width: var(--gutter);
-        max-width: var(--gutter);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .transport {
-        display: grid;
-        place-items: center;
-        width: 1.35rem;
-        height: 1.35rem;
-        padding: 0;
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        background: var(--card);
-        color: var(--ink);
-        cursor: pointer;
-      }
-
-      .transport:hover,
-      .transport:focus-visible {
-        outline: 1px solid var(--ink);
-        outline-offset: 0;
-      }
-
-      .play-shape {
-        width: 0;
-        height: 0;
-        margin-left: 2px;
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-        border-left: 7px solid currentColor;
-      }
-
-      .pause-shape {
-        display: none;
-        width: 8px;
-        height: 8px;
-        background:
-          linear-gradient(currentColor, currentColor) 0 0 / 2.5px 100% no-repeat,
-          linear-gradient(currentColor, currentColor) 100% 0 / 2.5px 100% no-repeat;
-      }
-
-      .transport[aria-pressed="true"] .play-shape {
-        display: none;
-      }
-
-      .transport[aria-pressed="true"] .pause-shape {
-        display: block;
-      }
-
-      .playhead {
-        position: absolute;
-        top: 0.4rem;
-        bottom: 0.5rem;
-        width: 2px;
-        margin-left: -1px;
-        background: var(--ink);
-        pointer-events: none;
-        z-index: 6;
-      }
-
-      .playhead::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-top: 6px solid var(--ink);
-      }
-
-      .playhead[hidden] {
-        display: none;
-      }
-
-      .time-edit.is-playing .track:not(.is-live) {
-        opacity: 0.38;
-      }
-
-      .time-edit.is-recut .track.is-live .track-name {
-        color: var(--ink);
-      }
-
-      .time-edit.is-recut .track.is-live .clips {
-        animation: recut-in 0.9s ease;
-      }
-
-      .time-edit.is-recut .track.is-live .clip {
-        animation: recut-clips 0.9s ease;
-      }
-
-      @keyframes recut-in {
-        0% {
-          filter: brightness(1.55);
-          box-shadow: inset 0 0 0 1.5px var(--ink);
+        .clip:hover,
+        .clip:focus-visible {
+            outline: none;
+            box-shadow: inset 0 0 0 1px var(--ink);
+            z-index: 1;
         }
-        100% {
-          filter: none;
-          box-shadow: none;
+
+        .clip.after {
+            height: 1.85rem;
+            line-height: 1.85rem;
+            border-radius: 4px;
+            color: var(--ink);
+            background: color-mix(in srgb, var(--ink) 16%, var(--card));
+            box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card) 70%, transparent);
         }
-      }
 
-      @keyframes recut-clips {
-        0% {
-          transform: translateY(3px);
-          opacity: 0.35;
+        .clip.after::before {
+            top: 3px;
+            bottom: 3px;
+            border-radius: 2px;
+            background: var(--ink);
         }
-        100% {
-          transform: none;
-          opacity: 1;
+
+        .clip.after:hover,
+        .clip.after:focus-visible,
+        .clip.after.is-on {
+            box-shadow:
+                inset 0 0 0 1px var(--ink),
+                inset 0 1px 0 color-mix(in srgb, var(--card) 70%, transparent);
         }
-      }
 
-      .clip.is-on {
-        box-shadow: inset 0 0 0 1px var(--ink);
-        z-index: 1;
-      }
+        .clip-bubble {
+            position: fixed;
+            z-index: 40;
+            width: min(16rem, calc(100vw - 1.5rem));
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 10px 28px rgba(28, 27, 24, 0.16);
+        }
 
-      .ruler-scale {
-        position: relative;
-        flex: 1;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 0 0.15rem 0 0;
-        background-image:
-          repeating-linear-gradient(
-            to right,
-            var(--line) 0 1px,
-            transparent 1px 10%
-          ),
-          repeating-linear-gradient(
-            to right,
-            color-mix(in srgb, var(--ink) 18%, transparent) 0 1px,
-            transparent 1px 2%
-          );
-        background-position: 0 100%, 0 100%;
-        background-size: 100% 9px, 100% 5px;
-        background-repeat: no-repeat;
-      }
+        .clip-bubble .transport {
+            position: absolute;
+            top: 0.45rem;
+            right: 0.45rem;
+            z-index: 2;
+            width: 1.7rem;
+            height: 1.7rem;
+            box-shadow: 0 2px 8px rgba(28, 27, 24, 0.18);
+        }
 
-      .ruler-scale::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 1px;
-        height: 9px;
-        background: var(--line);
-      }
+        .clip-bubble[hidden] {
+            display: none;
+        }
 
-      .track {
-        display: flex;
-        align-items: center;
-        min-height: 1.55rem;
-        margin-top: 3px;
-      }
+        .clip-bubble img {
+            display: block;
+            width: 100%;
+            height: 7.25rem;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
 
-      .track-name {
-        flex: 0 0 var(--gutter);
-        width: var(--gutter);
-        min-width: var(--gutter);
-        max-width: var(--gutter);
-        display: flex;
-        align-items: center;
-        padding: 0 0.45rem 0 0.2rem;
-        font-size: 0.62rem;
-        font-weight: 650;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--muted);
-        overflow: hidden;
-      }
+        .clip-bubble img[hidden] {
+            display: none;
+        }
 
-      .clips {
-        position: relative;
-        display: flex;
-        flex: 1;
-        min-width: 0;
-        gap: 2px;
-        padding: 0;
-        overflow: hidden;
-        border-radius: 5px;
-        background: var(--lane);
-      }
+        .clip-bubble .sheet {
+            padding: 0.6rem 0.75rem 0.7rem;
+        }
 
-      .track:has(.clip.after) {
-        align-items: center;
-        min-height: 1.85rem;
-      }
+        .clip-bubble h3 {
+            margin: 0 0 0.1rem;
+            font-size: 0.92rem;
+        }
 
-      .track:has(.clip.after) .track-name {
-        color: var(--ink);
-      }
+        .clip-bubble .kind {
+            margin: 0 0 0.3rem;
+            font-size: 0.75rem;
+        }
 
-      .track:has(.clip.after) .clips {
-        background: color-mix(in srgb, var(--ink) 5%, var(--card));
-      }
+        .clip-bubble .story {
+            margin: 0;
+            font-size: 0.82rem;
+            line-height: 1.4;
+        }
 
-      .clip {
-        position: relative;
-        z-index: 1;
-        min-width: 0;
-        overflow: hidden;
-        height: 1.55rem;
-        padding: 0 0.4rem 0 0.55rem;
-        border: 0;
-        border-radius: 3px;
-        background:
-          repeating-linear-gradient(
-            -55deg,
-            transparent,
-            transparent 3px,
-            color-mix(in srgb, var(--ink) 5%, transparent) 3px,
-            color-mix(in srgb, var(--ink) 5%, transparent) 4px
-          ),
-          color-mix(in srgb, var(--muted) 38%, var(--card));
-        color: var(--muted);
-        font: inherit;
-        font-size: 0.68rem;
-        font-weight: 600;
-        line-height: 1.55rem;
-        letter-spacing: 0.01em;
-        text-align: left;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        cursor: pointer;
-      }
+        .clip-bubble .tail {
+            position: absolute;
+            left: var(--tail-x, 50%);
+            bottom: -6px;
+            width: 12px;
+            height: 12px;
+            background: var(--card);
+            border-right: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            transform: translateX(-50%) rotate(45deg);
+        }
 
-      .clip::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 3px;
-        background: color-mix(in srgb, var(--ink) 38%, transparent);
-      }
-
-      .clip:hover,
-      .clip:focus-visible {
-        outline: none;
-        box-shadow: inset 0 0 0 1px var(--ink);
-        z-index: 1;
-      }
-
-      .clip.after {
-        height: 1.85rem;
-        line-height: 1.85rem;
-        border-radius: 4px;
-        color: var(--ink);
-        background: color-mix(in srgb, var(--ink) 16%, var(--card));
-        box-shadow: inset 0 1px 0 color-mix(in srgb, var(--card) 70%, transparent);
-      }
-
-      .clip.after::before {
-        top: 3px;
-        bottom: 3px;
-        border-radius: 2px;
-        background: var(--ink);
-      }
-
-      .clip.after:hover,
-      .clip.after:focus-visible,
-      .clip.after.is-on {
-        box-shadow:
-          inset 0 0 0 1px var(--ink),
-          inset 0 1px 0 color-mix(in srgb, var(--card) 70%, transparent);
-      }
-
-      .clip-bubble {
-        position: fixed;
-        z-index: 40;
-        width: min(16rem, calc(100vw - 1.5rem));
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        box-shadow: 0 10px 28px rgba(28, 27, 24, 0.16);
-      }
-
-      .clip-bubble .transport {
-        position: absolute;
-        top: 0.45rem;
-        right: 0.45rem;
-        z-index: 2;
-        width: 1.7rem;
-        height: 1.7rem;
-        box-shadow: 0 2px 8px rgba(28, 27, 24, 0.18);
-      }
-
-      .clip-bubble[hidden] {
-        display: none;
-      }
-
-      .clip-bubble img {
-        display: block;
-        width: 100%;
-        height: 7.25rem;
-        object-fit: cover;
-        border-radius: 8px 8px 0 0;
-      }
-
-      .clip-bubble img[hidden] {
-        display: none;
-      }
-
-      .clip-bubble .sheet {
-        padding: 0.6rem 0.75rem 0.7rem;
-      }
-
-      .clip-bubble h3 {
-        margin: 0 0 0.1rem;
-        font-size: 0.92rem;
-      }
-
-      .clip-bubble .kind {
-        margin: 0 0 0.3rem;
-        font-size: 0.75rem;
-      }
-
-      .clip-bubble .story {
-        margin: 0;
-        font-size: 0.82rem;
-        line-height: 1.4;
-      }
-
-      .clip-bubble .tail {
-        position: absolute;
-        left: var(--tail-x, 50%);
-        bottom: -6px;
-        width: 12px;
-        height: 12px;
-        background: var(--card);
-        border-right: 1px solid var(--line);
-        border-bottom: 1px solid var(--line);
-        transform: translateX(-50%) rotate(45deg);
-      }
-
-      .clip-bubble.below .tail {
-        bottom: auto;
-        top: -6px;
-        border: none;
-        border-left: 1px solid var(--line);
-        border-top: 1px solid var(--line);
-      }
+        .clip-bubble.below .tail {
+            bottom: auto;
+            top: -6px;
+            border: none;
+            border-left: 1px solid var(--line);
+            border-top: 1px solid var(--line);
+        }
 
         section {
             background: var(--card);
@@ -861,7 +861,7 @@
                     <div class="track">
                         <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open a filter" data-kind="After · a sitting" data-story="Open a filter. See which deeds would count here. Not a credential. A map of what to do next." data-image="images/clip-filter.jpg" data-alt="Opening a filter on a laptop">Open a filter</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open a filter" data-kind="After · a sitting" data-story="Open a filter. See which deeds would count here. A map of what to do next." data-image="images/clip-filter.jpg" data-alt="Opening a filter on a laptop">Open a filter</button>
                             <button type="button" class="clip after" style="flex: 8" data-title="Leave deeds" data-kind="After · ~5 mo" data-story="Show up. Ship. Leave deeds a stranger can inspect. This is where the months now go." data-image="images/clip-leave-deeds.jpg" data-alt="Hands leaving inspectable deeds on a laptop">Leave deeds</button>
                             <button type="button" class="clip after" style="flex: 1" data-title="Deed" data-kind="After · leftover" data-story="The next deed is now in the history. A Requester can later inspect it, then act." data-image="images/clip-deed.jpg" data-alt="A new deed added to a history">Deed</button>
                         </div>
