@@ -549,50 +549,7 @@
             overflow: visible;
         }
 
-        .filter-map {
-            margin: 0.85rem 0 0;
-            padding: 0.7rem 0.85rem 0.8rem;
-            border: 1px solid var(--line);
-            border-radius: 6px;
-        }
-
-        .filter-map[hidden] {
-            display: none;
-        }
-
-        .filter-map h3 {
-            margin: 0 0 0.45rem;
-            font-size: 0.88rem;
-        }
-
-        .filter-map ol {
-            margin: 0;
-            padding-left: 1.15rem;
-        }
-
-        .filter-map .ask {
-            display: block;
-        }
-
-        .filter-map .hit,
-        .filter-map .open {
-            display: block;
-            margin-top: 0.15rem;
-            font-size: 0.78rem;
-            color: var(--muted);
-        }
-
-        .filter-map .deed-link {
-            padding: 0;
-            border: 0;
-            background: none;
-            color: inherit;
-            font: inherit;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .filters {
+        .chips {
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
@@ -608,13 +565,13 @@
             color: var(--muted);
         }
 
-        .filters button.address {
+        .chips button.address {
             font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
             font-size: 0.75rem;
             letter-spacing: -0.03em;
         }
 
-        .filters button {
+        .chips button {
             padding: 0.28rem 0.65rem;
             border: 1px solid var(--line);
             border-radius: 999px;
@@ -625,12 +582,12 @@
             cursor: pointer;
         }
 
-        .filters button[aria-pressed="true"] {
+        .chips button[aria-pressed="true"] {
             border-color: var(--ink);
             background: color-mix(in srgb, var(--ink) 12%, var(--card));
         }
 
-        .filters button:focus-visible {
+        .chips button:focus-visible {
             outline: 2px solid var(--ink);
             outline-offset: 2px;
         }
@@ -682,10 +639,6 @@
         .node:focus-visible {
             outline: 2px solid var(--ink);
             outline-offset: 2px;
-        }
-
-        .node.is-out {
-            opacity: 0.38;
         }
 
         .node img {
@@ -920,11 +873,11 @@
                     <div class="track">
                         <span class="track-name">After</span>
                         <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open a filter"
-                                data-kind="After · a sitting"
-                                data-story="Open a filter. See which deeds would count here. A map of what to do next."
-                                data-image="images/clip-filter.jpg" data-alt="Opening a filter on a laptop">Open a
-                                filter</button>
+                            <button type="button" class="clip after" style="flex: 1" data-title="Open a history"
+                                data-kind="After · a look"
+                                data-story="Open a history. See the work that is already there. Not a catalog."
+                                data-image="images/clip-open.jpg" data-alt="Hands opening a history on a laptop">Open a
+                                history</button>
                             <button type="button" class="clip after" style="flex: 8" data-title="Leave deeds"
                                 data-kind="After · ~5 mo"
                                 data-story="Show up. Ship. Leave deeds a stranger can inspect. This is where the months now go."
@@ -944,10 +897,7 @@
             <h2>What if we could look at a history this way?</h2>
             <p class="muted" id="example-blurb" hidden></p>
             <p class="chip-kicker">Address</p>
-            <div class="filters" id="addresses" role="group" aria-label="Which address"></div>
-            <p class="chip-kicker">Filter</p>
-            <div class="filters" id="history-filters" role="group" aria-label="Filter over this history"></div>
-            <div class="filter-map" id="filter-map" hidden></div>
+            <div class="chips" id="addresses" role="group" aria-label="Which address"></div>
             <div class="network-scroll">
                 <div class="network-board" role="group" aria-label="Click a deed to open details.">
                     <svg class="network-lines" aria-hidden="true"></svg>
@@ -1002,13 +952,9 @@
         const boardEl = document.querySelector(".network-board");
         const blurbEl = document.getElementById("example-blurb");
         const addressesEl = document.getElementById("addresses");
-        const filtersEl = document.getElementById("history-filters");
-        let filters = [];
         let histories = [];
         let activeAddress = "";
-        let activeFilterId = "";
         let historyEdges = [];
-        let historyEntries = [];
 
         const bubbleEl = document.getElementById("clip-bubble");
         const bubbleImg = document.getElementById("clip-bubble-image");
@@ -1125,7 +1071,6 @@
         }
 
         function renderHistory(history) {
-            historyEntries = history.entries || [];
             const label = shortAddress(history.address) || "Unknown";
             boardEl.setAttribute(
                 "aria-label",
@@ -1179,7 +1124,6 @@
                 button.setAttribute("aria-pressed", button.dataset.address === activeAddress ? "true" : "false");
             });
             renderHistory(history);
-            applyFilter(activeFilterId);
         }
 
         function renderAddresses(list) {
@@ -1343,137 +1287,20 @@
                 line.setAttribute("stroke", "currentColor");
                 line.setAttribute("stroke-width", "2");
                 line.setAttribute("stroke-linecap", "round");
-                if (from.classList.contains("is-out") || to.classList.contains("is-out")) {
-                    line.setAttribute("opacity", "0.28");
-                }
                 svg.appendChild(line);
             });
         }
 
-        function historyIdsForFilter(filter) {
-            const ids = {};
-            (filter.nodes || []).forEach(function (node) {
-                (node.historySatisfies || []).forEach(function (id) {
-                    ids[id] = true;
-                });
-            });
-            return ids;
-        }
-
-        function applyFilter(filterId) {
-            activeFilterId = filterId || "";
-            const filter = filters.find(function (item) {
-                return item.id === filterId;
-            });
-            const allowed = filter ? historyIdsForFilter(filter) : null;
-            boardEl.querySelectorAll(".node").forEach(function (node) {
-                node.classList.toggle("is-out", Boolean(allowed) && !allowed[node.dataset.entryId]);
-            });
-            filtersEl.querySelectorAll("button").forEach(function (button) {
-                button.setAttribute("aria-pressed", button.dataset.filterId === String(activeFilterId) ? "true" : "false");
-            });
-            renderFilterMap(filter);
-            drawNetworkLines();
-        }
-
-        function renderFilterMap(filter) {
-            const mapEl = document.getElementById("filter-map");
-            if (!filter) {
-                mapEl.hidden = true;
-                mapEl.replaceChildren();
-                return;
-            }
-            mapEl.hidden = false;
-            mapEl.replaceChildren();
-            const heading = document.createElement("h3");
-            heading.textContent = filter.title;
-            mapEl.appendChild(heading);
-            const list = document.createElement("ol");
-            (filter.nodes || []).forEach(function (node) {
-                const item = document.createElement("li");
-                const ask = document.createElement("span");
-                ask.className = "ask";
-                ask.textContent = node.ask || "";
-                item.appendChild(ask);
-                const ids = node.historySatisfies || [];
-                const hits = historyEntries.filter(function (entry) {
-                    return ids.indexOf(entry.id) !== -1;
-                });
-                const note = document.createElement("span");
-                if (hits.length) {
-                    note.className = "hit";
-                    note.appendChild(document.createTextNode("In this history: "));
-                    hits.forEach(function (entry, index) {
-                        if (index) {
-                            note.appendChild(document.createTextNode(", "));
-                        }
-                        const link = document.createElement("button");
-                        link.type = "button";
-                        link.className = "deed-link";
-                        link.textContent = entry.title;
-                        link.addEventListener("click", function () {
-                            const deed = boardEl.querySelector('.node[data-entry-id="' + entry.id + '"]');
-                            if (deed) {
-                                openDeed(deed);
-                            }
-                        });
-                        note.appendChild(link);
-                    });
-                } else {
-                    note.className = "open";
-                    note.textContent = "Not in this history yet.";
-                }
-                item.appendChild(note);
-                list.appendChild(item);
-            });
-            mapEl.appendChild(list);
-        }
-
-        function renderFilters(list) {
-            filters = list;
-            filtersEl.replaceChildren();
-            const all = document.createElement("button");
-            all.type = "button";
-            all.dataset.filterId = "";
-            all.textContent = "All";
-            all.setAttribute("aria-pressed", "false");
-            all.addEventListener("click", function () {
-                applyFilter("");
-            });
-            filtersEl.appendChild(all);
-            list.forEach(function (filter) {
-                const button = document.createElement("button");
-                button.type = "button";
-                button.dataset.filterId = filter.id;
-                button.textContent = filter.title;
-                button.setAttribute("aria-pressed", "false");
-                button.addEventListener("click", function () {
-                    applyFilter(filter.id);
-                });
-                filtersEl.appendChild(button);
-            });
-            applyFilter(activeFilterId);
-        }
-
-        Promise.all([
-            fetch("history.json").then(function (response) {
+        fetch("history.json")
+            .then(function (response) {
                 if (!response.ok) {
                     throw new Error("history.json");
                 }
                 return response.json();
-            }),
-            fetch("filter.json").then(function (response) {
-                if (!response.ok) {
-                    throw new Error("filter.json");
-                }
-                return response.json();
-            }),
-        ])
-            .then(function (files) {
-                const data = files[0];
+            })
+            .then(function (data) {
                 histories = data.histories || [];
                 renderAddresses(histories);
-                renderFilters(files[1].filters || []);
                 showHistory(histories[0] && histories[0].address);
             })
             .catch(function () {
