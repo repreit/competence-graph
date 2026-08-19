@@ -1566,7 +1566,9 @@
             if (playback) {
                 stopPlayback();
             }
-            startPlayback(edit);
+            const fromClip =
+                bubbleClip && edit.contains(bubbleClip) ? bubbleClip : null;
+            startPlayback(edit, fromClip);
         }
 
         document.querySelectorAll(".time-edit").forEach(function (edit) {
