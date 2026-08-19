@@ -1081,23 +1081,23 @@
                 node.remove();
             });
 
-            (history.entries || []).forEach(function (entry) {
+            (history.nodes || []).forEach(function (node) {
                 const button = document.createElement("button");
                 button.type = "button";
                 button.className = "node";
-                button.dataset.entryId = entry.id;
-                button.dataset.title = entry.title;
-                button.dataset.proof = entry.proof || "";
-                button.dataset.story = entry.story;
-                button.dataset.image = entry.image;
-                button.dataset.alt = entry.alt;
+                button.dataset.nodeId = node.id;
+                button.dataset.title = node.title;
+                button.dataset.proof = node.proof || "";
+                button.dataset.story = node.story;
+                button.dataset.image = node.image;
+                button.dataset.alt = node.alt;
 
                 const img = document.createElement("img");
-                img.src = entry.image;
-                img.alt = entry.alt;
+                img.src = node.image;
+                img.alt = node.alt;
 
                 const heading = document.createElement("h3");
-                heading.textContent = entry.title;
+                heading.textContent = node.title;
 
                 button.appendChild(img);
                 button.appendChild(heading);
@@ -1163,11 +1163,11 @@
 
             const degree = {};
             nodes.forEach(function (node, index) {
-                degree[node.dataset.entryId] = 0;
+                degree[node.dataset.nodeId] = 0;
                 node.dataset.order = String(index);
             });
             historyEdges.forEach(function (edge) {
-                const ends = edge.nodes || [];
+                const ends = edge.ends || [];
                 if (Object.prototype.hasOwnProperty.call(degree, ends[0])) {
                     degree[ends[0]] += 1;
                 }
@@ -1176,7 +1176,7 @@
                 }
             });
             nodes.sort(function (a, b) {
-                const byDeg = degree[b.dataset.entryId] - degree[a.dataset.entryId];
+                const byDeg = degree[b.dataset.nodeId] - degree[a.dataset.nodeId];
                 if (byDeg !== 0) {
                     return byDeg;
                 }
@@ -1261,14 +1261,14 @@
             svg.replaceChildren();
 
             historyEdges.forEach(function (edge) {
-                const ends = edge.nodes || [];
-                const from = boardEl.querySelector('.node[data-entry-id="' + ends[0] + '"]');
-                const to = boardEl.querySelector('.node[data-entry-id="' + ends[1] + '"]');
-                if (!from || !to) {
+                const ends = edge.ends || [];
+                const aNode = boardEl.querySelector('.node[data-node-id="' + ends[0] + '"]');
+                const bNode = boardEl.querySelector('.node[data-node-id="' + ends[1] + '"]');
+                if (!aNode || !bNode) {
                     return;
                 }
-                const a = boxOf(from, boardRect);
-                const b = boxOf(to, boardRect);
+                const a = boxOf(aNode, boardRect);
+                const b = boxOf(bNode, boardRect);
                 const start = exitPoint(a, b.cx, b.cy);
                 const end = exitPoint(b, a.cx, a.cy);
                 const dx = end.x - start.x;

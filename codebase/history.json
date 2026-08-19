@@ -2,7 +2,7 @@
     "histories": [
         {
             "address": "0xa71c0e8f4d2b91e6c3d847a5f1b0e9c2d6a84f31",
-            "entries": [
+            "nodes": [
                 {
                     "id": "working-group",
                     "title": "Escrow and closing working group",
@@ -46,25 +46,25 @@
             ],
             "edges": [
                 {
-                    "nodes": [
+                    "ends": [
                         "working-group",
                         "testnet-listing"
                     ]
                 },
                 {
-                    "nodes": [
+                    "ends": [
                         "escrow-pr",
                         "testnet-listing"
                     ]
                 },
                 {
-                    "nodes": [
+                    "ends": [
                         "testnet-listing",
                         "live-fulfillment"
                     ]
                 },
                 {
-                    "nodes": [
+                    "ends": [
                         "testnet-listing",
                         "listing-ux"
                     ]
@@ -73,7 +73,7 @@
         },
         {
             "address": "0x3e9b17dc5a48f20e6b1d94c8a7f2e5b0c4d83a16",
-            "entries": [
+            "nodes": [
                 {
                     "id": "closings-desk",
                     "title": "Clerk at live closings",
@@ -101,13 +101,13 @@
             ],
             "edges": [
                 {
-                    "nodes": [
+                    "ends": [
                         "closings-desk",
                         "live-operator"
                     ]
                 },
                 {
-                    "nodes": [
+                    "ends": [
                         "live-operator",
                         "second-live"
                     ]

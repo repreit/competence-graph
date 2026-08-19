@@ -27,8 +27,6 @@ The page is how a history is seen. This first context is Ethereum / web3.
 
 **Deed:** inspectable. No inspectable proof → not a deed.
 
-**Edges:** a link, not an unlock. The structure is a network.
-
 Optional later: `{ easUid?, did? }` on a deed. No wallet in this MVP.
 
 ## Example
