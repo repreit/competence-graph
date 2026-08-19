@@ -1369,14 +1369,17 @@
         }
 
         function isPlaybackUi(node) {
-            if (!node || !playback) {
+            if (!node || !node.closest) {
+                return false;
+            }
+            if (node.closest(".clip-bubble, .time-edit .transport")) {
+                return true;
+            }
+            if (!playback) {
                 return false;
             }
             const scene = playback.edit.closest(".time-scene");
-            if (scene && scene.contains(node)) {
-                return true;
-            }
-            return Boolean(node.closest && node.closest(".clip-bubble"));
+            return Boolean(scene && scene.contains(node));
         }
 
         function setTransportPlaying(playing) {
@@ -1621,9 +1624,6 @@
         });
 
         document.addEventListener("pointerdown", function (event) {
-            if (event.target.closest(".clip-bubble")) {
-                return;
-            }
             if (isPlaybackUi(event.target)) {
                 return;
             }
