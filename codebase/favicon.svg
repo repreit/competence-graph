@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .bg { fill: #f6f4ef; }
+    .ink { fill: #1c1b18; stroke: #1c1b18; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #161513; }
+      .ink { fill: #f3efe6; stroke: #f3efe6; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="6" />
+  <g fill="none" stroke-width="1.75" stroke-linecap="round">
+    <line class="ink" x1="10" y1="12" x2="22" y2="12" />
+    <line class="ink" x1="10" y1="12" x2="16" y2="22" />
+    <line class="ink" x1="22" y1="12" x2="16" y2="22" />
+  </g>
+  <circle class="ink" cx="10" cy="12" r="3.1" />
+  <circle class="ink" cx="22" cy="12" r="3.1" />
+  <circle class="ink" cx="16" cy="22" r="3.1" />
+</svg>
