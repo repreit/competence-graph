@@ -8,14 +8,6 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# IDE / editor
-.idea/
-.vscode/*
-!.vscode/extensions.json
-*.swp
-*.swo
-*~
-
 # Dependencies
 node_modules/
 .pnpm-store/
