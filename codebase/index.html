@@ -99,6 +99,24 @@
             margin: 0 0 0.5rem;
         }
 
+        header .title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+            margin: 0 0 0.5rem;
+        }
+
+        header .title-row h1 {
+            margin: 0;
+        }
+
+        header .title-row img {
+            display: block;
+            height: 1.25rem;
+            width: auto;
+        }
+
         h2 {
             font-size: 1.1rem;
             margin: 0 0 0.6rem;
@@ -106,15 +124,6 @@
 
         header p {
             margin: 0;
-        }
-
-        .mark {
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin: 0 0 0.35rem;
         }
 
         header p+p {
@@ -709,8 +718,10 @@
 <body>
     <main>
         <header>
-            <h1>competency-graph</h1>
-            <p class="mark">protocol</p>
+            <div class="title-row">
+                <h1>competency-graph</h1>
+                <img src="protocol.svg" alt="PROTOCOL" height="20" width="88" />
+            </div>
             <p class="muted">
                 A shared language for inspectable competence.
             </p>
