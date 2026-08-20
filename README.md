@@ -8,7 +8,9 @@ Competence is a **history** of **deeds** — not a credential, not a course comp
 
 This protocol does not deal with what must be hidden. If it should not be opened, it is not a deed. Leave it out. Nothing here is proven by concealment.
 
-Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
+## Demo
+
+[https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
 
 ## Who this is for
 
