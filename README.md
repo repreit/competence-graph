@@ -4,6 +4,8 @@ A shared language for **inspectable competence**.
 
 Competence is a **history** of **deeds** — not a credential, not a course completion.
 
+This protocol does not deal with what must be hidden. If it should not be opened, it is not a deed. Leave it out. Nothing here is proven by concealment.
+
 Demo: [https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
 
 ## Who this is for
@@ -26,5 +28,3 @@ The page is how a history is seen. This first context is Ethereum / web3.
 | [`codebase/index.html`](codebase/index.html) | Reference viewer (no framework) |
 
 **Deed:** inspectable. No inspectable proof → not a deed.
-
-This protocol does not deal with what must be hidden. If it should not be opened, it is not a deed. Leave it out. Nothing here is proven by concealment.
