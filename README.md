@@ -18,8 +18,6 @@ This protocol does not deal with what must be hidden. If it should not be opened
 
 **Requester** — opens that history in order to act: fund or entrust the next piece of work. A grant, a DAO, or a collaborator.
 
-The page is how a history is seen. This first context is Ethereum / web3.
-
 **When this is used:** a Requester used to ask for a school name, a resume, a portfolio of claims. That is the old sitting. This protocol is for the moment that is not enough — open the history, inspect the deeds, then act: fund or entrust the next piece of work.
 
 ## Format (the MVP)
