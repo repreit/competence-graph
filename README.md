@@ -1,6 +1,6 @@
 # competency-graph
 
-protocol
+PROTOCOL
 
 A shared language for **inspectable competence**.
 
