@@ -32,16 +32,3 @@ This protocol does not deal with what must be hidden. If it should not be opened
 ## Example
 
 Two histories. Click a deed for the photo and the proof. Pick an address to open that history.
-
-## Run locally
-
-GitHub Pages serves `codebase/`. Opening `index.html` as a file may block JSON fetch.
-
-```bash
-cd codebase
-python3 -m http.server 4173
-```
-
-Then open http://localhost:4173/
-
-Push to `main` to update the live demo.
