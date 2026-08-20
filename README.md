@@ -45,7 +45,3 @@ python3 -m http.server 4173
 Then open http://localhost:4173/
 
 Push to `main` to update the live demo.
-
-## Not in this MVP
-
-Wallet, login, marketplace, grant application UI, real on-chain verification.
