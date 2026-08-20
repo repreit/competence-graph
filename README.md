@@ -25,6 +25,6 @@ This protocol does not deal with what must be hidden. If it should not be opened
 | File | What it is |
 |---|---|
 | [`codebase/history.json`](codebase/history.json) | Append-only deeds, one history per address |
-| [`codebase/index.html`](codebase/index.html) | Reference viewer (no framework) |
+| [`codebase/index.html`](codebase/index.html) | Reference viewer |
 
 **Deed:** inspectable. No inspectable proof → not a deed.
