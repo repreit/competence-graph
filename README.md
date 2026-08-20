@@ -4,7 +4,7 @@ PROTOCOL
 
 A shared language for **inspectable competence**.
 
-Competence is a **history** of **deeds** — not a credential, not a course completion.
+Competence is a **history** of **deeds**. Open the history. Then act.
 
 This protocol does not deal with what must be hidden. If it should not be opened, it is not a deed. Leave it out. Nothing here is proven by concealment.
 
