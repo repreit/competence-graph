@@ -46,4 +46,4 @@ Push to `main` to update the live demo.
 
 ## Not in this MVP
 
-Wallet, EAS writes, login, marketplace, grant application UI, real on-chain verification.
+Wallet, login, marketplace, grant application UI, real on-chain verification.
