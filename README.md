@@ -1,6 +1,4 @@
-# competency-graph
-
-PROTOCOL
+# competency-graph <img src="codebase/protocol.svg" alt="PROTOCOL" height="20">
 
 A shared language for **inspectable competence**.
 
