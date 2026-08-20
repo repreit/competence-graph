@@ -1,5 +1,7 @@
 # competency-graph
 
+protocol
+
 A shared language for **inspectable competence**.
 
 Competence is a **history** of **deeds** — not a credential, not a course completion.
