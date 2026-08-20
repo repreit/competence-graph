@@ -6,7 +6,7 @@
                 {
                     "id": "working-group",
                     "title": "Escrow and closing working group",
-                    "image": "images/deed-closing-group.jpg",
+                    "image": "img/deed-closing-group.jpg",
                     "alt": "People at a table with floor plans and a peer-to-peer property deal sketch",
                     "proof": "Attendance notes and the public working-group agenda.",
                     "story": "Sat with closing clerks and builders to map a peer-to-peer deal: list, deposit, inspect, hand over, release funds."
@@ -14,7 +14,7 @@
                 {
                     "id": "escrow-pr",
                     "title": "Property escrow contract PR",
-                    "image": "images/deed-property-escrow-pr.jpg",
+                    "image": "img/deed-property-escrow-pr.jpg",
                     "alt": "Laptop showing a property escrow contract pull request",
                     "proof": "A public pull request: deposit, inspection window, release to seller.",
                     "story": "Wrote the contract that holds buyer funds until inspection and handover. A stranger can inspect the PR and read the rules."
@@ -22,7 +22,7 @@
                 {
                     "id": "testnet-listing",
                     "title": "Testnet P2P listing",
-                    "image": "images/deed-testnet-listing.jpg",
+                    "image": "img/deed-testnet-listing.jpg",
                     "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action",
                     "proof": "A testnet listing and a lock-deposit transaction.",
                     "story": "The working group and the escrow PR made a test listing possible: a house, a deposit button, no platform as middleman."
@@ -30,7 +30,7 @@
                 {
                     "id": "live-fulfillment",
                     "title": "Live P2P fulfillment",
-                    "image": "images/deed-live-fulfillment.jpg",
+                    "image": "img/deed-live-fulfillment.jpg",
                     "alt": "Keys and a tablet showing fulfillment complete",
                     "proof": "A mainnet fulfillment transaction and a recorded key handover.",
                     "story": "A real deal completed: deposit locked, inspection passed, keys handed over, funds released."
@@ -38,7 +38,7 @@
                 {
                     "id": "listing-ux",
                     "title": "Listing and handover UX",
-                    "image": "images/deed-listing-design.jpg",
+                    "image": "img/deed-listing-design.jpg",
                     "alt": "Paper wireframes of a property listing and fulfillment steps",
                     "proof": "Wireframes for listing, deposit, inspection, and handover.",
                     "story": "The same fulfillment also left a listing and handover design a merchant or buyer can follow."
@@ -77,7 +77,7 @@
                 {
                     "id": "closings-desk",
                     "title": "Clerk at live closings",
-                    "image": "images/deed-closings-desk.jpg",
+                    "image": "img/deed-closings-desk.jpg",
                     "alt": "A desk of closing folders, a stamp, and a house key",
                     "proof": "Closing files and a public log of which deals the clerk sat.",
                     "story": "Sat the desk at live closings: escrow, keys. The map of a deal came from the room, not from a course."
@@ -85,7 +85,7 @@
                 {
                     "id": "live-operator",
                     "title": "Live P2P fulfillment, on site",
-                    "image": "images/deed-live-operator.jpg",
+                    "image": "img/deed-live-operator.jpg",
                     "alt": "Keys handed over at a house door, tablet in hand",
                     "proof": "A mainnet fulfillment transaction and a recorded key handover.",
                     "story": "Ran a real peer-to-peer deal on site: deposit locked, inspection passed, keys handed over, funds released. Did not write the contract."
@@ -93,7 +93,7 @@
                 {
                     "id": "second-live",
                     "title": "Second live fulfillment",
-                    "image": "images/deed-second-live.jpg",
+                    "image": "img/deed-second-live.jpg",
                     "alt": "Keys handed over on a brick townhouse stoop",
                     "proof": "A second mainnet fulfillment on a different property.",
                     "story": "A second real deal, a different house. Not a one-off."
