@@ -28,7 +28,3 @@ The page is how a history is seen. This first context is Ethereum / web3.
 **Deed:** inspectable. No inspectable proof → not a deed.
 
 This protocol does not deal with what must be hidden. If it should not be opened, it is not a deed. Leave it out. Nothing here is proven by concealment.
-
-## Example
-
-Two histories. Click a deed for the photo and the proof. Pick an address to open that history.
