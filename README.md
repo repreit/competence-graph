@@ -23,5 +23,5 @@ This protocol does not deal with what must be hidden. If it should not be opened
 ## Official Community
 
 <a href="https://hey.xyz/g/0xa88e766372937f45d4d70A786A1aaa0a603Ae5f7">
-  <img src="codebase/img/a001/hey.png" alt="Hey" height="24" align="center">
-</a> &nbsp; [Join the CompetencyGraph Community on Hey](https://hey.xyz/g/0xa88e766372937f45d4d70A786A1aaa0a603Ae5f7)
+  <img src="codebase/img/a001/hey.png" alt="Hey Community" height="32">
+</a>
