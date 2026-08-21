@@ -1,4 +1,4 @@
-<img src="codebase/favicon.svg" alt="competency-graph" height="32">
+<img src="codebase/mark.svg" alt="competency-graph" height="32">
 
 # competency-graph <img src="codebase/protocol.svg" alt="PROTOCOL" height="20">
 
