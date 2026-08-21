@@ -19,3 +19,9 @@ This protocol does not deal with what must be hidden. If it should not be opened
 **Builder** — participates, ships, and accumulates a history. Someone who cares about Ethereum and web3, and wants professional competence — not a certificate. They work at home or wherever they learn. They need income and room for another dream.
 
 **Requester** — opens that history in order to act: fund or entrust the next piece of work. A grant, a DAO, or a collaborator.
+
+## Official Community
+
+<a href="https://hey.xyz/g/0xa88e766372937f45d4d70A786A1aaa0a603Ae5f7">
+  <img src="codebase/img/a001/hey.png" alt="Hey Community" height="32">
+</a>
