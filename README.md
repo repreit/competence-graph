@@ -26,4 +26,4 @@ This protocol does not deal with what must be hidden. If it should not be opened
   <img src="codebase/img/a001/hey.png" alt="Hey Community" height="32">
 </a>
 
-Join our community on Hey.
+<p>Join our community on Hey.</p>
