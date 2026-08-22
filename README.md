@@ -1,6 +1,6 @@
-<img src="codebase/mark.svg" alt="competency-graph" height="32">
+<img src="codebase/mark.svg" alt="competence-graph" height="32">
 
-# competency-graph <img src="codebase/protocol.svg" alt="PROTOCOL" height="20">
+# competence-graph <img src="codebase/protocol.svg" alt="PROTOCOL" height="20">
 
 A shared language for **inspectable competence**.
 
@@ -12,7 +12,7 @@ This protocol does not deal with what must be hidden. If it should not be opened
 
 ## Demo
 
-[https://repreit.github.io/competency-graph/](https://repreit.github.io/competency-graph/)
+[https://repreit.github.io/competence-graph/](https://repreit.github.io/competence-graph/)
 
 ## Who this is for
 
