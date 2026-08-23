@@ -8,7 +8,7 @@ Competence is a **history** of **deeds**. Open the history. Then act.
 
 This protocol does not deal with what must be hidden. If it should not be opened, it is not a deed. Leave it out. Nothing here is proven by concealment.
 
-## This is one way
+## Not the only way
 
 This is one way to work with competence.
 
@@ -16,7 +16,7 @@ If it does not fit, or you do not use it, that does not mean you lack competence
 
 A small attempt not to box people in, reduce them to numbers, or make speed and efficiency the only measure.
 
-We will not hide behind packaging. We will take your views so this can become a method you can stand behind.
+We will not hide behind buzzwords or packaging. We shape this with your feedback so it becomes a method you can stand behind.
 
 ## Demo
 
