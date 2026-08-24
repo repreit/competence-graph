@@ -1,7 +1,6 @@
 const windowEl = document.getElementById("deed-window");
 const imageEl = document.getElementById("deed-image");
 const titleEl = document.getElementById("deed-title");
-const storyEl = document.getElementById("deed-story");
 const proofEl = document.getElementById("deed-proof");
 const boardEl = document.querySelector(".network-board");
 const blurbEl = document.getElementById("example-blurb");
@@ -84,7 +83,6 @@ bubbleImg.addEventListener("load", function () {
 
 function openDeed(node) {
     titleEl.textContent = node.dataset.title;
-    storyEl.textContent = node.dataset.story;
     proofEl.textContent = node.dataset.proof
         ? "Inspectable: " + node.dataset.proof
         : "";
@@ -141,7 +139,6 @@ function renderHistory(history) {
         button.dataset.nodeId = node.id;
         button.dataset.title = node.title;
         button.dataset.proof = node.proof || "";
-        button.dataset.story = node.story;
         button.dataset.img = node.img;
         button.dataset.alt = node.alt;
 
