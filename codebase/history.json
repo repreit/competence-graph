@@ -5,26 +5,36 @@
             "nodes": [
                 {
                     "id": "working-group",
-                    "title": "Escrow and closing working group",
-                    "img": "img/deed-closing-group.jpg",
-                    "alt": "People at a table with floor plans and a peer-to-peer property deal sketch",
                     "proof": "Attendance notes and the public working-group agenda.",
-                    "nodeIds": ["testnet-listing"]
+                    "data": {
+                        "title": "Escrow and closing working group",
+                        "img": "img/deed-closing-group.jpg",
+                        "alt": "People at a table with floor plans and a peer-to-peer property deal sketch"
+                    },
+                    "nodeIds": [
+                        "testnet-listing"
+                    ]
                 },
                 {
                     "id": "escrow-pr",
-                    "title": "Property escrow contract PR",
-                    "img": "img/deed-property-escrow-pr.jpg",
-                    "alt": "Laptop showing a property escrow contract pull request",
                     "proof": "A public pull request: deposit, inspection window, release to seller.",
-                    "nodeIds": ["testnet-listing"]
+                    "data": {
+                        "title": "Property escrow contract PR",
+                        "img": "img/deed-property-escrow-pr.jpg",
+                        "alt": "Laptop showing a property escrow contract pull request"
+                    },
+                    "nodeIds": [
+                        "testnet-listing"
+                    ]
                 },
                 {
                     "id": "testnet-listing",
-                    "title": "Testnet P2P listing",
-                    "img": "img/deed-testnet-listing.jpg",
-                    "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action",
                     "proof": "A testnet listing and a lock-deposit transaction.",
+                    "data": {
+                        "title": "Testnet P2P listing",
+                        "img": "img/deed-testnet-listing.jpg",
+                        "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action"
+                    },
                     "nodeIds": [
                         "working-group",
                         "escrow-pr",
@@ -34,19 +44,27 @@
                 },
                 {
                     "id": "live-fulfillment",
-                    "title": "Live P2P fulfillment",
-                    "img": "img/deed-live-fulfillment.jpg",
-                    "alt": "Keys and a tablet showing fulfillment complete",
                     "proof": "A mainnet fulfillment transaction and a recorded key handover.",
-                    "nodeIds": ["testnet-listing"]
+                    "data": {
+                        "title": "Live P2P fulfillment",
+                        "img": "img/deed-live-fulfillment.jpg",
+                        "alt": "Keys and a tablet showing fulfillment complete"
+                    },
+                    "nodeIds": [
+                        "testnet-listing"
+                    ]
                 },
                 {
                     "id": "listing-ux",
-                    "title": "Listing and handover UX",
-                    "img": "img/deed-listing-design.jpg",
-                    "alt": "Paper wireframes of a property listing and fulfillment steps",
                     "proof": "Wireframes for listing, deposit, inspection, and handover.",
-                    "nodeIds": ["testnet-listing"]
+                    "data": {
+                        "title": "Listing and handover UX",
+                        "img": "img/deed-listing-design.jpg",
+                        "alt": "Paper wireframes of a property listing and fulfillment steps"
+                    },
+                    "nodeIds": [
+                        "testnet-listing"
+                    ]
                 }
             ]
         },
@@ -55,27 +73,40 @@
             "nodes": [
                 {
                     "id": "closings-desk",
-                    "title": "Clerk at live closings",
-                    "img": "img/deed-closings-desk.jpg",
-                    "alt": "A desk of closing folders, a stamp, and a house key",
                     "proof": "Closing files and a public log of which deals the clerk sat.",
-                    "nodeIds": ["live-operator"]
+                    "data": {
+                        "title": "Clerk at live closings",
+                        "img": "img/deed-closings-desk.jpg",
+                        "alt": "A desk of closing folders, a stamp, and a house key"
+                    },
+                    "nodeIds": [
+                        "live-operator"
+                    ]
                 },
                 {
                     "id": "live-operator",
-                    "title": "Live P2P fulfillment, on site",
-                    "img": "img/deed-live-operator.jpg",
-                    "alt": "Keys handed over at a house door, tablet in hand",
                     "proof": "A mainnet fulfillment transaction and a recorded key handover.",
-                    "nodeIds": ["closings-desk", "second-live"]
+                    "data": {
+                        "title": "Live P2P fulfillment, on site",
+                        "img": "img/deed-live-operator.jpg",
+                        "alt": "Keys handed over at a house door, tablet in hand"
+                    },
+                    "nodeIds": [
+                        "closings-desk",
+                        "second-live"
+                    ]
                 },
                 {
                     "id": "second-live",
-                    "title": "Second live fulfillment",
-                    "img": "img/deed-second-live.jpg",
-                    "alt": "Keys handed over on a brick townhouse stoop",
                     "proof": "A second mainnet fulfillment on a different property.",
-                    "nodeIds": ["live-operator"]
+                    "data": {
+                        "title": "Second live fulfillment",
+                        "img": "img/deed-second-live.jpg",
+                        "alt": "Keys handed over on a brick townhouse stoop"
+                    },
+                    "nodeIds": [
+                        "live-operator"
+                    ]
                 }
             ]
         }

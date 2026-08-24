@@ -157,19 +157,21 @@ function renderHistory(history) {
         button.type = "button";
         button.className = "node";
         button.dataset.nodeId = node.id;
-        button.dataset.title = node.title;
+        const data = node.data || {};
+        button.dataset.title = data.title || "";
         button.dataset.proof = node.proof || "";
-        button.dataset.img = node.img;
-        button.dataset.alt = node.alt;
-
-        const img = document.createElement("img");
-        img.src = node.img;
-        img.alt = node.alt;
+        button.dataset.img = data.img || "";
+        button.dataset.alt = data.alt || "";
 
         const heading = document.createElement("h3");
-        heading.textContent = node.title;
+        heading.textContent = data.title || "";
 
-        button.appendChild(img);
+        if (data.img) {
+            const img = document.createElement("img");
+            img.src = data.img;
+            img.alt = data.alt || "";
+            button.appendChild(img);
+        }
         button.appendChild(heading);
         button.addEventListener("click", function () {
             openDeed(button);
