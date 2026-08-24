@@ -5,9 +5,9 @@
             "nodes": [
                 {
                     "id": "working-group",
-                    "proof": "Attendance notes and the public working-group agenda.",
                     "data": {
                         "title": "Escrow and closing working group",
+                        "link": "https://example.com/working-group",
                         "img": "img/deed-closing-group.jpg",
                         "alt": "People at a table with floor plans and a peer-to-peer property deal sketch"
                     },
@@ -17,9 +17,9 @@
                 },
                 {
                     "id": "escrow-pr",
-                    "proof": "A public pull request: deposit, inspection window, release to seller.",
                     "data": {
                         "title": "Property escrow contract PR",
+                        "link": "https://example.com/escrow-pr",
                         "img": "img/deed-property-escrow-pr.jpg",
                         "alt": "Laptop showing a property escrow contract pull request"
                     },
@@ -29,9 +29,9 @@
                 },
                 {
                     "id": "testnet-listing",
-                    "proof": "A testnet listing and a lock-deposit transaction.",
                     "data": {
                         "title": "Testnet P2P listing",
+                        "link": "https://example.com/testnet-listing",
                         "img": "img/deed-testnet-listing.jpg",
                         "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action"
                     },
@@ -44,9 +44,9 @@
                 },
                 {
                     "id": "live-fulfillment",
-                    "proof": "A mainnet fulfillment transaction and a recorded key handover.",
                     "data": {
                         "title": "Live P2P fulfillment",
+                        "link": "https://example.com/live-fulfillment",
                         "img": "img/deed-live-fulfillment.jpg",
                         "alt": "Keys and a tablet showing fulfillment complete"
                     },
@@ -56,9 +56,9 @@
                 },
                 {
                     "id": "listing-ux",
-                    "proof": "Wireframes for listing, deposit, inspection, and handover.",
                     "data": {
                         "title": "Listing and handover UX",
+                        "link": "https://example.com/listing-ux",
                         "img": "img/deed-listing-design.jpg",
                         "alt": "Paper wireframes of a property listing and fulfillment steps"
                     },
@@ -73,9 +73,9 @@
             "nodes": [
                 {
                     "id": "closings-desk",
-                    "proof": "Closing files and a public log of which deals the clerk sat.",
                     "data": {
                         "title": "Clerk at live closings",
+                        "link": "https://example.com/closings-desk",
                         "img": "img/deed-closings-desk.jpg",
                         "alt": "A desk of closing folders, a stamp, and a house key"
                     },
@@ -85,9 +85,9 @@
                 },
                 {
                     "id": "live-operator",
-                    "proof": "A mainnet fulfillment transaction and a recorded key handover.",
                     "data": {
                         "title": "Live P2P fulfillment, on site",
+                        "link": "https://example.com/live-operator",
                         "img": "img/deed-live-operator.jpg",
                         "alt": "Keys handed over at a house door, tablet in hand"
                     },
@@ -98,9 +98,9 @@
                 },
                 {
                     "id": "second-live",
-                    "proof": "A second mainnet fulfillment on a different property.",
                     "data": {
                         "title": "Second live fulfillment",
+                        "link": "https://example.com/second-live",
                         "img": "img/deed-second-live.jpg",
                         "alt": "Keys handed over on a brick townhouse stoop"
                     },

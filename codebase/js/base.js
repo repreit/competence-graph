@@ -1,7 +1,7 @@
 const windowEl = document.getElementById("deed-window");
 const imageEl = document.getElementById("deed-image");
 const titleEl = document.getElementById("deed-title");
-const proofEl = document.getElementById("deed-proof");
+const linkEl = document.getElementById("deed-link");
 const boardEl = document.querySelector(".network-board");
 const blurbEl = document.getElementById("example-blurb");
 const addressesEl = document.getElementById("addresses");
@@ -83,10 +83,15 @@ bubbleImg.addEventListener("load", function () {
 
 function openDeed(node) {
     titleEl.textContent = node.dataset.title;
-    proofEl.textContent = node.dataset.proof
-        ? "Inspectable: " + node.dataset.proof
-        : "";
-    proofEl.hidden = !node.dataset.proof;
+    if (node.dataset.link) {
+        linkEl.hidden = false;
+        linkEl.href = node.dataset.link;
+        linkEl.textContent = node.dataset.link;
+    } else {
+        linkEl.hidden = true;
+        linkEl.removeAttribute("href");
+        linkEl.textContent = "";
+    }
     imageEl.hidden = !node.dataset.img;
     if (node.dataset.img) {
         imageEl.src = node.dataset.img;
@@ -159,7 +164,7 @@ function renderHistory(history) {
         button.dataset.nodeId = node.id;
         const data = node.data || {};
         button.dataset.title = data.title || "";
-        button.dataset.proof = node.proof || "";
+        button.dataset.link = data.link || "";
         button.dataset.img = data.img || "";
         button.dataset.alt = data.alt || "";
 
