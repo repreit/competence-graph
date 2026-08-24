@@ -393,6 +393,10 @@ function exitPoint(rect, towardX, towardY) {
     return { x: rect.cx + dx * t, y: rect.cy + dy * t };
 }
 
+function nodeById(id) {
+    return boardEl.querySelector('.node[data-node-id="' + CSS.escape(id) + '"]');
+}
+
 function drawNetworkLines() {
     const svg = boardEl.querySelector(".network-lines");
     if (!svg) {
@@ -409,8 +413,8 @@ function drawNetworkLines() {
     svg.replaceChildren();
 
     pairs.forEach(function (pair) {
-        const aNode = boardEl.querySelector('.node[data-node-id="' + pair[0] + '"]');
-        const bNode = boardEl.querySelector('.node[data-node-id="' + pair[1] + '"]');
+        const aNode = nodeById(pair[0]);
+        const bNode = nodeById(pair[1]);
         if (!aNode || !bNode) {
             return;
         }
