@@ -122,6 +122,26 @@ function shortAddress(address) {
     return address.slice(0, 6) + "…" + address.slice(-4);
 }
 
+function pairsFromNodes(nodes) {
+    const seen = {};
+    const pairs = [];
+    (nodes || []).forEach(function (node) {
+        (node.nodeIds || []).forEach(function (otherId) {
+            if (!otherId || otherId === node.id) {
+                return;
+            }
+            const a = node.id;
+            const b = otherId;
+            const key = a < b ? a + "|" + b : b + "|" + a;
+            if (!seen[key]) {
+                seen[key] = true;
+                pairs.push([a, b]);
+            }
+        });
+    });
+    return pairs;
+}
+
 function renderHistory(history) {
     const label = shortAddress(history.address) || "Unknown";
     boardEl.setAttribute(
@@ -156,7 +176,7 @@ function renderHistory(history) {
         });
         boardEl.appendChild(button);
     });
-    historyEdges = history.edges || [];
+    historyEdges = pairsFromNodes(history.nodes);
     boardEl.querySelectorAll(".node img").forEach(function (img) {
         img.addEventListener("load", layoutNetwork);
     });
@@ -216,13 +236,12 @@ function layoutNetwork() {
         degree[node.dataset.nodeId] = 0;
         node.dataset.order = String(index);
     });
-    historyEdges.forEach(function (edge) {
-        const ends = edge.ends || [];
-        if (Object.prototype.hasOwnProperty.call(degree, ends[0])) {
-            degree[ends[0]] += 1;
+    historyEdges.forEach(function (pair) {
+        if (Object.prototype.hasOwnProperty.call(degree, pair[0])) {
+            degree[pair[0]] += 1;
         }
-        if (Object.prototype.hasOwnProperty.call(degree, ends[1])) {
-            degree[ends[1]] += 1;
+        if (Object.prototype.hasOwnProperty.call(degree, pair[1])) {
+            degree[pair[1]] += 1;
         }
     });
     nodes.sort(function (a, b) {
@@ -310,10 +329,9 @@ function drawNetworkLines() {
     const ns = "http://www.w3.org/2000/svg";
     svg.replaceChildren();
 
-    historyEdges.forEach(function (edge) {
-        const ends = edge.ends || [];
-        const aNode = boardEl.querySelector('.node[data-node-id="' + ends[0] + '"]');
-        const bNode = boardEl.querySelector('.node[data-node-id="' + ends[1] + '"]');
+    historyEdges.forEach(function (pair) {
+        const aNode = boardEl.querySelector('.node[data-node-id="' + pair[0] + '"]');
+        const bNode = boardEl.querySelector('.node[data-node-id="' + pair[1] + '"]');
         if (!aNode || !bNode) {
             return;
         }
