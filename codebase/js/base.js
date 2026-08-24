@@ -7,7 +7,7 @@ const blurbEl = document.getElementById("example-blurb");
 const addressesEl = document.getElementById("addresses");
 let accounts = [];
 let activeAddress = "";
-let historyEdges = [];
+let pairs = [];
 
 const bubbleEl = document.getElementById("clip-bubble");
 const bubbleImg = document.getElementById("clip-bubble-image");
@@ -192,7 +192,7 @@ function renderHistory(account) {
         });
         boardEl.appendChild(button);
     });
-    historyEdges = pairsFromNodes(history.nodes);
+    pairs = pairsFromNodes(history.nodes);
     boardEl.querySelectorAll(".node img").forEach(function (img) {
         img.addEventListener("load", function () {
             if (!boardEl.contains(img)) {
@@ -294,7 +294,7 @@ function layoutNetwork() {
         degree[node.dataset.nodeId] = 0;
         node.dataset.order = String(index);
     });
-    historyEdges.forEach(function (pair) {
+    pairs.forEach(function (pair) {
         if (Object.prototype.hasOwnProperty.call(degree, pair[0])) {
             degree[pair[0]] += 1;
         }
@@ -408,7 +408,7 @@ function drawNetworkLines() {
     const ns = "http://www.w3.org/2000/svg";
     svg.replaceChildren();
 
-    historyEdges.forEach(function (pair) {
+    pairs.forEach(function (pair) {
         const aNode = boardEl.querySelector('.node[data-node-id="' + pair[0] + '"]');
         const bNode = boardEl.querySelector('.node[data-node-id="' + pair[1] + '"]');
         if (!aNode || !bNode) {
