@@ -260,6 +260,23 @@ function placeNode(el, left, top, boxW, boxH, boardW, boardH) {
     el.style.top = Math.max(pad, Math.min(top, boardH - boxH - pad)) + "px";
 }
 
+function placeCard(el, boxW, boxH, innerW, innerH, boardW, boardH, autoLeft, autoTop) {
+    const pos = readPosition(el);
+    if (pos) {
+        placeNode(
+            el,
+            BOARD_PAD + pos.x * innerW - boxW / 2,
+            BOARD_PAD + pos.y * innerH - boxH / 2,
+            boxW,
+            boxH,
+            boardW,
+            boardH
+        );
+        return;
+    }
+    placeNode(el, autoLeft, autoTop, boxW, boxH, boardW, boardH);
+}
+
 function layoutNetwork() {
     const nodes = Array.prototype.slice.call(boardEl.querySelectorAll(".node"));
     nodes.forEach(function (node) {
@@ -321,46 +338,34 @@ function layoutNetwork() {
     const innerH = Math.max(0, boardH - BOARD_PAD * 2);
     const cx = width / 2;
     const cy = boardH / 2;
-    const hubPos = readPosition(hub);
-    if (hubPos) {
-        placeNode(
-            hub,
-            BOARD_PAD + hubPos.x * innerW - hubW / 2,
-            BOARD_PAD + hubPos.y * innerH - hubH / 2,
-            hubW,
-            hubH,
-            width,
-            boardH
-        );
-    } else {
-        placeNode(hub, cx - hubW / 2, cy - hubH / 2, hubW, hubH, width, boardH);
-    }
+    placeCard(
+        hub,
+        hubW,
+        hubH,
+        innerW,
+        innerH,
+        width,
+        boardH,
+        cx - hubW / 2,
+        cy - hubH / 2
+    );
     const autoRest = rest.filter(function (node) {
         return !readPosition(node);
     });
     rest.forEach(function (node) {
-        const pos = readPosition(node);
         const w = nodeW;
         const h = node.offsetHeight;
-        if (pos) {
-            placeNode(
-                node,
-                BOARD_PAD + pos.x * innerW - w / 2,
-                BOARD_PAD + pos.y * innerH - h / 2,
-                w,
-                h,
-                width,
-                boardH
-            );
+        if (readPosition(node)) {
+            placeCard(node, w, h, innerW, innerH, width, boardH, 0, 0);
             return;
         }
         const index = autoRest.indexOf(node);
         const angle =
             -Math.PI / 2 +
             (2 * Math.PI * index) / Math.max(autoRest.length, 1);
-        const x = cx + Math.cos(angle) * radius - w / 2;
-        const y = cy + Math.sin(angle) * radius - h / 2;
-        placeNode(node, x, y, w, h, width, boardH);
+        const autoLeft = cx + Math.cos(angle) * radius - w / 2;
+        const autoTop = cy + Math.sin(angle) * radius - h / 2;
+        placeCard(node, w, h, innerW, innerH, width, boardH, autoLeft, autoTop);
     });
     drawNetworkLines();
 }
