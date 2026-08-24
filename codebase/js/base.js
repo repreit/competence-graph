@@ -194,7 +194,12 @@ function renderHistory(account) {
     });
     historyEdges = pairsFromNodes(history.nodes);
     boardEl.querySelectorAll(".node img").forEach(function (img) {
-        img.addEventListener("load", layoutNetwork);
+        img.addEventListener("load", function () {
+            if (!boardEl.contains(img)) {
+                return;
+            }
+            layoutNetwork();
+        });
     });
     layoutNetwork();
 }
