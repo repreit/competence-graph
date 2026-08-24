@@ -665,13 +665,15 @@ section {
 dialog {
     position: fixed;
     width: min(40rem, calc(100vw - 2rem));
+    max-width: calc(100vw - 2rem);
     max-height: calc(100vh - 2rem);
     padding: 0;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: var(--card);
     color: var(--ink);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 dialog::backdrop {
@@ -695,6 +697,17 @@ dialog .sheet {
 
 dialog h2 {
     margin: 0 0 0.25rem;
+}
+
+dialog .sheet p {
+    margin: 0;
+}
+
+#deed-link {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-all;
 }
 
 dialog .close {
