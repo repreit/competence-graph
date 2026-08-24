@@ -168,6 +168,14 @@ function renderHistory(account) {
         button.dataset.link = data.link || "";
         button.dataset.img = data.img || "";
         button.dataset.alt = data.alt || "";
+        if (
+            node.position &&
+            typeof node.position.x === "number" &&
+            typeof node.position.y === "number"
+        ) {
+            button.dataset.posX = String(node.position.x);
+            button.dataset.posY = String(node.position.y);
+        }
 
         const heading = document.createElement("h3");
         heading.textContent = data.title || "";
@@ -227,6 +235,26 @@ function renderAddresses(list) {
 
 let layoutWidth = 0;
 
+function readPosition(el) {
+    if (!el.dataset.posX || !el.dataset.posY) {
+        return null;
+    }
+    const x = Number(el.dataset.posX);
+    const y = Number(el.dataset.posY);
+    if (!isFinite(x) || !isFinite(y)) {
+        return null;
+    }
+    return { x: x, y: y };
+}
+
+const BOARD_PAD = 8;
+
+function placeNode(el, left, top, boxW, boxH, boardW, boardH) {
+    const pad = BOARD_PAD;
+    el.style.left = Math.max(pad, Math.min(left, boardW - boxW - pad)) + "px";
+    el.style.top = Math.max(pad, Math.min(top, boardH - boxH - pad)) + "px";
+}
+
 function layoutNetwork() {
     const nodes = Array.prototype.slice.call(boardEl.querySelectorAll(".node"));
     nodes.forEach(function (node) {
@@ -279,22 +307,55 @@ function layoutNetwork() {
         maxRest = Math.max(maxRest, node.offsetHeight);
     });
     const radius = Math.max(hubW, hubH) / 2 + Math.max(nodeW, maxRest) / 2 + 40;
-    const boardH = Math.max(hubH, radius * 2 + maxRest) + 32;
+    const boardH =
+        Math.max(hubH, radius * 2 + maxRest) + 32 + BOARD_PAD * 2;
     boardEl.style.height = boardH + "px";
     layoutWidth = width;
 
+    const innerW = Math.max(0, width - BOARD_PAD * 2);
+    const innerH = Math.max(0, boardH - BOARD_PAD * 2);
     const cx = width / 2;
     const cy = boardH / 2;
-    hub.style.left = cx - hubW / 2 + "px";
-    hub.style.top = cy - hubH / 2 + "px";
-    rest.forEach(function (node, index) {
-        const angle = -Math.PI / 2 + (2 * Math.PI * index) / rest.length;
+    const hubPos = readPosition(hub);
+    if (hubPos) {
+        placeNode(
+            hub,
+            BOARD_PAD + hubPos.x * innerW - hubW / 2,
+            BOARD_PAD + hubPos.y * innerH - hubH / 2,
+            hubW,
+            hubH,
+            width,
+            boardH
+        );
+    } else {
+        placeNode(hub, cx - hubW / 2, cy - hubH / 2, hubW, hubH, width, boardH);
+    }
+    const autoRest = rest.filter(function (node) {
+        return !readPosition(node);
+    });
+    rest.forEach(function (node) {
+        const pos = readPosition(node);
         const w = nodeW;
         const h = node.offsetHeight;
+        if (pos) {
+            placeNode(
+                node,
+                BOARD_PAD + pos.x * innerW - w / 2,
+                BOARD_PAD + pos.y * innerH - h / 2,
+                w,
+                h,
+                width,
+                boardH
+            );
+            return;
+        }
+        const index = autoRest.indexOf(node);
+        const angle =
+            -Math.PI / 2 +
+            (2 * Math.PI * index) / Math.max(autoRest.length, 1);
         const x = cx + Math.cos(angle) * radius - w / 2;
         const y = cy + Math.sin(angle) * radius - h / 2;
-        node.style.left = Math.max(0, Math.min(x, width - w)) + "px";
-        node.style.top = Math.max(0, Math.min(y, boardH - h)) + "px";
+        placeNode(node, x, y, w, h, width, boardH);
     });
     drawNetworkLines();
 }

@@ -42,6 +42,10 @@
             },
             {
                 "id": "live-fulfillment",
+                "position": {
+                    "x": 0.9,
+                    "y": 0.88
+                },
                 "data": {
                     "title": "Live P2P fulfillment",
                     "link": "https://etherscan.io/tx/0x9e2d4b6a1c8f0e3d7b5a9c2f4e6d8b0a1c3e5f7a9b2d4c6e8f0a1b3c5d7e9f1a",
@@ -54,6 +58,10 @@
             },
             {
                 "id": "listing-ux",
+                "position": {
+                    "x": 0.08,
+                    "y": 0.12
+                },
                 "data": {
                     "title": "Listing and handover UX",
                     "link": "ipfs://bafybeihdwdcefghijklmnopqrstuvwxyz234567abcdefghijk",

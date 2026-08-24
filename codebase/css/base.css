@@ -603,6 +603,7 @@ section {
 .network-scroll {
     overflow-x: auto;
     margin-top: 1rem;
+    padding: 0.4rem;
     -webkit-overflow-scrolling: touch;
 }
 
