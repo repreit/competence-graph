@@ -1,0 +1,69 @@
+{
+    "history": {
+        "nodes": [
+            {
+                "id": "working-group",
+                "data": {
+                    "title": "Escrow and closing working group",
+                    "link": "https://github.com/repreit/p2p-escrow/discussions/3",
+                    "img": "img/deed-closing-group.jpg",
+                    "alt": "People at a table with floor plans and a peer-to-peer property deal sketch"
+                },
+                "nodeIds": [
+                    "testnet-listing"
+                ]
+            },
+            {
+                "id": "escrow-pr",
+                "data": {
+                    "title": "Property escrow contract PR",
+                    "link": "https://github.com/repreit/p2p-escrow/pull/17",
+                    "img": "img/deed-property-escrow-pr.jpg",
+                    "alt": "Laptop showing a property escrow contract pull request"
+                },
+                "nodeIds": [
+                    "testnet-listing"
+                ]
+            },
+            {
+                "id": "testnet-listing",
+                "data": {
+                    "title": "Testnet P2P listing",
+                    "link": "https://sepolia.etherscan.io/tx/0x3a8f1c0e7b92d64f5e1a0c8b9d2e4f7a6b1c3d5e8f0a2b4c6d8e0f1a3b5c7d9e",
+                    "img": "img/deed-testnet-listing.jpg",
+                    "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action"
+                },
+                "nodeIds": [
+                    "working-group",
+                    "escrow-pr",
+                    "live-fulfillment",
+                    "listing-ux"
+                ]
+            },
+            {
+                "id": "live-fulfillment",
+                "data": {
+                    "title": "Live P2P fulfillment",
+                    "link": "https://etherscan.io/tx/0x9e2d4b6a1c8f0e3d7b5a9c2f4e6d8b0a1c3e5f7a9b2d4c6e8f0a1b3c5d7e9f1a",
+                    "img": "img/deed-live-fulfillment.jpg",
+                    "alt": "Keys and a tablet showing fulfillment complete"
+                },
+                "nodeIds": [
+                    "testnet-listing"
+                ]
+            },
+            {
+                "id": "listing-ux",
+                "data": {
+                    "title": "Listing and handover UX",
+                    "link": "ipfs://bafybeihdwdcefghijklmnopqrstuvwxyz234567abcdefghijk",
+                    "img": "img/deed-listing-design.jpg",
+                    "alt": "Paper wireframes of a property listing and fulfillment steps"
+                },
+                "nodeIds": [
+                    "testnet-listing"
+                ]
+            }
+        ]
+    }
+}

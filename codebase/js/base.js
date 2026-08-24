@@ -5,7 +5,7 @@ const linkEl = document.getElementById("deed-link");
 const boardEl = document.querySelector(".network-board");
 const blurbEl = document.getElementById("example-blurb");
 const addressesEl = document.getElementById("addresses");
-let histories = [];
+let accounts = [];
 let activeAddress = "";
 let historyEdges = [];
 
@@ -147,8 +147,9 @@ function pairsFromNodes(nodes) {
     return pairs;
 }
 
-function renderHistory(history) {
-    const label = shortAddress(history.address) || "Unknown";
+function renderHistory(account) {
+    const history = (account && account.history) || {};
+    const label = shortAddress(account.address) || "Unknown";
     boardEl.setAttribute(
         "aria-label",
         label + ". Click a deed to open details."
@@ -191,23 +192,23 @@ function renderHistory(history) {
 }
 
 function showHistory(address) {
-    const history = histories.find(function (item) {
+    const account = accounts.find(function (item) {
         return item.address === address;
-    }) || histories[0];
-    if (!history) {
+    }) || accounts[0];
+    if (!account) {
         return;
     }
-    activeAddress = history.address || "";
+    activeAddress = account.address || "";
     addressesEl.querySelectorAll("button").forEach(function (button) {
         button.setAttribute("aria-pressed", button.dataset.address === activeAddress ? "true" : "false");
     });
-    renderHistory(history);
+    renderHistory(account);
 }
 
 function renderAddresses(list) {
     addressesEl.replaceChildren();
-    list.forEach(function (history) {
-        const address = history.address || "";
+    list.forEach(function (account) {
+        const address = account.address || "";
         const button = document.createElement("button");
         button.type = "button";
         button.className = address ? "address" : "";
@@ -367,17 +368,35 @@ function drawNetworkLines() {
     });
 }
 
-fetch("history.json")
+fetch("accounts/index.json")
     .then(function (response) {
         if (!response.ok) {
-            throw new Error("history.json");
+            throw new Error("accounts/index.json");
         }
         return response.json();
     })
-    .then(function (data) {
-        histories = data.histories || [];
-        renderAddresses(histories);
-        showHistory(histories[0] && histories[0].address);
+    .then(function (ids) {
+        const list = Array.isArray(ids) ? ids : [];
+        return Promise.all(
+            list.map(function (id) {
+                return fetch("accounts/" + id + ".json").then(function (response) {
+                    if (!response.ok) {
+                        throw new Error("accounts/" + id + ".json");
+                    }
+                    return response.json().then(function (data) {
+                        return {
+                            address: id,
+                            history: data.history || { nodes: [] }
+                        };
+                    });
+                });
+            })
+        );
+    })
+    .then(function (list) {
+        accounts = list;
+        renderAddresses(accounts);
+        showHistory(accounts[0] && accounts[0].address);
     })
     .catch(function () {
         blurbEl.hidden = false;
