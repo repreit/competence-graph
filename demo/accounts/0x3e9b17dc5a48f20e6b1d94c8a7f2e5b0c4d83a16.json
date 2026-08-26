@@ -9,9 +9,7 @@
                     "img": "img/deed-closings-desk.jpg",
                     "alt": "A desk of closing folders, a stamp, and a house key"
                 },
-                "nodeIds": [
-                    "live-operator"
-                ]
+                "nodeIds": ["live-operator"]
             },
             {
                 "id": "live-operator",
@@ -21,10 +19,7 @@
                     "img": "img/deed-live-operator.jpg",
                     "alt": "Keys handed over at a house door, tablet in hand"
                 },
-                "nodeIds": [
-                    "closings-desk",
-                    "second-live"
-                ]
+                "nodeIds": ["closings-desk", "second-live"]
             },
             {
                 "id": "second-live",
@@ -34,9 +29,7 @@
                     "img": "img/deed-second-live.jpg",
                     "alt": "Keys handed over on a brick townhouse stoop"
                 },
-                "nodeIds": [
-                    "live-operator"
-                ]
+                "nodeIds": ["live-operator"]
             }
         ]
     }

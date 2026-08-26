@@ -1,244 +1,442 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>competence-graph</title>
+        <link rel="icon" href="img/a001/mark.svg" type="image/svg+xml" />
+        <link rel="stylesheet" href="css/base.css" />
+    </head>
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>competence-graph</title>
-    <link rel="icon" href="img/a001/mark.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="css/base.css" />
-</head>
+    <body>
+        <main>
+            <header>
+                <img
+                    class="mark"
+                    src="img/a001/mark.svg"
+                    alt="competence-graph"
+                    width="32"
+                    height="32"
+                />
+                <div class="title-row">
+                    <h1>competence-graph</h1>
+                    <img
+                        src="img/a001/protocol.svg"
+                        alt="PROTOCOL"
+                        height="20"
+                        width="88"
+                    />
+                </div>
+                <p class="muted">
+                    A shared language for
+                    <strong>inspectable competence</strong>.
+                </p>
+                <p class="muted">
+                    Competence is a <strong>history</strong> of
+                    <strong>deeds</strong>. Open the history. Then act.
+                </p>
+                <p class="muted">
+                    This protocol does not deal with what must be hidden. If it
+                    should not be opened, it is not a deed. Leave it out.
+                    Nothing here is proven by concealment.
+                </p>
+            </header>
 
-<body>
-    <main>
-        <header>
-            <img class="mark" src="img/a001/mark.svg" alt="competence-graph" width="32" height="32" />
-            <div class="title-row">
-                <h1>competence-graph</h1>
-                <img src="img/a001/protocol.svg" alt="PROTOCOL" height="20" width="88" />
-            </div>
-            <p class="muted">
-                A shared language for <strong>inspectable competence</strong>.
-            </p>
-            <p class="muted">
-                Competence is a <strong>history</strong> of <strong>deeds</strong>. Open the history. Then act.
-            </p>
-            <p class="muted">
-                This protocol does not deal with what must be hidden. If it should not be opened, it is not a deed.
-                Leave it out. Nothing here is proven by concealment.
-            </p>
-        </header>
-
-        <section class="minutes">
-            <h2>How does this change the way people spend time?</h2>
-            <p class="muted">
-                Same need to act. Different object. Different cut of time.
-                Click a clip.
-            </p>
-            <div class="time-scene">
-                <h3>Entrust</h3>
-                <p class="muted">About one minute — the first sitting before someone is invited or passed over.</p>
-                <div class="time-edit">
-                    <div class="ruler" aria-hidden="true">
-                        <span class="ruler-gutter"></span>
-                        <div class="ruler-scale">
-                            <span>0</span><span>30 s</span><span>1 min</span>
+            <section class="minutes">
+                <h2>How does this change the way people spend time?</h2>
+                <p class="muted">
+                    Same need to act. Different object. Different cut of time.
+                    Click a clip.
+                </p>
+                <div class="time-scene">
+                    <h3>Entrust</h3>
+                    <p class="muted">
+                        About one minute — the first sitting before someone is
+                        invited or passed over.
+                    </p>
+                    <div class="time-edit">
+                        <div class="ruler" aria-hidden="true">
+                            <span class="ruler-gutter"></span>
+                            <div class="ruler-scale">
+                                <span>0</span><span>30 s</span
+                                ><span>1 min</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="track">
-                        <span class="track-name">Before</span>
-                        <div class="clips">
-                            <button type="button" class="clip" style="flex: 1" data-title="School" data-kind="~6 s"
-                                data-story="A glance at a school name. The first pass is measured in seconds. The paper does not open."
-                                data-img="img/clip-school.jpg"
-                                data-alt="A diploma folder on a wooden desk">School</button>
-                            <button type="button" class="clip" style="flex: 5" data-title="Resume" data-kind="~30 s"
-                                data-story="Most of the sitting. Roles, dates, keywords. Typical first-pass resume time is about half a minute."
-                                data-img="img/clip-resume.jpg"
-                                data-alt="A printed resume on a wooden desk">Resume</button>
-                            <button type="button" class="clip" style="flex: 3" data-title="Claims" data-kind="~18 s"
-                                data-story="A portfolio or GitHub, if they open it. Often scanned in under a minute with the resume, still as claims."
-                                data-img="img/clip-claims.jpg"
-                                data-alt="A laptop showing a portfolio grid, barely glanced at">Claims</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="Guess" data-kind="leftover"
-                                data-story="Fit or no-fit. Then the Requester acts on a profile, not on a history."
-                                data-img="img/clip-guess.jpg"
-                                data-alt="A resume on a laptop, cursor over pass">Guess</button>
+                        <div class="track">
+                            <span class="track-name">Before</span>
+                            <div class="clips">
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 1"
+                                    data-title="School"
+                                    data-kind="~6 s"
+                                    data-story="A glance at a school name. The first pass is measured in seconds. The paper does not open."
+                                    data-img="img/clip-school.jpg"
+                                    data-alt="A diploma folder on a wooden desk"
+                                >
+                                    School
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 5"
+                                    data-title="Resume"
+                                    data-kind="~30 s"
+                                    data-story="Most of the sitting. Roles, dates, keywords. Typical first-pass resume time is about half a minute."
+                                    data-img="img/clip-resume.jpg"
+                                    data-alt="A printed resume on a wooden desk"
+                                >
+                                    Resume
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 3"
+                                    data-title="Claims"
+                                    data-kind="~18 s"
+                                    data-story="A portfolio or GitHub, if they open it. Often scanned in under a minute with the resume, still as claims."
+                                    data-img="img/clip-claims.jpg"
+                                    data-alt="A laptop showing a portfolio grid, barely glanced at"
+                                >
+                                    Claims
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 1"
+                                    data-title="Guess"
+                                    data-kind="leftover"
+                                    data-story="Fit or no-fit. Then the Requester acts on a profile, not on a history."
+                                    data-img="img/clip-guess.jpg"
+                                    data-alt="A resume on a laptop, cursor over pass"
+                                >
+                                    Guess
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="track">
-                        <span class="track-name">After</span>
-                        <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="~6 s"
-                                data-story="Open the history. Same one-minute sitting. Different object: a history a stranger can inspect."
-                                data-img="img/clip-open.jpg"
-                                data-alt="Hands opening a history on a laptop">Open</button>
-                            <button type="button" class="clip after" style="flex: 6" data-title="Inspect deeds"
-                                data-kind="~36 s"
-                                data-story="This is where the minute now goes. Inspect a deed, not the packaging."
-                                data-img="img/clip-inspect.jpg" data-alt="Hands inspecting a deed on a laptop">Inspect
-                                deeds</button>
-                            <button type="button" class="clip after" style="flex: 3" data-title="Entrust"
-                                data-kind="leftover"
-                                data-story="If the deeds are there, the Requester can entrust the next piece of work."
-                                data-img="img/clip-entrust.jpg"
-                                data-alt="Assigning the next piece of work on a laptop">Entrust</button>
+                        <div class="track">
+                            <span class="track-name">After</span>
+                            <div class="clips">
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 1"
+                                    data-title="Open"
+                                    data-kind="~6 s"
+                                    data-story="Open the history. Same one-minute sitting. Different object: a history a stranger can inspect."
+                                    data-img="img/clip-open.jpg"
+                                    data-alt="Hands opening a history on a laptop"
+                                >
+                                    Open
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 6"
+                                    data-title="Inspect deeds"
+                                    data-kind="~36 s"
+                                    data-story="This is where the minute now goes. Inspect a deed, not the packaging."
+                                    data-img="img/clip-inspect.jpg"
+                                    data-alt="Hands inspecting a deed on a laptop"
+                                >
+                                    Inspect deeds
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 3"
+                                    data-title="Entrust"
+                                    data-kind="leftover"
+                                    data-story="If the deeds are there, the Requester can entrust the next piece of work."
+                                    data-img="img/clip-entrust.jpg"
+                                    data-alt="Assigning the next piece of work on a laptop"
+                                >
+                                    Entrust
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="time-scene">
-                <h3>Fund</h3>
-                <p class="muted">About three hours on one application. The calendar wait is weeks; the cut is hours.</p>
-                <div class="time-edit">
-                    <div class="ruler" aria-hidden="true">
-                        <span class="ruler-gutter"></span>
-                        <div class="ruler-scale">
-                            <span>0</span><span>1.5 h</span><span>3 h</span>
+                <div class="time-scene">
+                    <h3>Fund</h3>
+                    <p class="muted">
+                        About three hours on one application. The calendar wait
+                        is weeks; the cut is hours.
+                    </p>
+                    <div class="time-edit">
+                        <div class="ruler" aria-hidden="true">
+                            <span class="ruler-gutter"></span>
+                            <div class="ruler-scale">
+                                <span>0</span><span>1.5 h</span><span>3 h</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="track">
-                        <span class="track-name">Before</span>
-                        <div class="clips">
-                            <button type="button" class="clip" style="flex: 6" data-title="Deck" data-kind="~1 h 50 m"
-                                data-story="Read a pitch. Independent grant review is typically two to four hours per application. Most of it goes to the proposal, not the history."
-                                data-img="img/clip-deck.jpg"
-                                data-alt="A laptop showing a pitch deck of slides">Deck</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="CV" data-kind="~20 m"
-                                data-story="Who they say they are. Roles, schools, a list. Still a claim."
-                                data-img="img/clip-cv.jpg" data-alt="A printed CV on cream paper">CV</button>
-                            <button type="button" class="clip" style="flex: 2" data-title="Interview" data-kind="~35 m"
-                                data-story="Sometimes a call. Still not the history. Time goes to performance in a room."
-                                data-img="img/clip-interview.jpg"
-                                data-alt="A laptop on a table showing a video call">Interview</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="Score" data-kind="~20 m"
-                                data-story="A score, a panel, a vote. The funds move. The history was never opened."
-                                data-img="img/clip-score.jpg" data-alt="A scoring sheet and a red pen">Score</button>
+                        <div class="track">
+                            <span class="track-name">Before</span>
+                            <div class="clips">
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 6"
+                                    data-title="Deck"
+                                    data-kind="~1 h 50 m"
+                                    data-story="Read a pitch. Independent grant review is typically two to four hours per application. Most of it goes to the proposal, not the history."
+                                    data-img="img/clip-deck.jpg"
+                                    data-alt="A laptop showing a pitch deck of slides"
+                                >
+                                    Deck
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 1"
+                                    data-title="CV"
+                                    data-kind="~20 m"
+                                    data-story="Who they say they are. Roles, schools, a list. Still a claim."
+                                    data-img="img/clip-cv.jpg"
+                                    data-alt="A printed CV on cream paper"
+                                >
+                                    CV
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 2"
+                                    data-title="Interview"
+                                    data-kind="~35 m"
+                                    data-story="Sometimes a call. Still not the history. Time goes to performance in a room."
+                                    data-img="img/clip-interview.jpg"
+                                    data-alt="A laptop on a table showing a video call"
+                                >
+                                    Interview
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 1"
+                                    data-title="Score"
+                                    data-kind="~20 m"
+                                    data-story="A score, a panel, a vote. The funds move. The history was never opened."
+                                    data-img="img/clip-score.jpg"
+                                    data-alt="A scoring sheet and a red pen"
+                                >
+                                    Score
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="track">
-                        <span class="track-name">After</span>
-                        <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open" data-kind="~20 m"
-                                data-story="Open the history. Same three hours. Different object: a history a stranger can inspect."
-                                data-img="img/clip-open.jpg"
-                                data-alt="Hands opening a history on a laptop">Open</button>
-                            <button type="button" class="clip after" style="flex: 7" data-title="Follow the history"
-                                data-kind="~2 h"
-                                data-story="This is where the hours now go. If the deeds are not there, it is not competence."
-                                data-img="img/clip-follow.jpg"
-                                data-alt="A hand tracing a history of deeds on a large screen">Follow the
-                                history</button>
-                            <button type="button" class="clip after" style="flex: 2" data-title="Fund" data-kind="~35 m"
-                                data-story="If the deeds are there, the Requester can fund the next piece of work. Not a prize for a slide deck."
-                                data-img="img/clip-fund.jpg"
-                                data-alt="Confirming an Ethereum transfer on a laptop">Fund</button>
+                        <div class="track">
+                            <span class="track-name">After</span>
+                            <div class="clips">
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 1"
+                                    data-title="Open"
+                                    data-kind="~20 m"
+                                    data-story="Open the history. Same three hours. Different object: a history a stranger can inspect."
+                                    data-img="img/clip-open.jpg"
+                                    data-alt="Hands opening a history on a laptop"
+                                >
+                                    Open
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 7"
+                                    data-title="Follow the history"
+                                    data-kind="~2 h"
+                                    data-story="This is where the hours now go. If the deeds are not there, it is not competence."
+                                    data-img="img/clip-follow.jpg"
+                                    data-alt="A hand tracing a history of deeds on a large screen"
+                                >
+                                    Follow the history
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 2"
+                                    data-title="Fund"
+                                    data-kind="~35 m"
+                                    data-story="If the deeds are there, the Requester can fund the next piece of work. Not a prize for a slide deck."
+                                    data-img="img/clip-fund.jpg"
+                                    data-alt="Confirming an Ethereum transfer on a laptop"
+                                >
+                                    Fund
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="time-scene">
-                <h3>Choose the next deed</h3>
-                <p class="muted">About six months — the usual professional-certificate pace. Same months, different
-                    object.</p>
-                <div class="time-edit">
-                    <div class="ruler" aria-hidden="true">
-                        <span class="ruler-gutter"></span>
-                        <div class="ruler-scale">
-                            <span>0</span><span>3 mo</span><span>6</span>
+                <div class="time-scene">
+                    <h3>Choose the next deed</h3>
+                    <p class="muted">
+                        About six months — the usual professional-certificate
+                        pace. Same months, different object.
+                    </p>
+                    <div class="time-edit">
+                        <div class="ruler" aria-hidden="true">
+                            <span class="ruler-gutter"></span>
+                            <div class="ruler-scale">
+                                <span>0</span><span>3 mo</span><span>6</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="track">
-                        <span class="track-name">Before</span>
-                        <div class="clips">
-                            <button type="button" class="clip" style="flex: 1" data-title="Catalog" data-kind="~2 wk"
-                                data-story="Browse courses. A few days, not months. The catalog does not become history."
-                                data-img="img/clip-catalog.jpg"
-                                data-alt="An open course catalog on a table">Catalog</button>
-                            <button type="button" class="clip" style="flex: 8" data-title="Course" data-kind="~5 mo"
-                                data-story="Sit through the hours. Typical certificate load is about ten hours a week for three to six months. Nothing a stranger can inspect."
-                                data-img="img/clip-course.jpg"
-                                data-alt="An empty classroom with a projector">Course</button>
-                            <button type="button" class="clip" style="flex: 1" data-title="Certificate"
-                                data-kind="leftover"
-                                data-story="A paper at the end. It does not open. It is not a deed."
-                                data-img="img/clip-certificate.jpg"
-                                data-alt="A framed paper certificate on a wall">Certificate</button>
+                        <div class="track">
+                            <span class="track-name">Before</span>
+                            <div class="clips">
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 1"
+                                    data-title="Catalog"
+                                    data-kind="~2 wk"
+                                    data-story="Browse courses. A few days, not months. The catalog does not become history."
+                                    data-img="img/clip-catalog.jpg"
+                                    data-alt="An open course catalog on a table"
+                                >
+                                    Catalog
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 8"
+                                    data-title="Course"
+                                    data-kind="~5 mo"
+                                    data-story="Sit through the hours. Typical certificate load is about ten hours a week for three to six months. Nothing a stranger can inspect."
+                                    data-img="img/clip-course.jpg"
+                                    data-alt="An empty classroom with a projector"
+                                >
+                                    Course
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip"
+                                    style="flex: 1"
+                                    data-title="Certificate"
+                                    data-kind="leftover"
+                                    data-story="A paper at the end. It does not open. It is not a deed."
+                                    data-img="img/clip-certificate.jpg"
+                                    data-alt="A framed paper certificate on a wall"
+                                >
+                                    Certificate
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="track">
-                        <span class="track-name">After</span>
-                        <div class="clips">
-                            <button type="button" class="clip after" style="flex: 1" data-title="Open a history"
-                                data-kind="a look"
-                                data-story="Open a history. See the work that is already there. Not a catalog."
-                                data-img="img/clip-open.jpg" data-alt="Hands opening a history on a laptop">Open a
-                                history</button>
-                            <button type="button" class="clip after" style="flex: 8" data-title="Leave deeds"
-                                data-kind="~5 mo"
-                                data-story="Show up. Ship. Leave deeds a stranger can inspect. This is where the months now go."
-                                data-img="img/clip-leave-deeds.jpg"
-                                data-alt="Hands leaving inspectable deeds on a laptop">Leave deeds</button>
-                            <button type="button" class="clip after" style="flex: 1" data-title="Deed"
-                                data-kind="leftover"
-                                data-story="The next deed is now in the history. A Requester can later inspect it, then act."
-                                data-img="img/clip-deed.jpg" data-alt="A new deed added to a history">Deed</button>
+                        <div class="track">
+                            <span class="track-name">After</span>
+                            <div class="clips">
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 1"
+                                    data-title="Open a history"
+                                    data-kind="a look"
+                                    data-story="Open a history. See the work that is already there. Not a catalog."
+                                    data-img="img/clip-open.jpg"
+                                    data-alt="Hands opening a history on a laptop"
+                                >
+                                    Open a history
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 8"
+                                    data-title="Leave deeds"
+                                    data-kind="~5 mo"
+                                    data-story="Show up. Ship. Leave deeds a stranger can inspect. This is where the months now go."
+                                    data-img="img/clip-leave-deeds.jpg"
+                                    data-alt="Hands leaving inspectable deeds on a laptop"
+                                >
+                                    Leave deeds
+                                </button>
+                                <button
+                                    type="button"
+                                    class="clip after"
+                                    style="flex: 1"
+                                    data-title="Deed"
+                                    data-kind="leftover"
+                                    data-story="The next deed is now in the history. A Requester can later inspect it, then act."
+                                    data-img="img/clip-deed.jpg"
+                                    data-alt="A new deed added to a history"
+                                >
+                                    Deed
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section>
-            <h2>What if we could look at a history this way?</h2>
-            <p class="muted" id="example-blurb" hidden></p>
-            <p class="chip-kicker">Account</p>
-            <div class="chips" id="addresses" role="group" aria-label="Which account"></div>
-            <div class="network-scroll">
-                <div class="network-board" role="group" aria-label="Click a deed to open details.">
-                    <svg class="network-lines" aria-hidden="true"></svg>
+            <section>
+                <h2>What if we could look at a history this way?</h2>
+                <p class="muted" id="example-blurb" hidden></p>
+                <p class="chip-kicker">Account</p>
+                <div
+                    class="chips"
+                    id="addresses"
+                    role="group"
+                    aria-label="Which account"
+                ></div>
+                <div class="network-scroll">
+                    <div
+                        class="network-board"
+                        role="group"
+                        aria-label="Click a deed to open details."
+                    >
+                        <svg class="network-lines" aria-hidden="true"></svg>
+                    </div>
                 </div>
+            </section>
+        </main>
+
+        <footer>
+            <p class="muted">Last modified: <time id="last-modified"></time></p>
+            <p class="muted">
+                <a
+                    class="github"
+                    href="https://github.com/repreit/competence-graph"
+                    aria-label="GitHub repository"
+                >
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"
+                        />
+                    </svg>
+                    GitHub
+                </a>
+            </p>
+        </footer>
+
+        <div class="clip-bubble" id="clip-bubble" hidden>
+            <button
+                type="button"
+                class="transport"
+                id="bubble-transport"
+                hidden
+                aria-label="Pause"
+            >
+                <span class="play-shape" aria-hidden="true"></span>
+                <span class="pause-shape" aria-hidden="true"></span>
+            </button>
+            <img id="clip-bubble-image" alt="" />
+            <div class="sheet">
+                <h3 id="clip-bubble-title"></h3>
+                <p class="muted kind" id="clip-bubble-kind"></p>
+                <p class="story" id="clip-bubble-story"></p>
             </div>
-        </section>
-    </main>
-
-    <footer>
-        <p class="muted">Last modified: <time id="last-modified"></time></p>
-        <p class="muted">
-            <a class="github" href="https://github.com/repreit/competence-graph" aria-label="GitHub repository">
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                    <path
-                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" />
-                </svg>
-                GitHub
-            </a>
-        </p>
-    </footer>
-
-    <div class="clip-bubble" id="clip-bubble" hidden>
-        <button type="button" class="transport" id="bubble-transport" hidden aria-label="Pause">
-            <span class="play-shape" aria-hidden="true"></span>
-            <span class="pause-shape" aria-hidden="true"></span>
-        </button>
-        <img id="clip-bubble-image" alt="" />
-        <div class="sheet">
-            <h3 id="clip-bubble-title"></h3>
-            <p class="muted kind" id="clip-bubble-kind"></p>
-            <p class="story" id="clip-bubble-story"></p>
+            <span class="tail" aria-hidden="true"></span>
         </div>
-        <span class="tail" aria-hidden="true"></span>
-    </div>
 
-    <dialog id="deed-window" aria-labelledby="deed-title">
-        <button type="button" class="close" aria-label="Close">&times;</button>
-        <img id="deed-image" alt="" />
-        <div class="sheet">
-            <h2 id="deed-title"></h2>
-            <p class="muted"><a id="deed-link" href="" hidden></a></p>
-        </div>
-    </dialog>
+        <dialog id="deed-window" aria-labelledby="deed-title">
+            <button type="button" class="close" aria-label="Close">
+                &times;
+            </button>
+            <img id="deed-image" alt="" />
+            <div class="sheet">
+                <h2 id="deed-title"></h2>
+                <p class="muted"><a id="deed-link" href="" hidden></a></p>
+            </div>
+        </dialog>
 
-    <script src="js/base.js"></script>
-</body>
-
+        <script src="js/base.js"></script>
+    </body>
 </html>

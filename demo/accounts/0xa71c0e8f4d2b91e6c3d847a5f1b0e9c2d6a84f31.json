@@ -9,9 +9,7 @@
                     "img": "img/deed-closing-group.jpg",
                     "alt": "People at a table with floor plans and a peer-to-peer property deal sketch"
                 },
-                "nodeIds": [
-                    "testnet-listing"
-                ]
+                "nodeIds": ["testnet-listing"]
             },
             {
                 "id": "escrow-pr",
@@ -21,9 +19,7 @@
                     "img": "img/deed-property-escrow-pr.jpg",
                     "alt": "Laptop showing a property escrow contract pull request"
                 },
-                "nodeIds": [
-                    "testnet-listing"
-                ]
+                "nodeIds": ["testnet-listing"]
             },
             {
                 "id": "testnet-listing",
@@ -52,9 +48,7 @@
                     "img": "img/deed-live-fulfillment.jpg",
                     "alt": "Keys and a tablet showing fulfillment complete"
                 },
-                "nodeIds": [
-                    "testnet-listing"
-                ]
+                "nodeIds": ["testnet-listing"]
             },
             {
                 "id": "listing-ux",
@@ -68,9 +62,7 @@
                     "img": "img/deed-listing-design.jpg",
                     "alt": "Paper wireframes of a property listing and fulfillment steps"
                 },
-                "nodeIds": [
-                    "testnet-listing"
-                ]
+                "nodeIds": ["testnet-listing"]
             }
         ]
     }

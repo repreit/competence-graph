@@ -25,9 +25,11 @@ function hideClipBubble() {
     bubbleEl.hidden = true;
     bubbleTransportEl.hidden = true;
     document.body.classList.remove("timeline-focus");
-    document.querySelectorAll(".time-scene.is-active").forEach(function (scene) {
-        scene.classList.remove("is-active");
-    });
+    document
+        .querySelectorAll(".time-scene.is-active")
+        .forEach(function (scene) {
+            scene.classList.remove("is-active");
+        });
 }
 
 function placeClipBubble(clip) {
@@ -40,9 +42,7 @@ function placeClipBubble(clip) {
     left = Math.max(8, Math.min(left, window.innerWidth - width - 8));
     const fitsAbove = rect.top > height + gap + 8;
     bubbleEl.classList.toggle("below", !fitsAbove);
-    const top = fitsAbove
-        ? rect.top - height - gap
-        : rect.bottom + gap;
+    const top = fitsAbove ? rect.top - height - gap : rect.bottom + gap;
     bubbleEl.style.left = left + "px";
     bubbleEl.style.top = top + "px";
     bubbleEl.style.setProperty("--tail-x", center - left + "px");
@@ -152,7 +152,7 @@ function renderHistory(account) {
     const label = shortAddress(account.address) || "Unknown";
     boardEl.setAttribute(
         "aria-label",
-        label + ". Click a deed to open details."
+        label + ". Click a deed to open details.",
     );
     boardEl.querySelectorAll(".node").forEach(function (node) {
         node.remove();
@@ -205,15 +205,19 @@ function renderHistory(account) {
 }
 
 function showHistory(address) {
-    const account = accounts.find(function (item) {
-        return item.address === address;
-    }) || accounts[0];
+    const account =
+        accounts.find(function (item) {
+            return item.address === address;
+        }) || accounts[0];
     if (!account) {
         return;
     }
     activeAddress = account.address || "";
     addressesEl.querySelectorAll("button").forEach(function (button) {
-        button.setAttribute("aria-pressed", button.dataset.address === activeAddress ? "true" : "false");
+        button.setAttribute(
+            "aria-pressed",
+            button.dataset.address === activeAddress ? "true" : "false",
+        );
     });
     renderHistory(account);
 }
@@ -260,7 +264,17 @@ function placeNode(el, left, top, boxW, boxH, boardW, boardH) {
     el.style.top = Math.max(pad, Math.min(top, boardH - boxH - pad)) + "px";
 }
 
-function placeCard(el, boxW, boxH, innerW, innerH, boardW, boardH, autoLeft, autoTop) {
+function placeCard(
+    el,
+    boxW,
+    boxH,
+    innerW,
+    innerH,
+    boardW,
+    boardH,
+    autoLeft,
+    autoTop,
+) {
     const pos = readPosition(el);
     if (pos) {
         placeNode(
@@ -270,7 +284,7 @@ function placeCard(el, boxW, boxH, innerW, innerH, boardW, boardH, autoLeft, aut
             boxW,
             boxH,
             boardW,
-            boardH
+            boardH,
         );
         return;
     }
@@ -329,8 +343,7 @@ function layoutNetwork() {
         maxRest = Math.max(maxRest, node.offsetHeight);
     });
     const radius = Math.max(hubW, hubH) / 2 + Math.max(nodeW, maxRest) / 2 + 40;
-    const boardH =
-        Math.max(hubH, radius * 2 + maxRest) + 32 + BOARD_PAD * 2;
+    const boardH = Math.max(hubH, radius * 2 + maxRest) + 32 + BOARD_PAD * 2;
     boardEl.style.height = boardH + "px";
     layoutWidth = width;
 
@@ -347,7 +360,7 @@ function layoutNetwork() {
         width,
         boardH,
         cx - hubW / 2,
-        cy - hubH / 2
+        cy - hubH / 2,
     );
     const autoRest = rest.filter(function (node) {
         return !readPosition(node);
@@ -361,8 +374,7 @@ function layoutNetwork() {
         }
         const index = autoRest.indexOf(node);
         const angle =
-            -Math.PI / 2 +
-            (2 * Math.PI * index) / Math.max(autoRest.length, 1);
+            -Math.PI / 2 + (2 * Math.PI * index) / Math.max(autoRest.length, 1);
         const autoLeft = cx + Math.cos(angle) * radius - w / 2;
         const autoTop = cy + Math.sin(angle) * radius - h / 2;
         placeCard(node, w, h, innerW, innerH, width, boardH, autoLeft, autoTop);
@@ -378,7 +390,7 @@ function boxOf(el, boardRect) {
         right: r.right - boardRect.left,
         bottom: r.bottom - boardRect.top,
         cx: (r.left + r.right) / 2 - boardRect.left,
-        cy: (r.top + r.bottom) / 2 - boardRect.top
+        cy: (r.top + r.bottom) / 2 - boardRect.top,
     };
 }
 
@@ -394,7 +406,9 @@ function exitPoint(rect, towardX, towardY) {
 }
 
 function nodeById(id) {
-    return boardEl.querySelector('.node[data-node-id="' + CSS.escape(id) + '"]');
+    return boardEl.querySelector(
+        '.node[data-node-id="' + CSS.escape(id) + '"]',
+    );
 }
 
 function drawNetworkLines() {
@@ -454,18 +468,20 @@ fetch("accounts/index.json")
         const list = Array.isArray(ids) ? ids : [];
         return Promise.all(
             list.map(function (id) {
-                return fetch("accounts/" + id + ".json").then(function (response) {
-                    if (!response.ok) {
-                        throw new Error("accounts/" + id + ".json");
-                    }
-                    return response.json().then(function (data) {
-                        return {
-                            address: id,
-                            history: data.history || { nodes: [] }
-                        };
-                    });
-                });
-            })
+                return fetch("accounts/" + id + ".json").then(
+                    function (response) {
+                        if (!response.ok) {
+                            throw new Error("accounts/" + id + ".json");
+                        }
+                        return response.json().then(function (data) {
+                            return {
+                                address: id,
+                                history: data.history || { nodes: [] },
+                            };
+                        });
+                    },
+                );
+            }),
         );
     })
     .then(function (list) {
@@ -519,15 +535,18 @@ function dwellForClip(clip) {
 
 function clipQueue(clipsEl) {
     const lane = clipsEl.getBoundingClientRect();
-    return Array.prototype.map.call(clipsEl.querySelectorAll(".clip"), function (clip) {
-        const rect = clip.getBoundingClientRect();
-        return {
-            clip: clip,
-            start: (rect.left - lane.left) / lane.width,
-            end: (rect.right - lane.left) / lane.width,
-            dwell: dwellForClip(clip)
-        };
-    });
+    return Array.prototype.map.call(
+        clipsEl.querySelectorAll(".clip"),
+        function (clip) {
+            const rect = clip.getBoundingClientRect();
+            return {
+                clip: clip,
+                start: (rect.left - lane.left) / lane.width,
+                end: (rect.right - lane.left) / lane.width,
+                dwell: dwellForClip(clip),
+            };
+        },
+    );
 }
 
 function setPlayheadAt(edit, playhead, clipsEl, progress) {
@@ -563,7 +582,10 @@ function setTransportPlaying(playing) {
         button.setAttribute("aria-label", label);
     });
     bubbleTransportEl.hidden = bubbleEl.hidden;
-    bubbleEl.classList.toggle("is-playing", Boolean(playback) && !playback.paused);
+    bubbleEl.classList.toggle(
+        "is-playing",
+        Boolean(playback) && !playback.paused,
+    );
 }
 
 function stopPlayback() {
@@ -662,16 +684,18 @@ function tickPlayback(now) {
             playback.started = now;
             playback.lastClip = null;
             playback.tracks[0].classList.remove("is-live");
-            playback.tracks[0].querySelectorAll(".is-on").forEach(function (clip) {
-                clip.classList.remove("is-on");
-            });
+            playback.tracks[0]
+                .querySelectorAll(".is-on")
+                .forEach(function (clip) {
+                    clip.classList.remove("is-on");
+                });
             playback.tracks[1].classList.add("is-live");
             playback.edit.classList.add("is-recut");
             setPlayheadAt(
                 playback.edit,
                 playback.playhead,
                 playback.tracks[1].querySelector(".clips"),
-                0
+                0,
             );
             bubbleEl.hidden = true;
             playback.raf = requestAnimationFrame(tickPlayback);
@@ -703,9 +727,15 @@ function startPlayback(edit, fromClip) {
     let elapsed = 0;
     if (fromClip && tracks[1] && tracks[1].contains(fromClip)) {
         pass = 1;
-        elapsed = elapsedBeforeClip(tracks[1].querySelector(".clips"), fromClip);
+        elapsed = elapsedBeforeClip(
+            tracks[1].querySelector(".clips"),
+            fromClip,
+        );
     } else if (fromClip && tracks[0] && tracks[0].contains(fromClip)) {
-        elapsed = elapsedBeforeClip(tracks[0].querySelector(".clips"), fromClip);
+        elapsed = elapsedBeforeClip(
+            tracks[0].querySelector(".clips"),
+            fromClip,
+        );
     }
     playback = {
         edit: edit,
@@ -806,11 +836,15 @@ document.addEventListener("pointerdown", function (event) {
     }
 });
 
-window.addEventListener("scroll", function () {
-    if (bubbleClip) {
-        placeClipBubble(bubbleClip);
-    }
-}, { passive: true });
+window.addEventListener(
+    "scroll",
+    function () {
+        if (bubbleClip) {
+            placeClipBubble(bubbleClip);
+        }
+    },
+    { passive: true },
+);
 
 window.addEventListener("resize", function () {
     layoutNetwork();
@@ -851,7 +885,7 @@ function showModifiedError() {
 }
 
 fetch(
-    "https://api.github.com/repos/repreit/competence-graph/commits?per_page=1"
+    "https://api.github.com/repos/repreit/competence-graph/commits?per_page=1",
 )
     .then(function (response) {
         if (!response.ok) {

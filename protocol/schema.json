@@ -1,60 +1,60 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "competence-graph account",
-  "description": "One account's history of deeds. The account address is the file name, not a field.",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["history"],
-  "properties": {
-    "history": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["nodes"],
-      "properties": {
-        "nodes": {
-          "type": "array",
-          "items": { "$ref": "#/$defs/node" }
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "competence-graph account",
+    "description": "One account's history of deeds. The account address is the file name, not a field.",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["history"],
+    "properties": {
+        "history": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["nodes"],
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": { "$ref": "#/$defs/node" }
+                }
+            }
         }
-      }
-    }
-  },
-  "$defs": {
-    "node": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["id", "data"],
-      "properties": {
-        "id": {
-          "type": "string",
-          "minLength": 1,
-          "description": "This node's name inside the history. Used by nodeIds. Not an on-chain address."
-        },
-        "position": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["x", "y"],
-          "properties": {
-            "x": { "type": "number" },
-            "y": { "type": "number" }
-          }
-        },
-        "data": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["title", "link"],
-          "properties": {
-            "title": { "type": "string" },
-            "link": { "type": "string", "minLength": 1 },
-            "img": { "type": "string" },
-            "alt": { "type": "string" }
-          }
-        },
-        "nodeIds": {
-          "type": "array",
-          "items": { "type": "string", "minLength": 1 },
-          "description": "Other node ids in this same history."
+    },
+    "$defs": {
+        "node": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "data"],
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "This node's name inside the history. Used by nodeIds. Not an on-chain address."
+                },
+                "position": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["x", "y"],
+                    "properties": {
+                        "x": { "type": "number" },
+                        "y": { "type": "number" }
+                    }
+                },
+                "data": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["title", "link"],
+                    "properties": {
+                        "title": { "type": "string" },
+                        "link": { "type": "string", "minLength": 1 },
+                        "img": { "type": "string" },
+                        "alt": { "type": "string" }
+                    }
+                },
+                "nodeIds": {
+                    "type": "array",
+                    "items": { "type": "string", "minLength": 1 },
+                    "description": "Other node ids in this same history."
+                }
+            }
         }
-      }
     }
-  }
 }
