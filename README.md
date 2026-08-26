@@ -31,7 +31,7 @@ We will not hide behind buzzwords or packaging. We shape this with your feedback
 ## Official Community
 
 <a href="https://hey.xyz/g/0xa88e766372937f45d4d70A786A1aaa0a603Ae5f7">
-  <img src="demo/img/a001/hey.png" alt="Hey Community" height="32">
+  <img src="protocol/img/hey.png" alt="Hey Community" height="32">
 </a>
 <br><br>
 
