@@ -13,9 +13,10 @@ let historyGraph = null;
 let historyGraphPending = null;
 let historyEpoch = 0;
 let hoveredNodeId = "";
+let hoveredNode = null;
 
 function openDeed(data) {
-    if (!windowEl) {
+    if (!windowEl || windowEl.open) {
         return;
     }
     data = data || {};
@@ -531,6 +532,7 @@ function setNodeHovered(node) {
         return;
     }
     hoveredNodeId = nextId;
+    hoveredNode = node || null;
     if (boardEl) {
         boardEl.style.cursor = nextId ? "pointer" : "";
     }
@@ -602,9 +604,6 @@ function createHistoryGraph(ForceGraph3D) {
         })
         .onNodeHover(function (node) {
             setNodeHovered(node);
-        })
-        .onNodeClick(function (node) {
-            openDeed(node.data || {});
         });
     bindHistoryControls(historyGraph);
     paintHistoryGraph();
@@ -658,6 +657,7 @@ function renderHistory(account) {
         }
         historyEpoch += 1;
         hoveredNodeId = "";
+        hoveredNode = null;
         boardEl.style.cursor = "";
         disposeHistoryGpu(graph);
         graph.graphData(graphDataFromHistory(history));
@@ -737,6 +737,28 @@ export function bindHistory() {
         windowEl.addEventListener("close", unlockScroll);
     }
     boardEl = document.querySelector(".network-board");
+    if (boardEl) {
+        let press = null;
+        boardEl.addEventListener("pointerdown", function (ev) {
+            press =
+                ev.button === 0 && hoveredNode
+                    ? { node: hoveredNode, x: ev.clientX, y: ev.clientY }
+                    : null;
+        });
+        boardEl.addEventListener("pointerup", function (ev) {
+            if (!press || ev.button !== 0) {
+                press = null;
+                return;
+            }
+            const dx = ev.clientX - press.x;
+            const dy = ev.clientY - press.y;
+            const node = press.node;
+            press = null;
+            if (dx * dx + dy * dy < 100) {
+                openDeed((node && node.data) || {});
+            }
+        });
+    }
     blurbEl = document.getElementById("example-blurb");
     addressesEl = document.getElementById("addresses");
     const resetViewEl = document.querySelector(".graph-reset");
