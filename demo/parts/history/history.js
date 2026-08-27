@@ -672,9 +672,12 @@ export function bindHistory() {
     titleEl = document.getElementById("deed-title");
     linkEl = document.getElementById("deed-link");
     if (windowEl) {
-        windowEl.querySelector(".close").addEventListener("click", function () {
-            windowEl.close();
-        });
+        const closeEl = windowEl.querySelector(".close");
+        if (closeEl) {
+            closeEl.addEventListener("click", function () {
+                windowEl.close();
+            });
+        }
         windowEl.addEventListener("click", function (event) {
             if (event.target === windowEl) {
                 windowEl.close();
