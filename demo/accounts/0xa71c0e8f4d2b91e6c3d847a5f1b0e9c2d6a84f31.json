@@ -11,7 +11,7 @@
                 "data": {
                     "title": "Escrow and closing working group",
                     "link": "https://github.com/repreit/p2p-escrow/discussions/3",
-                    "img": "img/deed-closing-group.jpg",
+                    "img": "parts/history/img/deed-closing-group.jpg",
                     "alt": "People at a table with floor plans and a peer-to-peer property deal sketch"
                 },
                 "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
@@ -26,7 +26,7 @@
                 "data": {
                     "title": "Property escrow contract PR",
                     "link": "https://github.com/repreit/p2p-escrow/pull/17",
-                    "img": "img/deed-property-escrow-pr.jpg",
+                    "img": "parts/history/img/deed-property-escrow-pr.jpg",
                     "alt": "Laptop showing a property escrow contract pull request"
                 },
                 "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
@@ -41,7 +41,7 @@
                 "data": {
                     "title": "Testnet P2P listing",
                     "link": "https://sepolia.etherscan.io/tx/0x3a8f1c0e7b92d64f5e1a0c8b9d2e4f7a6b1c3d5e8f0a2b4c6d8e0f1a3b5c7d9e",
-                    "img": "img/deed-testnet-listing.jpg",
+                    "img": "parts/history/img/deed-testnet-listing.jpg",
                     "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action"
                 },
                 "nodeIds": [
@@ -61,7 +61,7 @@
                 "data": {
                     "title": "Live P2P fulfillment",
                     "link": "https://etherscan.io/tx/0x9e2d4b6a1c8f0e3d7b5a9c2f4e6d8b0a1c3e5f7a9b2d4c6e8f0a1b3c5d7e9f1a",
-                    "img": "img/deed-live-fulfillment.jpg",
+                    "img": "parts/history/img/deed-live-fulfillment.jpg",
                     "alt": "Keys and a tablet showing fulfillment complete"
                 },
                 "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
@@ -76,7 +76,7 @@
                 "data": {
                     "title": "Listing and handover UX",
                     "link": "ipfs://bafybeihdwdcefghijklmnopqrstuvwxyz234567abcdefghijk",
-                    "img": "img/deed-listing-design.jpg",
+                    "img": "parts/history/img/deed-listing-design.jpg",
                     "alt": "Paper wireframes of a property listing and fulfillment steps"
                 },
                 "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
