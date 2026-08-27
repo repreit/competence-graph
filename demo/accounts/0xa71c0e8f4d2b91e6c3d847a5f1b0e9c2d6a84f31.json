@@ -2,7 +2,7 @@
     "history": {
         "nodes": [
             {
-                "id": "working-group",
+                "id": "7c4e2a91-8b3d-4f16-a2e0-5d9c1b7e4f28",
                 "position": {
                     "x": -16,
                     "y": 17,
@@ -14,10 +14,10 @@
                     "img": "img/deed-closing-group.jpg",
                     "alt": "People at a table with floor plans and a peer-to-peer property deal sketch"
                 },
-                "nodeIds": ["testnet-listing"]
+                "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
             },
             {
-                "id": "escrow-pr",
+                "id": "1f8a0c33-6e2b-4a91-9d47-c0e5b8f2a164",
                 "position": {
                     "x": 17,
                     "y": -16,
@@ -29,10 +29,10 @@
                     "img": "img/deed-property-escrow-pr.jpg",
                     "alt": "Laptop showing a property escrow contract pull request"
                 },
-                "nodeIds": ["testnet-listing"]
+                "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
             },
             {
-                "id": "testnet-listing",
+                "id": "a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21",
                 "position": {
                     "x": 0,
                     "y": 0,
@@ -45,14 +45,14 @@
                     "alt": "Phone showing a peer-to-peer property listing with a lock-deposit action"
                 },
                 "nodeIds": [
-                    "working-group",
-                    "escrow-pr",
-                    "live-fulfillment",
-                    "listing-ux"
+                    "7c4e2a91-8b3d-4f16-a2e0-5d9c1b7e4f28",
+                    "1f8a0c33-6e2b-4a91-9d47-c0e5b8f2a164",
+                    "4b2e8f07-d1c6-49a3-8e5f-2a7b0c4d91e6",
+                    "e6c1a048-5f93-4d2b-b870-1c4e9a2f6d35"
                 ]
             },
             {
-                "id": "live-fulfillment",
+                "id": "4b2e8f07-d1c6-49a3-8e5f-2a7b0c4d91e6",
                 "position": {
                     "x": 17,
                     "y": 16,
@@ -64,10 +64,10 @@
                     "img": "img/deed-live-fulfillment.jpg",
                     "alt": "Keys and a tablet showing fulfillment complete"
                 },
-                "nodeIds": ["testnet-listing"]
+                "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
             },
             {
-                "id": "listing-ux",
+                "id": "e6c1a048-5f93-4d2b-b870-1c4e9a2f6d35",
                 "position": {
                     "x": -17,
                     "y": -16,
@@ -79,7 +79,7 @@
                     "img": "img/deed-listing-design.jpg",
                     "alt": "Paper wireframes of a property listing and fulfillment steps"
                 },
-                "nodeIds": ["testnet-listing"]
+                "nodeIds": ["a93d5e10-2c74-4b8e-b156-8f0d3a7c9e21"]
             }
         ]
     }

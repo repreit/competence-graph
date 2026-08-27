@@ -27,7 +27,7 @@
                 "id": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "This node's name inside the history. Used by nodeIds. Not an on-chain address."
+                    "description": "Opaque id for this node inside the history. Used by nodeIds. Not an on-chain address."
                 },
                 "position": {
                     "type": "object",

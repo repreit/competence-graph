@@ -2,7 +2,7 @@
     "history": {
         "nodes": [
             {
-                "id": "closings-desk",
+                "id": "2d9f1b84-0a57-4c3e-9e16-7b4d8c0a2f51",
                 "position": {
                     "x": -20,
                     "y": 12,
@@ -14,10 +14,10 @@
                     "img": "img/deed-closings-desk.jpg",
                     "alt": "A desk of closing folders, a stamp, and a house key"
                 },
-                "nodeIds": ["live-operator"]
+                "nodeIds": ["8a3c7e05-b1d4-48f2-a6c9-0e5b7d2f4a18"]
             },
             {
-                "id": "live-operator",
+                "id": "8a3c7e05-b1d4-48f2-a6c9-0e5b7d2f4a18",
                 "position": {
                     "x": 0,
                     "y": 0,
@@ -29,10 +29,13 @@
                     "img": "img/deed-live-operator.jpg",
                     "alt": "Keys handed over at a house door, tablet in hand"
                 },
-                "nodeIds": ["closings-desk", "second-live"]
+                "nodeIds": [
+                    "2d9f1b84-0a57-4c3e-9e16-7b4d8c0a2f51",
+                    "c5e0d192-7f46-4b8a-9c13-6d2a8e4f0b37"
+                ]
             },
             {
-                "id": "second-live",
+                "id": "c5e0d192-7f46-4b8a-9c13-6d2a8e4f0b37",
                 "position": {
                     "x": 20,
                     "y": -12,
@@ -44,7 +47,7 @@
                     "img": "img/deed-second-live.jpg",
                     "alt": "Keys handed over on a brick townhouse stoop"
                 },
-                "nodeIds": ["live-operator"]
+                "nodeIds": ["8a3c7e05-b1d4-48f2-a6c9-0e5b7d2f4a18"]
             }
         ]
     }
