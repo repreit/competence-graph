@@ -12,6 +12,7 @@ let activeAddress = "";
 let historyGraph = null;
 let historyGraphPending = null;
 let historyEpoch = 0;
+let hoveredNodeId = "";
 
 function openDeed(data) {
     if (!windowEl) {
@@ -192,11 +193,18 @@ function paintCardMesh(mesh, theme) {
     if (!card) {
         return;
     }
-    paintCard(card.ctx, card.canvas, card.data, theme, card.image);
+    paintCard(
+        card.ctx,
+        card.canvas,
+        card.data,
+        theme,
+        card.image,
+        card.hovered,
+    );
     card.tex.needsUpdate = true;
     const mats = mesh.material;
     if (Array.isArray(mats) && mats.length >= 6) {
-        mats[0].color.copy(cssColor(theme.line));
+        mats[0].color.copy(cssColor(card.hovered ? theme.ink : theme.line));
         mats[5].color.copy(cssColor(theme.card));
     }
 }
@@ -308,7 +316,7 @@ function drawCover(ctx, image, x, y, w, h) {
     ctx.drawImage(image, sx, sy, sw, sh, x, y, w, h);
 }
 
-function paintCard(ctx, canvas, data, theme, image) {
+function paintCard(ctx, canvas, data, theme, image, hovered) {
     const w = canvas.width;
     const titleH = 96;
     const imgH = canvas.height - titleH;
@@ -320,7 +328,7 @@ function paintCard(ctx, canvas, data, theme, image) {
         ctx.fillStyle = theme.line;
         ctx.fillRect(0, 0, w, imgH);
     }
-    ctx.strokeStyle = theme.line;
+    ctx.strokeStyle = hovered ? theme.ink : theme.line;
     ctx.lineWidth = 4;
     ctx.strokeRect(2, 2, w - 4, canvas.height - 4);
     ctx.fillStyle = theme.ink;
@@ -377,8 +385,9 @@ function nodeThreeObject(node) {
         tex: tex,
         data: data,
         image: null,
+        hovered: node.id === hoveredNodeId,
     };
-    paintCard(ctx, canvas, data, theme, null);
+    paintCard(ctx, canvas, data, theme, null, card.hovered);
     const front = new THREE.MeshBasicMaterial(
         Object.assign({ map: tex, transparent: false, opacity: 1 }, CARD_DEPTH),
     );
@@ -390,7 +399,11 @@ function nodeThreeObject(node) {
     );
     const edge = new THREE.MeshBasicMaterial(
         Object.assign(
-            { color: cssColor(theme.line), transparent: false, opacity: 1 },
+            {
+                color: cssColor(card.hovered ? theme.ink : theme.line),
+                transparent: false,
+                opacity: 1,
+            },
             CARD_DEPTH,
         ),
     );
@@ -403,6 +416,7 @@ function nodeThreeObject(node) {
         back,
     ]);
     mesh.userData.historyCard = card;
+    mesh.userData.nodeId = node.id;
     mesh.renderOrder = 1;
     paintCardOpaque(mesh);
     if (data.img) {
@@ -413,7 +427,7 @@ function nodeThreeObject(node) {
                 return;
             }
             card.image = image;
-            paintCard(ctx, canvas, data, historyTheme(), image);
+            paintCard(ctx, canvas, data, historyTheme(), image, card.hovered);
             tex.needsUpdate = true;
         };
         image.src = data.img;
@@ -511,6 +525,37 @@ function clipLinkToCards(linkObject, coords) {
     return true;
 }
 
+function setNodeHovered(node) {
+    const nextId = (node && node.id) || "";
+    if (nextId === hoveredNodeId) {
+        return;
+    }
+    hoveredNodeId = nextId;
+    if (boardEl) {
+        boardEl.style.cursor = nextId ? "pointer" : "";
+    }
+    if (!historyGraph) {
+        return;
+    }
+    const scene = historyGraph.scene();
+    if (!scene || typeof scene.traverse !== "function") {
+        return;
+    }
+    const theme = historyTheme();
+    scene.traverse(function (obj) {
+        const card = obj.userData && obj.userData.historyCard;
+        if (!card) {
+            return;
+        }
+        const hovered = obj.userData.nodeId === hoveredNodeId;
+        if (card.hovered === hovered) {
+            return;
+        }
+        card.hovered = hovered;
+        paintCardMesh(obj, theme);
+    });
+}
+
 function bindHistoryControls(graph) {
     const controls = graph.controls();
     if (!controls || !controls.mouseButtons) {
@@ -554,6 +599,9 @@ function createHistoryGraph(ForceGraph3D) {
         })
         .nodeLabel(function () {
             return "";
+        })
+        .onNodeHover(function (node) {
+            setNodeHovered(node);
         })
         .onNodeClick(function (node) {
             openDeed(node.data || {});
@@ -609,6 +657,8 @@ function renderHistory(account) {
             return;
         }
         historyEpoch += 1;
+        hoveredNodeId = "";
+        boardEl.style.cursor = "";
         disposeHistoryGpu(graph);
         graph.graphData(graphDataFromHistory(history));
         sizeHistoryGraph();
