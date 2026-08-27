@@ -1,9 +1,9 @@
-const bubbleEl = document.getElementById("clip-bubble");
-const bubbleImg = document.getElementById("clip-bubble-image");
-const bubbleTitle = document.getElementById("clip-bubble-title");
-const bubbleKind = document.getElementById("clip-bubble-kind");
-const bubbleStory = document.getElementById("clip-bubble-story");
-const bubbleTransportEl = document.getElementById("bubble-transport");
+let bubbleEl;
+let bubbleImg;
+let bubbleTitle;
+let bubbleKind;
+let bubbleStory;
+let bubbleTransportEl;
 let bubbleClip = null;
 
 function hideClipBubble() {
@@ -11,8 +11,13 @@ function hideClipBubble() {
         return;
     }
     bubbleClip = null;
-    bubbleEl.hidden = true;
-    bubbleTransportEl.hidden = true;
+    if (bubbleEl) {
+        bubbleEl.hidden = true;
+        bubbleEl.classList.remove("is-playing");
+    }
+    if (bubbleTransportEl) {
+        bubbleTransportEl.hidden = true;
+    }
     document.body.classList.remove("timeline-focus");
     document
         .querySelectorAll(".time-scene.is-active")
@@ -63,12 +68,6 @@ function showClipBubble(clip) {
     bubbleTransportEl.hidden = false;
     placeClipBubble(clip);
 }
-
-bubbleImg.addEventListener("load", function () {
-    if (bubbleClip) {
-        placeClipBubble(bubbleClip);
-    }
-});
 
 const MIN_DWELL_MS = 5500;
 const MAX_DWELL_MS = 12000;
@@ -131,16 +130,20 @@ function setTransportPlaying(playing) {
     if (playback && playback.button) {
         buttons.push(playback.button);
     }
-    buttons.push(bubbleTransportEl);
+    if (bubbleTransportEl) {
+        buttons.push(bubbleTransportEl);
+    }
     buttons.forEach(function (button) {
         button.setAttribute("aria-pressed", playing ? "true" : "false");
         button.setAttribute("aria-label", label);
     });
-    bubbleTransportEl.hidden = bubbleEl.hidden;
-    bubbleEl.classList.toggle(
-        "is-playing",
-        Boolean(playback) && !playback.paused,
-    );
+    if (bubbleTransportEl && bubbleEl) {
+        bubbleTransportEl.hidden = bubbleEl.hidden;
+        bubbleEl.classList.toggle(
+            "is-playing",
+            Boolean(playback) && !playback.paused,
+        );
+    }
 }
 
 function stopPlayback() {
@@ -157,10 +160,12 @@ function stopPlayback() {
     playback = null;
     button.setAttribute("aria-pressed", "false");
     button.setAttribute("aria-label", "Play this timeline");
-    bubbleTransportEl.hidden = bubbleEl.hidden;
-    bubbleTransportEl.setAttribute("aria-pressed", "false");
-    bubbleTransportEl.setAttribute("aria-label", "Play this timeline");
-    bubbleEl.classList.remove("is-playing");
+    if (bubbleTransportEl && bubbleEl) {
+        bubbleTransportEl.hidden = bubbleEl.hidden;
+        bubbleTransportEl.setAttribute("aria-pressed", "false");
+        bubbleTransportEl.setAttribute("aria-label", "Play this timeline");
+        bubbleEl.classList.remove("is-playing");
+    }
 }
 
 function pausePlayback() {
@@ -252,7 +257,9 @@ function tickPlayback(now) {
                 playback.tracks[1].querySelector(".clips"),
                 0,
             );
-            bubbleEl.hidden = true;
+            if (bubbleEl) {
+                bubbleEl.hidden = true;
+            }
             playback.raf = requestAnimationFrame(tickPlayback);
             return;
         }
@@ -328,49 +335,6 @@ function togglePlayback(edit) {
     startPlayback(edit, fromClip);
 }
 
-bubbleTransportEl.addEventListener("click", function (event) {
-    event.stopPropagation();
-    if (playback) {
-        togglePlayback(playback.edit);
-        return;
-    }
-    const clip = bubbleClip;
-    const edit = clip && clip.closest(".time-edit");
-    if (edit) {
-        startPlayback(edit, clip);
-    }
-});
-
-document.addEventListener("pointerdown", function (event) {
-    if (isPlaybackUi(event.target)) {
-        return;
-    }
-    if (playback) {
-        stopPlayback();
-        hideClipBubble();
-        return;
-    }
-    if (!event.target.closest(".clip")) {
-        hideClipBubble();
-    }
-});
-
-window.addEventListener(
-    "scroll",
-    function () {
-        if (bubbleClip) {
-            placeClipBubble(bubbleClip);
-        }
-    },
-    { passive: true },
-);
-
-window.addEventListener("resize", function () {
-    if (bubbleClip) {
-        placeClipBubble(bubbleClip);
-    }
-});
-
 function bindClips() {
     document.querySelectorAll(".clip").forEach(function (clip) {
         clip.addEventListener("click", function (event) {
@@ -422,6 +386,60 @@ function bindTimelines() {
 }
 
 export function bindDifference() {
+    bubbleEl = document.getElementById("clip-bubble");
+    bubbleImg = document.getElementById("clip-bubble-image");
+    bubbleTitle = document.getElementById("clip-bubble-title");
+    bubbleKind = document.getElementById("clip-bubble-kind");
+    bubbleStory = document.getElementById("clip-bubble-story");
+    bubbleTransportEl = document.getElementById("bubble-transport");
+    if (bubbleImg) {
+        bubbleImg.addEventListener("load", function () {
+            if (bubbleClip) {
+                placeClipBubble(bubbleClip);
+            }
+        });
+    }
+    if (bubbleTransportEl) {
+        bubbleTransportEl.addEventListener("click", function (event) {
+            event.stopPropagation();
+            if (playback) {
+                togglePlayback(playback.edit);
+                return;
+            }
+            const clip = bubbleClip;
+            const edit = clip && clip.closest(".time-edit");
+            if (edit) {
+                startPlayback(edit, clip);
+            }
+        });
+    }
+    document.addEventListener("pointerdown", function (event) {
+        if (isPlaybackUi(event.target)) {
+            return;
+        }
+        if (playback) {
+            stopPlayback();
+            hideClipBubble();
+            return;
+        }
+        if (!event.target.closest(".clip")) {
+            hideClipBubble();
+        }
+    });
+    window.addEventListener(
+        "scroll",
+        function () {
+            if (bubbleClip) {
+                placeClipBubble(bubbleClip);
+            }
+        },
+        { passive: true },
+    );
+    window.addEventListener("resize", function () {
+        if (bubbleClip) {
+            placeClipBubble(bubbleClip);
+        }
+    });
     bindClips();
     bindTimelines();
 }

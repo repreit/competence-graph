@@ -1,6 +1,15 @@
-import { bindDifference } from "../parts/difference/difference.js";
-import { bindHistory } from "../parts/history/history.js";
-import { bindFooter } from "../parts/footer/footer.js";
+import { bindDifference } from "../difference/difference.js";
+import { bindHistory } from "../history/history.js";
+import { bindFooter } from "../footer/footer.js";
+
+function addPartStyles() {
+    ["header", "difference", "history", "footer"].forEach(function (name) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "parts/" + name + "/" + name + ".css";
+        document.head.appendChild(link);
+    });
+}
 
 function loadPart(name) {
     return fetch("parts/" + name + "/" + name + ".html").then(
@@ -24,10 +33,14 @@ function putPart(name, html) {
 }
 
 function assemblePage() {
-    const names = ["header", "difference", "history", "footer"];
-    return Promise.all(names.map(loadPart)).then(function (htmls) {
-        names.forEach(function (name, i) {
-            putPart(name, htmls[i]);
+    addPartStyles();
+    return loadPart("root").then(function (html) {
+        document.body.insertAdjacentHTML("afterbegin", html.trim());
+        const names = ["header", "difference", "history", "footer"];
+        return Promise.all(names.map(loadPart)).then(function (htmls) {
+            names.forEach(function (name, i) {
+                putPart(name, htmls[i]);
+            });
         });
     });
 }

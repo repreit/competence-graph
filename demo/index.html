@@ -5,54 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>competence-graph</title>
         <link rel="icon" href="img/a001/mark.svg" type="image/svg+xml" />
-        <link rel="stylesheet" href="css/base.css" />
-        <link rel="stylesheet" href="parts/header/header.css" />
-        <link rel="stylesheet" href="parts/difference/difference.css" />
-        <link rel="stylesheet" href="parts/history/history.css" />
-        <link rel="stylesheet" href="parts/footer/footer.css" />
+        <link rel="stylesheet" href="parts/root/root.css" />
     </head>
 
     <body>
-        <main>
-            <div data-part="header"></div>
-            <div data-part="difference"></div>
-            <div data-part="history"></div>
-        </main>
-
-        <div data-part="footer"></div>
-
-        <div class="clip-bubble" id="clip-bubble" hidden>
-            <button
-                type="button"
-                class="transport"
-                id="bubble-transport"
-                hidden
-                aria-label="Pause"
-            >
-                <span class="play-shape" aria-hidden="true"></span>
-                <span class="pause-shape" aria-hidden="true"></span>
-            </button>
-            <img id="clip-bubble-image" alt="" />
-            <div class="sheet">
-                <h3 id="clip-bubble-title"></h3>
-                <p class="muted kind" id="clip-bubble-kind"></p>
-                <p class="story" id="clip-bubble-story"></p>
-            </div>
-            <span class="tail" aria-hidden="true"></span>
-        </div>
-
-        <dialog id="deed-window" aria-labelledby="deed-title">
-            <button type="button" class="close" aria-label="Close">
-                &times;
-            </button>
-            <img id="deed-image" alt="" />
-            <div class="sheet">
-                <h2 id="deed-title"></h2>
-                <p class="muted"><a id="deed-link" href="" hidden></a></p>
-            </div>
-        </dialog>
-
         <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.79.1"></script>
-        <script type="module" src="js/base.js"></script>
+        <script type="module" src="parts/root/root.js"></script>
     </body>
 </html>

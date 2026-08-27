@@ -1,9 +1,9 @@
 import * as THREE from "https://esm.sh/three@0.170.0";
 
-const windowEl = document.getElementById("deed-window");
-const imageEl = document.getElementById("deed-image");
-const titleEl = document.getElementById("deed-title");
-const linkEl = document.getElementById("deed-link");
+let windowEl;
+let imageEl;
+let titleEl;
+let linkEl;
 let boardEl;
 let blurbEl;
 let addressesEl;
@@ -12,6 +12,9 @@ let activeAddress = "";
 let historyGraph = null;
 
 function openDeed(data) {
+    if (!windowEl) {
+        return;
+    }
     data = data || {};
     titleEl.textContent = data.title || "";
     if (data.link) {
@@ -527,19 +530,22 @@ window.addEventListener("resize", function () {
     sizeHistoryGraph();
 });
 
-windowEl.querySelector(".close").addEventListener("click", function () {
-    windowEl.close();
-});
-
-windowEl.addEventListener("click", function (event) {
-    if (event.target === windowEl) {
-        windowEl.close();
-    }
-});
-
-windowEl.addEventListener("close", unlockScroll);
-
 export function bindHistory() {
+    windowEl = document.getElementById("deed-window");
+    imageEl = document.getElementById("deed-image");
+    titleEl = document.getElementById("deed-title");
+    linkEl = document.getElementById("deed-link");
+    if (windowEl) {
+        windowEl.querySelector(".close").addEventListener("click", function () {
+            windowEl.close();
+        });
+        windowEl.addEventListener("click", function (event) {
+            if (event.target === windowEl) {
+                windowEl.close();
+            }
+        });
+        windowEl.addEventListener("close", unlockScroll);
+    }
     boardEl = document.querySelector(".network-board");
     blurbEl = document.getElementById("example-blurb");
     addressesEl = document.getElementById("addresses");
