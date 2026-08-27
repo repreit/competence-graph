@@ -32,10 +32,11 @@
                 "position": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["x", "y"],
+                    "required": ["x", "y", "z"],
                     "properties": {
                         "x": { "type": "number" },
-                        "y": { "type": "number" }
+                        "y": { "type": "number" },
+                        "z": { "type": "number" }
                     }
                 },
                 "data": {
