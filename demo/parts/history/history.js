@@ -139,6 +139,7 @@ function sizeHistoryGraph() {
 }
 
 let fitTimer = 0;
+const FIT_PULL = 0.72;
 
 function fitHistoryGraph() {
     if (!historyGraph) {
@@ -164,9 +165,9 @@ function fitHistoryGraph() {
     }
     historyGraph.cameraPosition(
         {
-            x: cam.x * 0.72,
-            y: cam.y * 0.72,
-            z: cam.z * 0.72,
+            x: cam.x * FIT_PULL,
+            y: cam.y * FIT_PULL,
+            z: cam.z * FIT_PULL,
         },
         { x: 0, y: 0, z: 0 },
         400,
