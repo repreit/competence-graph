@@ -1,4 +1,4 @@
-# Commands
+# Frequently used commands
 
 ```bash
 npx prettier --write .
