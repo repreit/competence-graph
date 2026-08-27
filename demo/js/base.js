@@ -4,9 +4,9 @@ const windowEl = document.getElementById("deed-window");
 const imageEl = document.getElementById("deed-image");
 const titleEl = document.getElementById("deed-title");
 const linkEl = document.getElementById("deed-link");
-const boardEl = document.querySelector(".network-board");
-const blurbEl = document.getElementById("example-blurb");
-const addressesEl = document.getElementById("addresses");
+let boardEl;
+let blurbEl;
+let addressesEl;
 let accounts = [];
 let activeAddress = "";
 let historyGraph = null;
@@ -194,7 +194,7 @@ function historyTheme() {
 }
 
 function sizeHistoryGraph() {
-    if (!historyGraph) {
+    if (!historyGraph || !boardEl) {
         return;
     }
     const width = boardEl.clientWidth;
@@ -493,6 +493,9 @@ function ensureHistoryGraph() {
     if (historyGraph) {
         return historyGraph;
     }
+    if (!boardEl) {
+        return null;
+    }
     const ForceGraph3D = window.ForceGraph3D;
     if (typeof ForceGraph3D !== "function") {
         blurbEl.hidden = false;
@@ -527,6 +530,9 @@ function ensureHistoryGraph() {
 }
 
 function renderHistory(account) {
+    if (!boardEl) {
+        return;
+    }
     const history = (account && account.history) || {};
     const label = shortAddress(account.address) || "Unknown";
     boardEl.setAttribute(
@@ -547,7 +553,7 @@ function showHistory(address) {
         accounts.find(function (item) {
             return item.address === address;
         }) || accounts[0];
-    if (!account) {
+    if (!account || !addressesEl) {
         return;
     }
     activeAddress = account.address || "";
@@ -561,6 +567,9 @@ function showHistory(address) {
 }
 
 function renderAddresses(list) {
+    if (!addressesEl) {
+        return;
+    }
     addressesEl.replaceChildren();
     list.forEach(function (account) {
         const address = account.address || "";
@@ -580,65 +589,11 @@ function renderAddresses(list) {
     });
 }
 
-fetch("accounts/index.json")
-    .then(function (response) {
-        if (!response.ok) {
-            throw new Error("accounts/index.json");
-        }
-        return response.json();
-    })
-    .then(function (ids) {
-        const list = Array.isArray(ids) ? ids : [];
-        return Promise.all(
-            list.map(function (id) {
-                return fetch("accounts/" + id + ".json").then(
-                    function (response) {
-                        if (!response.ok) {
-                            throw new Error("accounts/" + id + ".json");
-                        }
-                        return response.json().then(function (data) {
-                            return {
-                                address: id,
-                                history: data.history || { nodes: [] },
-                            };
-                        });
-                    },
-                );
-            }),
-        );
-    })
-    .then(function (list) {
-        accounts = list;
-        renderAddresses(accounts);
-        showHistory(accounts[0] && accounts[0].address);
-    })
-    .catch(function () {
-        blurbEl.hidden = false;
-        blurbEl.textContent =
-            "Could not load this example. Serve this folder with a local server, or open the GitHub Pages demo.";
-    });
-
-if (window.ResizeObserver) {
-    new ResizeObserver(function () {
-        sizeHistoryGraph();
-    }).observe(boardEl);
-}
-
 if (window.matchMedia) {
     window
         .matchMedia("(prefers-color-scheme: dark)")
         .addEventListener("change", paintHistoryGraph);
 }
-
-document.querySelectorAll(".clip").forEach(function (clip) {
-    clip.addEventListener("click", function (event) {
-        if (playbackLocksClip(clip)) {
-            event.preventDefault();
-            return;
-        }
-        showClipBubble(clip);
-    });
-});
 
 const MIN_DWELL_MS = 5500;
 const MAX_DWELL_MS = 12000;
@@ -898,42 +853,6 @@ function togglePlayback(edit) {
     startPlayback(edit, fromClip);
 }
 
-document.querySelectorAll(".time-edit").forEach(function (edit) {
-    const gutter = edit.querySelector(".ruler-gutter");
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "transport";
-    button.setAttribute("aria-label", "Play this timeline");
-    button.innerHTML =
-        '<span class="play-shape" aria-hidden="true"></span>' +
-        '<span class="pause-shape" aria-hidden="true"></span>';
-    gutter.appendChild(button);
-
-    const playhead = document.createElement("div");
-    playhead.className = "playhead";
-    playhead.hidden = true;
-    edit.appendChild(playhead);
-
-    button.addEventListener("click", function (event) {
-        event.stopPropagation();
-        togglePlayback(edit);
-    });
-
-    edit.addEventListener("focusout", function (event) {
-        if (!playback || playback.edit !== edit) {
-            return;
-        }
-        if (isPlaybackUi(event.relatedTarget)) {
-            return;
-        }
-        if (!event.relatedTarget) {
-            return;
-        }
-        stopPlayback();
-        hideClipBubble();
-    });
-});
-
 bubbleTransportEl.addEventListener("click", function (event) {
     event.stopPropagation();
     if (playback) {
@@ -982,13 +901,6 @@ windowEl.querySelector(".close").addEventListener("click", function () {
     windowEl.close();
 });
 
-const resetViewEl = document.querySelector(".graph-reset");
-if (resetViewEl) {
-    resetViewEl.addEventListener("click", function () {
-        fitHistoryGraph();
-    });
-}
-
 windowEl.addEventListener("click", function (event) {
     if (event.target === windowEl) {
         windowEl.close();
@@ -997,45 +909,201 @@ windowEl.addEventListener("click", function (event) {
 
 windowEl.addEventListener("close", unlockScroll);
 
-const timeEl = document.getElementById("last-modified");
-
-function showModified(date) {
-    timeEl.dateTime = date.toISOString();
-    timeEl.textContent = date.toLocaleString(undefined, {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        timeZoneName: "short",
+function loadPart(name) {
+    return fetch("parts/" + name + ".html").then(function (response) {
+        if (!response.ok) {
+            throw new Error("parts/" + name + ".html");
+        }
+        return response.text();
     });
 }
 
-function showModifiedError() {
-    timeEl.removeAttribute("datetime");
-    timeEl.textContent = "could not load from GitHub";
+function putPart(name, html) {
+    const slot = document.querySelector('[data-part="' + name + '"]');
+    if (!slot) {
+        throw new Error("missing slot " + name);
+    }
+    const template = document.createElement("template");
+    template.innerHTML = html.trim();
+    slot.replaceWith(...Array.from(template.content.childNodes));
 }
 
-fetch(
-    "https://api.github.com/repos/repreit/competence-graph/commits?per_page=1",
-)
-    .then(function (response) {
-        if (!response.ok) {
-            throw new Error("github");
-        }
-        return response.json();
-    })
-    .then(function (commits) {
-        if (
-            !Array.isArray(commits) ||
-            !commits[0] ||
-            !commits[0].commit ||
-            !commits[0].commit.committer
-        ) {
-            throw new Error("github");
-        }
-        showModified(new Date(commits[0].commit.committer.date));
-    })
+function assemblePage() {
+    const names = ["header", "difference", "history", "footer"];
+    return Promise.all(names.map(loadPart)).then(function (htmls) {
+        names.forEach(function (name, i) {
+            putPart(name, htmls[i]);
+        });
+    });
+}
+
+function bindClips() {
+    document.querySelectorAll(".clip").forEach(function (clip) {
+        clip.addEventListener("click", function (event) {
+            if (playbackLocksClip(clip)) {
+                event.preventDefault();
+                return;
+            }
+            showClipBubble(clip);
+        });
+    });
+}
+
+function bindTimelines() {
+    document.querySelectorAll(".time-edit").forEach(function (edit) {
+        const gutter = edit.querySelector(".ruler-gutter");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "transport";
+        button.setAttribute("aria-label", "Play this timeline");
+        button.innerHTML =
+            '<span class="play-shape" aria-hidden="true"></span>' +
+            '<span class="pause-shape" aria-hidden="true"></span>';
+        gutter.appendChild(button);
+
+        const playhead = document.createElement("div");
+        playhead.className = "playhead";
+        playhead.hidden = true;
+        edit.appendChild(playhead);
+
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            togglePlayback(edit);
+        });
+
+        edit.addEventListener("focusout", function (event) {
+            if (!playback || playback.edit !== edit) {
+                return;
+            }
+            if (isPlaybackUi(event.relatedTarget)) {
+                return;
+            }
+            if (!event.relatedTarget) {
+                return;
+            }
+            stopPlayback();
+            hideClipBubble();
+        });
+    });
+}
+
+function bindLastModified() {
+    const timeEl = document.getElementById("last-modified");
+    if (!timeEl) {
+        return;
+    }
+
+    function showModified(date) {
+        timeEl.dateTime = date.toISOString();
+        timeEl.textContent = date.toLocaleString(undefined, {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZoneName: "short",
+        });
+    }
+
+    function showModifiedError() {
+        timeEl.removeAttribute("datetime");
+        timeEl.textContent = "could not load from GitHub";
+    }
+
+    fetch(
+        "https://api.github.com/repos/repreit/competence-graph/commits?per_page=1",
+    )
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("github");
+            }
+            return response.json();
+        })
+        .then(function (commits) {
+            if (
+                !Array.isArray(commits) ||
+                !commits[0] ||
+                !commits[0].commit ||
+                !commits[0].commit.committer
+            ) {
+                throw new Error("github");
+            }
+            showModified(new Date(commits[0].commit.committer.date));
+        })
+        .catch(function () {
+            showModifiedError();
+        });
+}
+
+function bindHistoryBoard() {
+    boardEl = document.querySelector(".network-board");
+    blurbEl = document.getElementById("example-blurb");
+    addressesEl = document.getElementById("addresses");
+    const resetViewEl = document.querySelector(".graph-reset");
+    if (resetViewEl) {
+        resetViewEl.addEventListener("click", function () {
+            fitHistoryGraph();
+        });
+    }
+    if (window.ResizeObserver && boardEl) {
+        new ResizeObserver(function () {
+            sizeHistoryGraph();
+        }).observe(boardEl);
+    }
+    fetch("accounts/index.json")
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("accounts/index.json");
+            }
+            return response.json();
+        })
+        .then(function (ids) {
+            const list = Array.isArray(ids) ? ids : [];
+            return Promise.all(
+                list.map(function (id) {
+                    return fetch("accounts/" + id + ".json").then(
+                        function (response) {
+                            if (!response.ok) {
+                                throw new Error("accounts/" + id + ".json");
+                            }
+                            return response.json().then(function (data) {
+                                return {
+                                    address: id,
+                                    history: data.history || { nodes: [] },
+                                };
+                            });
+                        },
+                    );
+                }),
+            );
+        })
+        .then(function (list) {
+            accounts = list;
+            renderAddresses(accounts);
+            showHistory(accounts[0] && accounts[0].address);
+        })
+        .catch(function () {
+            if (!blurbEl) {
+                return;
+            }
+            blurbEl.hidden = false;
+            blurbEl.textContent =
+                "Could not load this example. Serve this folder with a local server, or open the GitHub Pages demo.";
+        });
+}
+
+function bindPage() {
+    bindClips();
+    bindTimelines();
+    bindLastModified();
+    bindHistoryBoard();
+}
+
+assemblePage()
+    .then(bindPage)
     .catch(function () {
-        showModifiedError();
+        document.body.insertAdjacentHTML(
+            "afterbegin",
+            '<p class="muted">Could not load this page. Serve this folder with a local server, or open the GitHub Pages demo.</p>',
+        );
     });

@@ -128,17 +128,17 @@ header p + p {
     margin-top: 0.55rem;
 }
 
-.minutes > h2,
-.minutes > p,
+.difference > h2,
+.difference > p,
 header,
 footer,
-main > section:not(.minutes) {
+main > section:not(.difference) {
     transition:
         filter 0.22s ease,
         opacity 0.22s ease;
 }
 
-.minutes {
+.difference {
     counter-reset: situation;
 }
 
@@ -174,22 +174,22 @@ body:has(.time-scene:hover)
     :is(
         header,
         footer,
-        .minutes > :not(.time-scene),
-        main > section:not(.minutes)
+        .difference > :not(.time-scene),
+        main > section:not(.difference)
     ),
 body:has(.clip:focus-visible)
     :is(
         header,
         footer,
-        .minutes > :not(.time-scene),
-        main > section:not(.minutes)
+        .difference > :not(.time-scene),
+        main > section:not(.difference)
     ),
 body.timeline-focus
     :is(
         header,
         footer,
-        .minutes > :not(.time-scene),
-        main > section:not(.minutes)
+        .difference > :not(.time-scene),
+        main > section:not(.difference)
     ),
 body:has(.time-scene:hover) .time-scene:not(:hover),
 body.timeline-focus .time-scene:not(.is-active) {
