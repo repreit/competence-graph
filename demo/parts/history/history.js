@@ -1,4 +1,4 @@
-import * as THREE from "https://esm.sh/three@0.170.0";
+import * as THREE from "three";
 
 let windowEl;
 let imageEl;
@@ -10,6 +10,7 @@ let addressesEl;
 let accounts = [];
 let activeAddress = "";
 let historyGraph = null;
+let historyGraphPending = null;
 
 function openDeed(data) {
     if (!windowEl) {
@@ -428,20 +429,16 @@ function bindHistoryControls(graph) {
     }
 }
 
-function ensureHistoryGraph() {
-    if (historyGraph) {
-        return historyGraph;
+function showGraphLoadError() {
+    if (!blurbEl) {
+        return;
     }
-    if (!boardEl) {
-        return null;
-    }
-    const ForceGraph3D = window.ForceGraph3D;
-    if (typeof ForceGraph3D !== "function") {
-        blurbEl.hidden = false;
-        blurbEl.textContent =
-            "Could not load the 3D graph. Check the network and reload.";
-        return null;
-    }
+    blurbEl.hidden = false;
+    blurbEl.textContent =
+        "Could not load the 3D graph. Check the network and reload.";
+}
+
+function createHistoryGraph(ForceGraph3D) {
     historyGraph = new ForceGraph3D(boardEl, { controlType: "orbit" })
         .showNavInfo(false)
         .enableNodeDrag(false)
@@ -468,23 +465,54 @@ function ensureHistoryGraph() {
     return historyGraph;
 }
 
+function ensureHistoryGraph() {
+    if (historyGraph) {
+        return Promise.resolve(historyGraph);
+    }
+    if (historyGraphPending) {
+        return historyGraphPending;
+    }
+    if (!boardEl) {
+        return Promise.resolve(null);
+    }
+    historyGraphPending = import("3d-force-graph")
+        .then(function (mod) {
+            const ForceGraph3D = mod.default || mod;
+            if (typeof ForceGraph3D !== "function") {
+                throw new Error("ForceGraph3D");
+            }
+            return createHistoryGraph(ForceGraph3D);
+        })
+        .catch(function (err) {
+            historyGraphPending = null;
+            if (typeof console !== "undefined" && console.error) {
+                console.error(err);
+            }
+            showGraphLoadError();
+            return null;
+        });
+    return historyGraphPending;
+}
+
 function renderHistory(account) {
     if (!boardEl) {
         return;
     }
     const history = (account && account.history) || {};
     const label = shortAddress(account.address) || "Unknown";
+    const address = account.address || "";
     boardEl.setAttribute(
         "aria-label",
         label + ". Click a deed to open details.",
     );
-    const graph = ensureHistoryGraph();
-    if (!graph) {
-        return;
-    }
-    graph.graphData(graphDataFromHistory(history));
-    sizeHistoryGraph();
-    scheduleFitHistoryGraph();
+    ensureHistoryGraph().then(function (graph) {
+        if (!graph || address !== activeAddress) {
+            return;
+        }
+        graph.graphData(graphDataFromHistory(history));
+        sizeHistoryGraph();
+        scheduleFitHistoryGraph();
+    });
 }
 
 function showHistory(address) {

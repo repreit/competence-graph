@@ -4,12 +4,24 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>competence-graph</title>
-        <link rel="icon" href="parts/header/img/mark.svg" type="image/svg+xml" />
+        <link
+            rel="icon"
+            href="parts/header/img/mark.svg"
+            type="image/svg+xml"
+        />
         <link rel="stylesheet" href="parts/root/root.css" />
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://esm.sh/three@0.179.0",
+                    "three/": "https://esm.sh/three@0.179.0/",
+                    "3d-force-graph": "https://esm.sh/3d-force-graph@1.79.1?external=three"
+                }
+            }
+        </script>
     </head>
 
     <body>
-        <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.79.1"></script>
         <script type="module" src="parts/root/root.js"></script>
     </body>
 </html>
