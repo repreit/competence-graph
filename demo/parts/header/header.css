@@ -1,0 +1,32 @@
+header .mark {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0 0.65rem;
+}
+
+header .title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+    margin: 0 0 0.5rem;
+}
+
+header .title-row h1 {
+    margin: 0;
+}
+
+header .title-row img {
+    display: block;
+    height: 1.25rem;
+    width: auto;
+}
+
+header p {
+    margin: 0;
+}
+
+header p + p {
+    margin-top: 0.55rem;
+}

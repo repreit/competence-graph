@@ -1,0 +1,163 @@
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.35rem 0 0;
+}
+
+.chip-kicker {
+    margin: 0.85rem 0 0;
+    font-size: 0.62rem;
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.chips button.address {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.75rem;
+    letter-spacing: -0.03em;
+}
+
+.chips button {
+    padding: 0.28rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+}
+
+.chips button[aria-pressed="true"] {
+    border-color: var(--ink);
+    background: color-mix(in srgb, var(--ink) 12%, var(--card));
+}
+
+.chips button:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.network-scroll {
+    margin-top: 1rem;
+}
+
+.network-frame {
+    position: relative;
+}
+
+.network-board {
+    position: relative;
+    width: 100%;
+    height: min(70vh, 36rem);
+    min-height: 12rem;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--bg);
+}
+
+.network-board canvas {
+    display: block;
+}
+
+.graph-reset {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.graph-reset:hover {
+    border-color: var(--ink);
+}
+
+.graph-reset:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.graph-reset svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+dialog {
+    position: fixed;
+    width: min(40rem, calc(100vw - 2rem));
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--ink);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+dialog::backdrop {
+    background: rgba(22, 21, 19, 0.55);
+}
+
+dialog img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+dialog img[hidden] {
+    display: none;
+}
+
+dialog .sheet {
+    padding: 1rem 1.15rem 1.25rem;
+}
+
+dialog h2 {
+    margin: 0 0 0.25rem;
+}
+
+dialog .sheet p {
+    margin: 0;
+}
+
+#deed-link {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+}
+
+dialog .close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--card);
+    color: var(--ink);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
