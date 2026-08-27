@@ -209,6 +209,15 @@ function fitHistoryGraph() {
     if (!historyGraph) {
         return;
     }
+    const camera = historyGraph.camera();
+    if (camera && camera.up) {
+        camera.up.set(0, 1, 0);
+    }
+    const controls = historyGraph.controls();
+    if (controls && controls.target) {
+        controls.target.set(0, 0, 0);
+    }
+    historyGraph.cameraPosition({ x: 0, y: 0, z: 400 }, { x: 0, y: 0, z: 0 }, 0);
     historyGraph.zoomToFit(0, 64);
     const cam = historyGraph.cameraPosition();
     if (!cam) {
@@ -970,6 +979,13 @@ window.addEventListener("resize", function () {
 windowEl.querySelector(".close").addEventListener("click", function () {
     windowEl.close();
 });
+
+const resetViewEl = document.querySelector(".graph-reset");
+if (resetViewEl) {
+    resetViewEl.addEventListener("click", function () {
+        fitHistoryGraph();
+    });
+}
 
 windowEl.addEventListener("click", function (event) {
     if (event.target === windowEl) {

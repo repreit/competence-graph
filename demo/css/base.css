@@ -637,6 +637,10 @@ section {
     margin-top: 1rem;
 }
 
+.network-frame {
+    position: relative;
+}
+
 .network-board {
     position: relative;
     width: 100%;
@@ -650,6 +654,42 @@ section {
 
 .network-board canvas {
     display: block;
+}
+
+.graph-reset {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.graph-reset:hover {
+    border-color: var(--ink);
+}
+
+.graph-reset:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+.graph-reset svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 dialog {
