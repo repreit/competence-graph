@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "competence-graph account",
-    "description": "One account's history of deeds. The account address is the file name, not a field.",
+    "title": "competence-graph",
+    "description": "A shared language for inspectable competence.",
     "type": "object",
     "additionalProperties": false,
     "required": ["history"],
