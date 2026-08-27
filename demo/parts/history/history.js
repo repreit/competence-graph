@@ -177,12 +177,47 @@ function scheduleFitHistoryGraph() {
     fitTimer = window.setTimeout(fitHistoryGraph, 300);
 }
 
+function cssColor(value) {
+    const color = new THREE.Color();
+    if (value) {
+        color.setStyle(value);
+    }
+    return color;
+}
+
+function paintCardMesh(mesh, theme) {
+    const card = mesh && mesh.userData && mesh.userData.historyCard;
+    if (!card) {
+        return;
+    }
+    paintCard(card.ctx, card.canvas, card.data, theme, card.image);
+    card.tex.needsUpdate = true;
+    const mats = mesh.material;
+    if (Array.isArray(mats) && mats.length >= 6) {
+        mats[0].color.copy(cssColor(theme.line));
+        mats[5].color.copy(cssColor(theme.card));
+    }
+}
+
 function paintHistoryGraph() {
     if (!historyGraph) {
         return;
     }
-    historyGraph.backgroundColor(historyTheme().bg);
-    historyGraph.refresh();
+    const theme = historyTheme();
+    const ink = cssColor(theme.ink);
+    historyGraph.backgroundColor(theme.bg);
+    const scene = historyGraph.scene();
+    if (!scene || typeof scene.traverse !== "function") {
+        return;
+    }
+    scene.traverse(function (obj) {
+        if (obj.userData && obj.userData.historyCard) {
+            paintCardMesh(obj, theme);
+        }
+        if (obj.userData && obj.userData.historyLink && obj.material) {
+            obj.material.color.copy(ink);
+        }
+    });
 }
 
 function wrapTitle(ctx, text, maxWidth) {
@@ -286,27 +321,26 @@ function nodeThreeObject(node) {
     const ctx = canvas.getContext("2d");
     const tex = new THREE.CanvasTexture(canvas);
     tex.colorSpace = THREE.SRGBColorSpace;
+    const card = {
+        canvas: canvas,
+        ctx: ctx,
+        tex: tex,
+        data: data,
+        image: null,
+    };
     paintCard(ctx, canvas, data, theme, null);
-    if (data.img) {
-        const image = new Image();
-        image.onload = function () {
-            paintCard(ctx, canvas, data, theme, image);
-            tex.needsUpdate = true;
-        };
-        image.src = data.img;
-    }
     const front = new THREE.MeshBasicMaterial(
         Object.assign({ map: tex, transparent: false, opacity: 1 }, CARD_DEPTH),
     );
     const back = new THREE.MeshBasicMaterial(
         Object.assign(
-            { color: theme.card, transparent: false, opacity: 1 },
+            { color: cssColor(theme.card), transparent: false, opacity: 1 },
             CARD_DEPTH,
         ),
     );
     const edge = new THREE.MeshBasicMaterial(
         Object.assign(
-            { color: theme.line, transparent: false, opacity: 1 },
+            { color: cssColor(theme.line), transparent: false, opacity: 1 },
             CARD_DEPTH,
         ),
     );
@@ -318,8 +352,18 @@ function nodeThreeObject(node) {
         front,
         back,
     ]);
+    mesh.userData.historyCard = card;
     mesh.renderOrder = 1;
     paintCardOpaque(mesh);
+    if (data.img) {
+        const image = new Image();
+        image.onload = function () {
+            card.image = image;
+            paintCard(ctx, canvas, data, historyTheme(), image);
+            tex.needsUpdate = true;
+        };
+        image.src = data.img;
+    }
     return mesh;
 }
 
@@ -359,11 +403,12 @@ function makeLinkObject() {
     const line = new THREE.Line(
         geom,
         new THREE.LineBasicMaterial({
-            color: 0x000000,
+            color: cssColor(historyTheme().ink),
             depthTest: true,
             depthWrite: false,
         }),
     );
+    line.userData.historyLink = true;
     line.frustumCulled = false;
     return line;
 }
