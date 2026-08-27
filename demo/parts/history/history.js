@@ -11,6 +11,7 @@ let accounts = [];
 let activeAddress = "";
 let historyGraph = null;
 let historyGraphPending = null;
+let historyEpoch = 0;
 
 function openDeed(data) {
     if (!windowEl) {
@@ -220,6 +221,54 @@ function paintHistoryGraph() {
     });
 }
 
+function disposeMaterial(mat) {
+    if (!mat) {
+        return;
+    }
+    if (mat.map) {
+        mat.map.dispose();
+        mat.map = null;
+    }
+    mat.dispose();
+}
+
+function disposeObject3D(obj) {
+    if (!obj) {
+        return;
+    }
+    const seen = [];
+    obj.traverse(function (child) {
+        if (child.geometry) {
+            child.geometry.dispose();
+        }
+        const mats = child.material;
+        const list = Array.isArray(mats) ? mats : mats ? [mats] : [];
+        list.forEach(function (mat) {
+            if (mat && seen.indexOf(mat) === -1) {
+                seen.push(mat);
+                disposeMaterial(mat);
+            }
+        });
+    });
+}
+
+function disposeHistoryGpu(graph) {
+    const scene = graph && graph.scene && graph.scene();
+    if (!scene || typeof scene.traverse !== "function") {
+        return;
+    }
+    const objects = [];
+    scene.traverse(function (obj) {
+        if (
+            obj.userData &&
+            (obj.userData.historyCard || obj.userData.historyLink)
+        ) {
+            objects.push(obj);
+        }
+    });
+    objects.forEach(disposeObject3D);
+}
+
 function wrapTitle(ctx, text, maxWidth) {
     const words = String(text || "")
         .split(/\s+/)
@@ -357,7 +406,11 @@ function nodeThreeObject(node) {
     paintCardOpaque(mesh);
     if (data.img) {
         const image = new Image();
+        const epoch = historyEpoch;
         image.onload = function () {
+            if (epoch !== historyEpoch) {
+                return;
+            }
             card.image = image;
             paintCard(ctx, canvas, data, historyTheme(), image);
             tex.needsUpdate = true;
@@ -554,6 +607,8 @@ function renderHistory(account) {
         if (!graph || address !== activeAddress) {
             return;
         }
+        historyEpoch += 1;
+        disposeHistoryGpu(graph);
         graph.graphData(graphDataFromHistory(history));
         sizeHistoryGraph();
         scheduleFitHistoryGraph();
