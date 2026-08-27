@@ -150,7 +150,11 @@ function fitHistoryGraph() {
     if (controls && controls.target) {
         controls.target.set(0, 0, 0);
     }
-    historyGraph.cameraPosition({ x: 0, y: 0, z: 400 }, { x: 0, y: 0, z: 0 }, 0);
+    historyGraph.cameraPosition(
+        { x: 0, y: 0, z: 400 },
+        { x: 0, y: 0, z: 0 },
+        0,
+    );
     historyGraph.zoomToFit(0, 16);
     const cam = historyGraph.cameraPosition();
     if (!cam) {
@@ -305,10 +309,14 @@ function nodeThreeObject(node) {
             CARD_DEPTH,
         ),
     );
-    const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(CARD_W, CARD_H, CARD_D),
-        [edge, edge, edge, edge, front, back],
-    );
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(CARD_W, CARD_H, CARD_D), [
+        edge,
+        edge,
+        edge,
+        edge,
+        front,
+        back,
+    ]);
     mesh.renderOrder = 1;
     paintCardOpaque(mesh);
     return mesh;
