@@ -212,7 +212,12 @@ function tickPlayback(now) {
         el.classList.toggle("is-live", index === playback.pass);
     });
     const clipsEl = track.querySelector(".clips");
-    const queue = clipQueue(clipsEl);
+    const queue = clipsEl ? clipQueue(clipsEl) : [];
+    if (!queue.length) {
+        stopPlayback();
+        hideClipBubble();
+        return;
+    }
     const elapsed = now - playback.started;
     let acc = 0;
     let current = queue[queue.length - 1];
