@@ -357,16 +357,16 @@ function nodeThreeObject(node) {
         };
         image.src = data.img;
     }
-    const front = new THREE.MeshLambertMaterial(
+    const front = new THREE.MeshBasicMaterial(
         Object.assign({ map: tex, transparent: false, opacity: 1 }, CARD_DEPTH),
     );
-    const back = new THREE.MeshLambertMaterial(
+    const back = new THREE.MeshBasicMaterial(
         Object.assign(
             { color: theme.card, transparent: false, opacity: 1 },
             CARD_DEPTH,
         ),
     );
-    const edge = new THREE.MeshLambertMaterial(
+    const edge = new THREE.MeshBasicMaterial(
         Object.assign(
             { color: theme.line, transparent: false, opacity: 1 },
             CARD_DEPTH,
