@@ -4,8 +4,8 @@
             {
                 "id": "working-group",
                 "position": {
-                    "x": -22,
-                    "y": 24,
+                    "x": -16,
+                    "y": 17,
                     "z": 0
                 },
                 "data": {
@@ -19,8 +19,8 @@
             {
                 "id": "escrow-pr",
                 "position": {
-                    "x": 24,
-                    "y": -22,
+                    "x": 17,
+                    "y": -16,
                     "z": 0
                 },
                 "data": {
@@ -54,8 +54,8 @@
             {
                 "id": "live-fulfillment",
                 "position": {
-                    "x": 24,
-                    "y": 22,
+                    "x": 17,
+                    "y": 16,
                     "z": 0
                 },
                 "data": {
@@ -69,8 +69,8 @@
             {
                 "id": "listing-ux",
                 "position": {
-                    "x": -24,
-                    "y": -22,
+                    "x": -17,
+                    "y": -16,
                     "z": 0
                 },
                 "data": {
