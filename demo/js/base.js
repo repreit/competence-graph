@@ -172,6 +172,8 @@ function graphDataFromHistory(history) {
             item.fx = pos.x;
             item.fy = pos.y;
             item.fz = pos.z;
+        } else {
+            item.fz = 0;
         }
         return item;
     });
