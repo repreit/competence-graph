@@ -218,16 +218,16 @@ function fitHistoryGraph() {
         controls.target.set(0, 0, 0);
     }
     historyGraph.cameraPosition({ x: 0, y: 0, z: 400 }, { x: 0, y: 0, z: 0 }, 0);
-    historyGraph.zoomToFit(0, 64);
+    historyGraph.zoomToFit(0, 28);
     const cam = historyGraph.cameraPosition();
     if (!cam) {
         return;
     }
     historyGraph.cameraPosition(
         {
-            x: cam.x * 0.925,
-            y: cam.y * 0.925,
-            z: cam.z * 0.925,
+            x: cam.x * 0.8,
+            y: cam.y * 0.8,
+            z: cam.z * 0.8,
         },
         { x: 0, y: 0, z: 0 },
         400,

@@ -4,8 +4,8 @@
             {
                 "id": "closings-desk",
                 "position": {
-                    "x": -32,
-                    "y": 16,
+                    "x": -20,
+                    "y": 12,
                     "z": 0
                 },
                 "data": {
@@ -34,8 +34,8 @@
             {
                 "id": "second-live",
                 "position": {
-                    "x": 32,
-                    "y": -16,
+                    "x": 20,
+                    "y": -12,
                     "z": 0
                 },
                 "data": {

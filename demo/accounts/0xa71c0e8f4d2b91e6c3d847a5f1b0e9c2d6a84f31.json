@@ -3,6 +3,11 @@
         "nodes": [
             {
                 "id": "working-group",
+                "position": {
+                    "x": -22,
+                    "y": 24,
+                    "z": 0
+                },
                 "data": {
                     "title": "Escrow and closing working group",
                     "link": "https://github.com/repreit/p2p-escrow/discussions/3",
@@ -13,6 +18,11 @@
             },
             {
                 "id": "escrow-pr",
+                "position": {
+                    "x": 24,
+                    "y": -22,
+                    "z": 0
+                },
                 "data": {
                     "title": "Property escrow contract PR",
                     "link": "https://github.com/repreit/p2p-escrow/pull/17",
@@ -23,6 +33,11 @@
             },
             {
                 "id": "testnet-listing",
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
                 "data": {
                     "title": "Testnet P2P listing",
                     "link": "https://sepolia.etherscan.io/tx/0x3a8f1c0e7b92d64f5e1a0c8b9d2e4f7a6b1c3d5e8f0a2b4c6d8e0f1a3b5c7d9e",
@@ -39,8 +54,8 @@
             {
                 "id": "live-fulfillment",
                 "position": {
-                    "x": 44,
-                    "y": 42,
+                    "x": 24,
+                    "y": 22,
                     "z": 0
                 },
                 "data": {
@@ -54,8 +69,8 @@
             {
                 "id": "listing-ux",
                 "position": {
-                    "x": -46,
-                    "y": -42,
+                    "x": -24,
+                    "y": -22,
                     "z": 0
                 },
                 "data": {
