@@ -39,8 +39,9 @@
             {
                 "id": "live-fulfillment",
                 "position": {
-                    "x": 0.9,
-                    "y": 0.88
+                    "x": 80,
+                    "y": 76,
+                    "z": 0
                 },
                 "data": {
                     "title": "Live P2P fulfillment",
@@ -53,8 +54,9 @@
             {
                 "id": "listing-ux",
                 "position": {
-                    "x": 0.08,
-                    "y": 0.12
+                    "x": -84,
+                    "y": -76,
+                    "z": 0
                 },
                 "data": {
                     "title": "Listing and handover UX",

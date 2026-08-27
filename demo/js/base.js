@@ -1,3 +1,5 @@
+import * as THREE from "https://esm.sh/three@0.170.0";
+
 const windowEl = document.getElementById("deed-window");
 const imageEl = document.getElementById("deed-image");
 const titleEl = document.getElementById("deed-title");
@@ -7,7 +9,7 @@ const blurbEl = document.getElementById("example-blurb");
 const addressesEl = document.getElementById("addresses");
 let accounts = [];
 let activeAddress = "";
-let pairs = [];
+let historyGraph = null;
 
 const bubbleEl = document.getElementById("clip-bubble");
 const bubbleImg = document.getElementById("clip-bubble-image");
@@ -81,21 +83,22 @@ bubbleImg.addEventListener("load", function () {
     }
 });
 
-function openDeed(node) {
-    titleEl.textContent = node.dataset.title;
-    if (node.dataset.link) {
+function openDeed(data) {
+    data = data || {};
+    titleEl.textContent = data.title || "";
+    if (data.link) {
         linkEl.hidden = false;
-        linkEl.href = node.dataset.link;
-        linkEl.textContent = node.dataset.link;
+        linkEl.href = data.link;
+        linkEl.textContent = data.link;
     } else {
         linkEl.hidden = true;
         linkEl.removeAttribute("href");
         linkEl.textContent = "";
     }
-    imageEl.hidden = !node.dataset.img;
-    if (node.dataset.img) {
-        imageEl.src = node.dataset.img;
-        imageEl.alt = node.dataset.alt || "";
+    imageEl.hidden = !data.img;
+    if (data.img) {
+        imageEl.src = data.img;
+        imageEl.alt = data.alt || "";
     } else {
         imageEl.removeAttribute("src");
         imageEl.alt = "";
@@ -147,6 +150,371 @@ function pairsFromNodes(nodes) {
     return pairs;
 }
 
+function graphDataFromHistory(history) {
+    const sourceNodes = (history && history.nodes) || [];
+    const nodes = sourceNodes.map(function (node) {
+        const data = node.data || {};
+        const item = {
+            id: node.id,
+            name: data.title || node.id,
+            data: data,
+        };
+        const pos = node.position;
+        if (
+            pos &&
+            typeof pos.x === "number" &&
+            typeof pos.y === "number" &&
+            typeof pos.z === "number" &&
+            isFinite(pos.x) &&
+            isFinite(pos.y) &&
+            isFinite(pos.z)
+        ) {
+            item.fx = pos.x;
+            item.fy = pos.y;
+            item.fz = pos.z;
+        }
+        return item;
+    });
+    const links = pairsFromNodes(sourceNodes).map(function (pair) {
+        return { source: pair[0], target: pair[1] };
+    });
+    return { nodes: nodes, links: links };
+}
+
+function historyTheme() {
+    const styles = getComputedStyle(document.documentElement);
+    return {
+        bg: styles.getPropertyValue("--bg").trim(),
+        ink: styles.getPropertyValue("--ink").trim(),
+        line: styles.getPropertyValue("--line").trim(),
+        card: styles.getPropertyValue("--card").trim(),
+    };
+}
+
+function sizeHistoryGraph() {
+    if (!historyGraph) {
+        return;
+    }
+    const width = boardEl.clientWidth;
+    const height = boardEl.clientHeight;
+    if (width < 8 || height < 8) {
+        return;
+    }
+    historyGraph.width(width).height(height);
+}
+
+let fitTimer = 0;
+
+function fitHistoryGraph() {
+    if (!historyGraph) {
+        return;
+    }
+    historyGraph.zoomToFit(0, 64);
+    const cam = historyGraph.cameraPosition();
+    if (!cam) {
+        return;
+    }
+    historyGraph.cameraPosition(
+        {
+            x: cam.x * 0.925,
+            y: cam.y * 0.925,
+            z: cam.z * 0.925,
+        },
+        { x: 0, y: 0, z: 0 },
+        400,
+    );
+}
+
+function scheduleFitHistoryGraph() {
+    window.clearTimeout(fitTimer);
+    fitTimer = window.setTimeout(fitHistoryGraph, 300);
+}
+
+function paintHistoryGraph() {
+    if (!historyGraph) {
+        return;
+    }
+    historyGraph.backgroundColor(historyTheme().bg);
+    historyGraph.refresh();
+}
+
+function wrapTitle(ctx, text, maxWidth) {
+    const words = String(text || "")
+        .split(/\s+/)
+        .filter(Boolean);
+    const lines = [];
+    let line = "";
+    words.forEach(function (word) {
+        const next = line ? line + " " + word : word;
+        if (line && ctx.measureText(next).width > maxWidth) {
+            lines.push(line);
+            line = word;
+        } else {
+            line = next;
+        }
+    });
+    if (line) {
+        lines.push(line);
+    }
+    return lines.slice(0, 3);
+}
+
+function drawCover(ctx, image, x, y, w, h) {
+    const ir = image.width / Math.max(image.height, 1);
+    const r = w / h;
+    let sx = 0;
+    let sy = 0;
+    let sw = image.width;
+    let sh = image.height;
+    if (ir > r) {
+        sw = image.height * r;
+        sx = (image.width - sw) / 2;
+    } else {
+        sh = image.width / r;
+        sy = (image.height - sh) / 2;
+    }
+    ctx.drawImage(image, sx, sy, sw, sh, x, y, w, h);
+}
+
+function paintCard(ctx, canvas, data, theme, image) {
+    const w = canvas.width;
+    const titleH = 96;
+    const imgH = canvas.height - titleH;
+    ctx.fillStyle = theme.card;
+    ctx.fillRect(0, 0, w, canvas.height);
+    if (image && image.width) {
+        drawCover(ctx, image, 0, 0, w, imgH);
+    } else {
+        ctx.fillStyle = theme.line;
+        ctx.fillRect(0, 0, w, imgH);
+    }
+    ctx.strokeStyle = theme.line;
+    ctx.lineWidth = 4;
+    ctx.strokeRect(2, 2, w - 4, canvas.height - 4);
+    ctx.fillStyle = theme.ink;
+    ctx.font = '600 28px Georgia, "Times New Roman", serif';
+    ctx.textBaseline = "top";
+    const pad = 22;
+    const lines = wrapTitle(ctx, data.title || "", w - pad * 2);
+    let ty = imgH + 22;
+    lines.forEach(function (line) {
+        ctx.fillText(line, pad, ty);
+        ty += 34;
+    });
+}
+
+const CARD_W = 16;
+const CARD_H = CARD_W * (384 / 512);
+const CARD_D = 0.55;
+const CARD_HX = CARD_W / 2;
+const CARD_HY = CARD_H / 2;
+const CARD_HZ = CARD_D / 2;
+const CARD_DEPTH = {
+    depthTest: true,
+    depthWrite: true,
+    transparent: false,
+    opacity: 1,
+    polygonOffset: true,
+    polygonOffsetFactor: -2,
+    polygonOffsetUnits: -2,
+};
+
+function paintCardOpaque(obj) {
+    const mats = obj && obj.material;
+    const list = Array.isArray(mats) ? mats : mats ? [mats] : [];
+    list.forEach(function (mat) {
+        mat.transparent = false;
+        mat.opacity = 1;
+        mat.depthTest = true;
+        mat.depthWrite = true;
+    });
+}
+
+function nodeThreeObject(node) {
+    const data = node.data || {};
+    const theme = historyTheme();
+    const canvas = document.createElement("canvas");
+    canvas.width = 512;
+    canvas.height = 384;
+    const ctx = canvas.getContext("2d");
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    paintCard(ctx, canvas, data, theme, null);
+    if (data.img) {
+        const image = new Image();
+        image.onload = function () {
+            paintCard(ctx, canvas, data, theme, image);
+            tex.needsUpdate = true;
+        };
+        image.src = data.img;
+    }
+    const front = new THREE.MeshLambertMaterial(
+        Object.assign({ map: tex, transparent: false, opacity: 1 }, CARD_DEPTH),
+    );
+    const back = new THREE.MeshLambertMaterial(
+        Object.assign(
+            { color: theme.card, transparent: false, opacity: 1 },
+            CARD_DEPTH,
+        ),
+    );
+    const edge = new THREE.MeshLambertMaterial(
+        Object.assign(
+            { color: theme.line, transparent: false, opacity: 1 },
+            CARD_DEPTH,
+        ),
+    );
+    const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(CARD_W, CARD_H, CARD_D),
+        [edge, edge, edge, edge, front, back],
+    );
+    mesh.renderOrder = 1;
+    paintCardOpaque(mesh);
+    return mesh;
+}
+
+function boxExitT(from, toward, hx, hy, hz) {
+    const dx = toward.x - from.x;
+    const dy = toward.y - from.y;
+    const dz = toward.z - from.z;
+    let t = Infinity;
+    if (dx !== 0) {
+        t = Math.min(t, hx / Math.abs(dx));
+    }
+    if (dy !== 0) {
+        t = Math.min(t, hy / Math.abs(dy));
+    }
+    if (dz !== 0) {
+        t = Math.min(t, hz / Math.abs(dz));
+    }
+    if (!isFinite(t) || t <= 0) {
+        return 0;
+    }
+    return t;
+}
+
+function along(from, toward, t) {
+    return {
+        x: from.x + (toward.x - from.x) * t,
+        y: from.y + (toward.y - from.y) * t,
+        z: from.z + (toward.z - from.z) * t,
+    };
+}
+
+function makeLinkObject() {
+    const pos = new THREE.BufferAttribute(new Float32Array(6), 3);
+    pos.setUsage(THREE.DynamicDrawUsage);
+    const geom = new THREE.BufferGeometry();
+    geom.setAttribute("position", pos);
+    const line = new THREE.Line(
+        geom,
+        new THREE.LineBasicMaterial({
+            color: 0x000000,
+            depthTest: true,
+            depthWrite: false,
+        }),
+    );
+    line.frustumCulled = false;
+    return line;
+}
+
+function setLineEnds(line, start, end) {
+    const geom = line && line.geometry;
+    if (!geom) {
+        return;
+    }
+    let pos = geom.getAttribute("position");
+    if (!pos || !pos.array || pos.array.length !== 6) {
+        pos = new THREE.BufferAttribute(new Float32Array(6), 3);
+        pos.setUsage(THREE.DynamicDrawUsage);
+        geom.setAttribute("position", pos);
+    }
+    pos.setXYZ(0, start.x, start.y || 0, start.z || 0);
+    pos.setXYZ(1, end.x, end.y || 0, end.z || 0);
+    pos.needsUpdate = true;
+    if (typeof geom.computeBoundingSphere === "function") {
+        geom.computeBoundingSphere();
+    }
+}
+
+function rimPoint(from, to) {
+    const t = boxExitT(from, to, CARD_HX, CARD_HY, Infinity);
+    const point = along(from, to, t);
+    point.z = from.z + CARD_HZ;
+    return point;
+}
+
+function clipLinkToCards(linkObject, coords) {
+    if (!linkObject) {
+        return true;
+    }
+    const start = rimPoint(coords.start, coords.end);
+    const end = rimPoint(coords.end, coords.start);
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const dz = end.z - start.z;
+    if (dx * dx + dy * dy + dz * dz < 1e-6) {
+        linkObject.visible = false;
+        return true;
+    }
+    linkObject.visible = true;
+    setLineEnds(linkObject, start, end);
+    return true;
+}
+
+function bindHistoryControls(graph) {
+    const controls = graph.controls();
+    if (!controls || !controls.mouseButtons) {
+        return;
+    }
+    controls.mouseButtons.LEFT = THREE.MOUSE.PAN;
+    controls.mouseButtons.MIDDLE = THREE.MOUSE.DOLLY;
+    controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE;
+    if (controls.touches && THREE.TOUCH) {
+        controls.touches.ONE = THREE.TOUCH.PAN;
+        controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
+    }
+    if ("screenSpacePanning" in controls) {
+        controls.screenSpacePanning = true;
+    }
+}
+
+function ensureHistoryGraph() {
+    if (historyGraph) {
+        return historyGraph;
+    }
+    const ForceGraph3D = window.ForceGraph3D;
+    if (typeof ForceGraph3D !== "function") {
+        blurbEl.hidden = false;
+        blurbEl.textContent =
+            "Could not load the 3D graph. Check the network and reload.";
+        return null;
+    }
+    historyGraph = new ForceGraph3D(boardEl, { controlType: "orbit" })
+        .showNavInfo(false)
+        .enableNodeDrag(false)
+        .nodeOpacity(1)
+        .linkOpacity(1)
+        .linkWidth(0)
+        .linkThreeObjectExtend(false)
+        .linkThreeObject(makeLinkObject)
+        .warmupTicks(80)
+        .linkPositionUpdate(clipLinkToCards)
+        .nodeThreeObject(nodeThreeObject)
+        .nodePositionUpdate(function (obj) {
+            paintCardOpaque(obj);
+        })
+        .nodeLabel(function () {
+            return "";
+        })
+        .onNodeClick(function (node) {
+            openDeed(node.data || {});
+        });
+    bindHistoryControls(historyGraph);
+    paintHistoryGraph();
+    sizeHistoryGraph();
+    return historyGraph;
+}
+
 function renderHistory(account) {
     const history = (account && account.history) || {};
     const label = shortAddress(account.address) || "Unknown";
@@ -154,54 +522,13 @@ function renderHistory(account) {
         "aria-label",
         label + ". Click a deed to open details.",
     );
-    boardEl.querySelectorAll(".node").forEach(function (node) {
-        node.remove();
-    });
-
-    (history.nodes || []).forEach(function (node) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "node";
-        button.dataset.nodeId = node.id;
-        const data = node.data || {};
-        button.dataset.title = data.title || "";
-        button.dataset.link = data.link || "";
-        button.dataset.img = data.img || "";
-        button.dataset.alt = data.alt || "";
-        if (
-            node.position &&
-            typeof node.position.x === "number" &&
-            typeof node.position.y === "number"
-        ) {
-            button.dataset.posX = String(node.position.x);
-            button.dataset.posY = String(node.position.y);
-        }
-
-        const heading = document.createElement("h3");
-        heading.textContent = data.title || "";
-
-        if (data.img) {
-            const img = document.createElement("img");
-            img.src = data.img;
-            img.alt = data.alt || "";
-            button.appendChild(img);
-        }
-        button.appendChild(heading);
-        button.addEventListener("click", function () {
-            openDeed(button);
-        });
-        boardEl.appendChild(button);
-    });
-    pairs = pairsFromNodes(history.nodes);
-    boardEl.querySelectorAll(".node img").forEach(function (img) {
-        img.addEventListener("load", function () {
-            if (!boardEl.contains(img)) {
-                return;
-            }
-            layoutNetwork();
-        });
-    });
-    layoutNetwork();
+    const graph = ensureHistoryGraph();
+    if (!graph) {
+        return;
+    }
+    graph.graphData(graphDataFromHistory(history));
+    sizeHistoryGraph();
+    scheduleFitHistoryGraph();
 }
 
 function showHistory(address) {
@@ -239,221 +566,6 @@ function renderAddresses(list) {
             showHistory(address);
         });
         addressesEl.appendChild(button);
-    });
-}
-
-let layoutWidth = 0;
-
-function readPosition(el) {
-    if (!el.dataset.posX || !el.dataset.posY) {
-        return null;
-    }
-    const x = Number(el.dataset.posX);
-    const y = Number(el.dataset.posY);
-    if (!isFinite(x) || !isFinite(y)) {
-        return null;
-    }
-    return { x: x, y: y };
-}
-
-const BOARD_PAD = 8;
-
-function placeNode(el, left, top, boxW, boxH, boardW, boardH) {
-    const pad = BOARD_PAD;
-    el.style.left = Math.max(pad, Math.min(left, boardW - boxW - pad)) + "px";
-    el.style.top = Math.max(pad, Math.min(top, boardH - boxH - pad)) + "px";
-}
-
-function placeCard(
-    el,
-    boxW,
-    boxH,
-    innerW,
-    innerH,
-    boardW,
-    boardH,
-    autoLeft,
-    autoTop,
-) {
-    const pos = readPosition(el);
-    if (pos) {
-        placeNode(
-            el,
-            BOARD_PAD + pos.x * innerW - boxW / 2,
-            BOARD_PAD + pos.y * innerH - boxH / 2,
-            boxW,
-            boxH,
-            boardW,
-            boardH,
-        );
-        return;
-    }
-    placeNode(el, autoLeft, autoTop, boxW, boxH, boardW, boardH);
-}
-
-function layoutNetwork() {
-    const nodes = Array.prototype.slice.call(boardEl.querySelectorAll(".node"));
-    nodes.forEach(function (node) {
-        node.classList.remove("is-hub");
-    });
-    if (!nodes.length) {
-        boardEl.style.height = "";
-        layoutWidth = boardEl.clientWidth;
-        drawNetworkLines();
-        return;
-    }
-
-    const degree = {};
-    nodes.forEach(function (node, index) {
-        degree[node.dataset.nodeId] = 0;
-        node.dataset.order = String(index);
-    });
-    pairs.forEach(function (pair) {
-        if (Object.prototype.hasOwnProperty.call(degree, pair[0])) {
-            degree[pair[0]] += 1;
-        }
-        if (Object.prototype.hasOwnProperty.call(degree, pair[1])) {
-            degree[pair[1]] += 1;
-        }
-    });
-    nodes.sort(function (a, b) {
-        const byDeg = degree[b.dataset.nodeId] - degree[a.dataset.nodeId];
-        if (byDeg !== 0) {
-            return byDeg;
-        }
-        return Number(a.dataset.order) - Number(b.dataset.order);
-    });
-
-    const width = boardEl.clientWidth;
-    const hub = nodes[0];
-    const rest = nodes.slice(1);
-    const hubW = Math.min(240, Math.max(176, width * 0.3));
-    const nodeW = Math.min(200, Math.max(148, width * 0.24));
-    hub.classList.add("is-hub");
-    hub.style.position = "absolute";
-    hub.style.width = hubW + "px";
-    rest.forEach(function (node) {
-        node.style.position = "absolute";
-        node.style.width = nodeW + "px";
-    });
-
-    const hubH = hub.offsetHeight;
-    let maxRest = 0;
-    rest.forEach(function (node) {
-        maxRest = Math.max(maxRest, node.offsetHeight);
-    });
-    const radius = Math.max(hubW, hubH) / 2 + Math.max(nodeW, maxRest) / 2 + 40;
-    const boardH = Math.max(hubH, radius * 2 + maxRest) + 32 + BOARD_PAD * 2;
-    boardEl.style.height = boardH + "px";
-    layoutWidth = width;
-
-    const innerW = Math.max(0, width - BOARD_PAD * 2);
-    const innerH = Math.max(0, boardH - BOARD_PAD * 2);
-    const cx = width / 2;
-    const cy = boardH / 2;
-    placeCard(
-        hub,
-        hubW,
-        hubH,
-        innerW,
-        innerH,
-        width,
-        boardH,
-        cx - hubW / 2,
-        cy - hubH / 2,
-    );
-    const autoRest = rest.filter(function (node) {
-        return !readPosition(node);
-    });
-    rest.forEach(function (node) {
-        const w = nodeW;
-        const h = node.offsetHeight;
-        if (readPosition(node)) {
-            placeCard(node, w, h, innerW, innerH, width, boardH, 0, 0);
-            return;
-        }
-        const index = autoRest.indexOf(node);
-        const angle =
-            -Math.PI / 2 + (2 * Math.PI * index) / Math.max(autoRest.length, 1);
-        const autoLeft = cx + Math.cos(angle) * radius - w / 2;
-        const autoTop = cy + Math.sin(angle) * radius - h / 2;
-        placeCard(node, w, h, innerW, innerH, width, boardH, autoLeft, autoTop);
-    });
-    drawNetworkLines();
-}
-
-function boxOf(el, boardRect) {
-    const r = el.getBoundingClientRect();
-    return {
-        left: r.left - boardRect.left,
-        top: r.top - boardRect.top,
-        right: r.right - boardRect.left,
-        bottom: r.bottom - boardRect.top,
-        cx: (r.left + r.right) / 2 - boardRect.left,
-        cy: (r.top + r.bottom) / 2 - boardRect.top,
-    };
-}
-
-function exitPoint(rect, towardX, towardY) {
-    const dx = towardX - rect.cx;
-    const dy = towardY - rect.cy;
-    const hw = (rect.right - rect.left) / 2;
-    const hh = (rect.bottom - rect.top) / 2;
-    const tx = Math.abs(dx) < 0.01 ? Infinity : hw / Math.abs(dx);
-    const ty = Math.abs(dy) < 0.01 ? Infinity : hh / Math.abs(dy);
-    const t = Math.min(tx, ty);
-    return { x: rect.cx + dx * t, y: rect.cy + dy * t };
-}
-
-function nodeById(id) {
-    return boardEl.querySelector(
-        '.node[data-node-id="' + CSS.escape(id) + '"]',
-    );
-}
-
-function drawNetworkLines() {
-    const svg = boardEl.querySelector(".network-lines");
-    if (!svg) {
-        return;
-    }
-    const boardRect = boardEl.getBoundingClientRect();
-    const w = boardRect.width;
-    const h = boardRect.height;
-    if (w < 8 || h < 8) {
-        return;
-    }
-    svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-    const ns = "http://www.w3.org/2000/svg";
-    svg.replaceChildren();
-
-    pairs.forEach(function (pair) {
-        const aNode = nodeById(pair[0]);
-        const bNode = nodeById(pair[1]);
-        if (!aNode || !bNode) {
-            return;
-        }
-        const a = boxOf(aNode, boardRect);
-        const b = boxOf(bNode, boardRect);
-        const start = exitPoint(a, b.cx, b.cy);
-        const end = exitPoint(b, a.cx, a.cy);
-        const dx = end.x - start.x;
-        const dy = end.y - start.y;
-        const len = Math.hypot(dx, dy);
-        if (len < 2) {
-            return;
-        }
-        const pad = Math.min(4, Math.max(0, len / 2 - 1));
-        const ux = dx / len;
-        const uy = dy / len;
-        const line = document.createElementNS(ns, "line");
-        line.setAttribute("x1", start.x + ux * pad);
-        line.setAttribute("y1", start.y + uy * pad);
-        line.setAttribute("x2", end.x - ux * pad);
-        line.setAttribute("y2", end.y - uy * pad);
-        line.setAttribute("stroke", "currentColor");
-        line.setAttribute("stroke-width", "2");
-        line.setAttribute("stroke-linecap", "round");
-        svg.appendChild(line);
     });
 }
 
@@ -497,12 +609,14 @@ fetch("accounts/index.json")
 
 if (window.ResizeObserver) {
     new ResizeObserver(function () {
-        if (boardEl.clientWidth !== layoutWidth) {
-            layoutNetwork();
-        } else {
-            drawNetworkLines();
-        }
+        sizeHistoryGraph();
     }).observe(boardEl);
+}
+
+if (window.matchMedia) {
+    window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", paintHistoryGraph);
 }
 
 document.querySelectorAll(".clip").forEach(function (clip) {
@@ -847,7 +961,7 @@ window.addEventListener(
 );
 
 window.addEventListener("resize", function () {
-    layoutNetwork();
+    sizeHistoryGraph();
     if (bubbleClip) {
         placeClipBubble(bubbleClip);
     }
