@@ -734,7 +734,10 @@ export function bindHistory() {
                 windowEl.close();
             }
         });
-        windowEl.addEventListener("close", unlockScroll);
+        windowEl.addEventListener("close", function () {
+            unlockScroll();
+            setNodeHovered(null);
+        });
     }
     boardEl = document.querySelector(".network-board");
     if (boardEl) {
@@ -757,6 +760,7 @@ export function bindHistory() {
             if (dx * dx + dy * dy < 100) {
                 openDeed((node && node.data) || {});
             }
+            setNodeHovered(null);
         });
     }
     blurbEl = document.getElementById("example-blurb");
