@@ -568,6 +568,8 @@ function bindHistoryControls(graph) {
     controls.mouseButtons.RIGHT = THREE.MOUSE.ROTATE;
     if (controls.touches && THREE.TOUCH) {
         controls.touches.ONE = THREE.TOUCH.PAN;
+        // TODO: Touch two-finger is zoom and rotate at once (DOLLY_ROTATE).
+        // Add a toggle at the top-right of the graph frame: off = zoom, on = rotate (touches.TWO).
         controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
     }
     if ("screenSpacePanning" in controls) {
