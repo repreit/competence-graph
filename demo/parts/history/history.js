@@ -740,10 +740,16 @@ export function bindHistory() {
     if (boardEl) {
         let press = null;
         boardEl.addEventListener("pointerdown", function (ev) {
-            press =
-                ev.button === 0 && hoveredNode
-                    ? { node: hoveredNode, x: ev.clientX, y: ev.clientY }
-                    : null;
+            if (ev.button !== 0) {
+                press = null;
+                return;
+            }
+            press = { x: ev.clientX, y: ev.clientY, node: null };
+            requestAnimationFrame(function () {
+                if (press) {
+                    press.node = hoveredNode;
+                }
+            });
         });
         boardEl.addEventListener("pointerup", function (ev) {
             if (!press || ev.button !== 0) {
@@ -752,10 +758,23 @@ export function bindHistory() {
             }
             const dx = ev.clientX - press.x;
             const dy = ev.clientY - press.y;
-            const node = press.node;
+            const p = press;
             press = null;
-            if (dx * dx + dy * dy < 100) {
-                openDeed((node && node.data) || {});
+            if (dx * dx + dy * dy >= 100) {
+                return;
+            }
+            function openPress() {
+                if (p.node) {
+                    openDeed(p.node.data || {});
+                }
+            }
+            if (p.node) {
+                openPress();
+            } else {
+                requestAnimationFrame(function () {
+                    p.node = hoveredNode;
+                    openPress();
+                });
             }
         });
     }
