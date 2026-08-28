@@ -7,3 +7,9 @@ npx prettier --write .
 ```bash
 npx repomix
 ```
+
+# Frequently used prompts
+
+```
+Code-review the whole project.
+```
