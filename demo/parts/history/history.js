@@ -739,17 +739,13 @@ export function bindHistory() {
     boardEl = document.querySelector(".network-board");
     if (boardEl) {
         let press = null;
+        const hoverWaitMs = 50;
         boardEl.addEventListener("pointerdown", function (ev) {
             if (ev.button !== 0) {
                 press = null;
                 return;
             }
-            press = { x: ev.clientX, y: ev.clientY, node: null };
-            requestAnimationFrame(function () {
-                if (press) {
-                    press.node = hoveredNode;
-                }
-            });
+            press = { x: ev.clientX, y: ev.clientY };
         });
         boardEl.addEventListener("pointerup", function (ev) {
             if (!press || ev.button !== 0) {
@@ -758,24 +754,15 @@ export function bindHistory() {
             }
             const dx = ev.clientX - press.x;
             const dy = ev.clientY - press.y;
-            const p = press;
             press = null;
             if (dx * dx + dy * dy >= 100) {
                 return;
             }
-            function openPress() {
-                if (p.node) {
-                    openDeed(p.node.data || {});
+            window.setTimeout(function () {
+                if (hoveredNode) {
+                    openDeed(hoveredNode.data || {});
                 }
-            }
-            if (p.node) {
-                openPress();
-            } else {
-                requestAnimationFrame(function () {
-                    p.node = hoveredNode;
-                    openPress();
-                });
-            }
+            }, hoverWaitMs);
         });
     }
     blurbEl = document.getElementById("example-blurb");
