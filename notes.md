@@ -11,5 +11,5 @@ npx repomix
 # Frequently used prompts
 
 ```
-Code-review the whole project.
+Code-review the whole project. (in Plan mode)
 ```
