@@ -1,2 +1,6 @@
 .DS_Store
 repomix-output.xml
+.env
+.env.*
+!.env.example
+node_modules/
