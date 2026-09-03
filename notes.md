@@ -24,4 +24,3 @@ Code-review the whole project. (in Plan mode)
 - Strengthen security
 - Bearer session + CORS
 - Review sessions table (multi-device login)
-- Auto-deploy Functions
