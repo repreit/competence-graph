@@ -21,3 +21,4 @@ Code-review the whole project. (in Plan mode)
 # TODOs
 
 - History table (protocol schema will change)
+- Strengthen auth
