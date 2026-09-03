@@ -10,6 +10,7 @@ import {
     cookieName,
     createSessionToken,
     sessionCookieOpts,
+    sessionExpiresAt,
 } from "./adapters/auth/siwe/session.js";
 import { verifySignedMessage } from "./adapters/auth/siwe/verify.js";
 
@@ -65,7 +66,7 @@ app.post("/auth/verify", async (c) => {
         return c.json({ error: result.error }, 401);
     }
     const token = createSessionToken();
-    const row = await setSession(result.address, token);
+    const row = await setSession(result.address, token, sessionExpiresAt());
     setCookie(c, cookieName, token, sessionCookieOpts(isHttps(c)));
     return c.json(publicAccount(row));
 });

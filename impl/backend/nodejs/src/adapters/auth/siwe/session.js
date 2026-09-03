@@ -7,6 +7,10 @@ export function createSessionToken() {
     return randomBytes(32).toString("base64url");
 }
 
+export function sessionExpiresAt() {
+    return new Date(Date.now() + maxAge * 1000);
+}
+
 export function sessionCookieOpts(secure) {
     return {
         path: "/",
