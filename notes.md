@@ -1,3 +1,7 @@
+# Vanilla
+
+Prefer vanilla development.
+
 # Frequently used commands
 
 ```bash
