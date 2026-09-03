@@ -6,7 +6,6 @@
     "node": ">=24"
   },
   "scripts": {
-    "db:ping": "node --env-file=../../../.env ./src/adapters/db/postgres/ping.js",
     "db:migrate": "node --env-file=../../../.env ./src/adapters/db/postgres/migrate.js"
   },
   "dependencies": {
