@@ -7,7 +7,7 @@
     },
     "scripts": {
         "db:migrate": "node --env-file=../../../.env ./src/adapters/db/postgres/migrate.js",
-        "start": "node --env-file=../../../.env ./src/server.js"
+        "dev": "node --env-file=../../../.env ./src/server.js"
     },
     "dependencies": {
         "@hono/node-server": "^2.1.1",
