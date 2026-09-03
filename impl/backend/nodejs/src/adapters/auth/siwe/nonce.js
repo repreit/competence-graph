@@ -1,7 +1,7 @@
 import { generateSiweNonce } from "viem/siwe";
 
 const ttlMs = 10 * 60 * 1000;
-const issued = new Map();
+const issued = new Map(); // TODO: share before scale-out
 
 export function issueNonce() {
   const nonce = generateSiweNonce();
