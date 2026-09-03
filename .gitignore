@@ -4,3 +4,4 @@ repomix-output.xml
 .env.*
 !.env.example
 node_modules/
+.neon
