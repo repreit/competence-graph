@@ -39,7 +39,7 @@ async function readJson(c) {
     return JSON.parse(text);
 }
 
-app.get("/auth/nonce", (c) => c.json({ nonce: issueNonce() }));
+app.get("/auth/nonce", async (c) => c.json({ nonce: await issueNonce() }));
 
 app.post("/auth/verify", async (c) => {
     const domain = c.req.header("host");

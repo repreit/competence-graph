@@ -21,7 +21,7 @@ export async function verifySignedMessage({ message, signature, domain }) {
         return { ok: false, error: "invalid_message" };
     }
 
-    if (!nonceIsValid(parsed.nonce)) {
+    if (!(await nonceIsValid(parsed.nonce))) {
         return { ok: false, error: "nonce" };
     }
 
@@ -46,7 +46,7 @@ export async function verifySignedMessage({ message, signature, domain }) {
         return { ok: false, error: "signature" };
     }
 
-    if (!consumeNonce(parsed.nonce)) {
+    if (!(await consumeNonce(parsed.nonce))) {
         return { ok: false, error: "nonce" };
     }
 

@@ -6,3 +6,8 @@ CREATE TABLE IF NOT EXISTS accounts (
     history jsonb NOT NULL,
     updated_at timestamptz NOT NULL DEFAULT now()
 );
+
+CREATE TABLE IF NOT EXISTS nonces (
+    nonce text PRIMARY KEY,
+    expires_at timestamptz NOT NULL
+);

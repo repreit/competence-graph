@@ -1,21 +1,12 @@
 import { generateSiweNonce } from "viem/siwe";
+import { insertNonce } from "../../db/postgres/nonces.js";
+
+export { consumeNonce, nonceIsValid } from "../../db/postgres/nonces.js";
 
 const ttlMs = 10 * 60 * 1000;
-const issued = new Map(); // TODO: share before scale-out
 
-export function issueNonce() {
+export async function issueNonce() {
     const nonce = generateSiweNonce();
-    issued.set(nonce, Date.now() + ttlMs);
+    await insertNonce(nonce, new Date(Date.now() + ttlMs));
     return nonce;
-}
-
-export function nonceIsValid(nonce) {
-    const exp = issued.get(nonce);
-    return Boolean(exp && exp >= Date.now());
-}
-
-export function consumeNonce(nonce) {
-    const exp = issued.get(nonce);
-    issued.delete(nonce);
-    return Boolean(exp && exp >= Date.now());
 }
