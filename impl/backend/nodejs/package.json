@@ -10,6 +10,8 @@
     "start": "node --env-file=../../../.env ./src/server.js"
   },
   "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "hono": "^4.13.5",
     "pg": "^8.23.0",
     "viem": "^2.56.3"
   }
