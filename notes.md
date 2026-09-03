@@ -22,3 +22,4 @@ Code-review the whole project. (in Plan mode)
 
 - History table (protocol schema will change)
 - Strengthen auth
+- Review sessions table (multi-device login)
