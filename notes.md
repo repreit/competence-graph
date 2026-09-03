@@ -17,3 +17,7 @@ npx --ignore-scripts repomix@1.18.0
 ```
 Code-review the whole project. (in Plan mode)
 ```
+
+# TODOs
+
+- History table (protocol schema will change)
