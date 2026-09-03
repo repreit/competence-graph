@@ -7,8 +7,8 @@ const dir = dirname(fileURLToPath(import.meta.url));
 const sql = await readFile(join(dir, "schema.sql"), "utf8");
 
 try {
-  await pool.query(sql);
-  console.log("accounts");
+    await pool.query(sql);
+    console.log("accounts");
 } finally {
-  await pool.end();
+    await pool.end();
 }

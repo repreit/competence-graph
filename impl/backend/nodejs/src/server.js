@@ -4,5 +4,5 @@ import app from "./app.js";
 const port = Number(process.env.PORT ?? "3000");
 
 serve({ fetch: app.fetch, port }, (info) => {
-  console.log(`http://127.0.0.1:${info.port}`);
+    console.log(`http://127.0.0.1:${info.port}`);
 });
