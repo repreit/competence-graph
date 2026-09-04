@@ -22,6 +22,6 @@ Code-review the whole project. (in Plan mode)
 
 - History table (protocol schema will change)
 - Strengthen security
-- Review sessions table (multi-device login)
+- Review Multi-device login
 - Review BFF pattern for first-party clients
 - Cron cleanup for expired sessions

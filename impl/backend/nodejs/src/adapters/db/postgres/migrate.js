@@ -9,6 +9,7 @@ const sql = await readFile(join(dir, "schema.sql"), "utf8");
 try {
     await pool.query(sql);
     console.log("accounts");
+    console.log("sessions");
     console.log("nonces");
 } finally {
     await pool.end();

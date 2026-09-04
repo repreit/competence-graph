@@ -4,7 +4,7 @@ import {
     setSession,
     clearSessionToken,
     findBySessionToken,
-} from "./adapters/db/postgres/accounts.js";
+} from "./adapters/db/postgres/sessions.js";
 import { issueNonce } from "./adapters/auth/siwe/nonce.js";
 import {
     createSessionToken,
