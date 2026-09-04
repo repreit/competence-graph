@@ -8,7 +8,7 @@
     "scripts": {
         "db:migrate": "node --env-file=../../../.env ./src/adapters/db/postgres/migrate.js",
         "dev": "node --env-file=../../../.env ./src/server.js",
-        "deploy": "neon functions deploy api --src ./src/app.js"
+        "deploy": "neon functions deploy devapi --src ./src/app.js"
     },
     "dependencies": {
         "@hono/node-server": "^2.1.1",
