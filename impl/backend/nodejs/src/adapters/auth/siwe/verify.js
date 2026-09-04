@@ -4,7 +4,7 @@ import { consumeNonce, nonceIsValid } from "./nonce.js";
 
 const chainId = Number(process.env.SIWE_CHAIN_ID ?? "1");
 
-export async function verifySignedMessage({ message, signature, domain }) {
+export async function verifySignedMessage({ message, signature }) {
     let parsed;
     try {
         parsed = parseSiweMessage(message);
@@ -27,7 +27,7 @@ export async function verifySignedMessage({ message, signature, domain }) {
 
     const fieldsOk = validateSiweMessage({
         address: parsed.address,
-        domain,
+        domain: parsed.domain,
         message: parsed,
         nonce: parsed.nonce,
     });

@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { deleteCookie, getCookie, setCookie } from "hono/cookie";
+import { cors } from "hono/cors";
 import {
     setSession,
     clearSessionToken,
@@ -7,25 +7,37 @@ import {
 } from "./adapters/db/postgres/accounts.js";
 import { issueNonce } from "./adapters/auth/siwe/nonce.js";
 import {
-    cookieName,
     createSessionToken,
-    sessionCookieOpts,
     sessionExpiresAt,
 } from "./adapters/auth/siwe/session.js";
 import { verifySignedMessage } from "./adapters/auth/siwe/verify.js";
 
 const app = new Hono();
 
-function isHttps(c) {
-    const url = new URL(c.req.url);
-    if (url.protocol === "https:") {
-        return true;
-    }
-    return c.req.header("x-forwarded-proto") === "https";
-}
+app.use(
+    "*",
+    cors({
+        origin: "*",
+        allowHeaders: ["Authorization", "Content-Type"],
+        allowMethods: ["GET", "POST", "OPTIONS"],
+    }),
+);
 
 function publicAccount(row) {
     return { id: row.id, address: row.address };
+}
+
+function bearerToken(c) {
+    const header = c.req.header("authorization");
+    if (!header) {
+        return null;
+    }
+    const match = /^Bearer\s+(.+)$/i.exec(header.trim());
+    if (!match) {
+        return null;
+    }
+    const token = match[1].trim();
+    return token.length > 0 ? token : null;
 }
 
 async function readJson(c) {
@@ -42,10 +54,6 @@ async function readJson(c) {
 app.get("/auth/nonce", async (c) => c.json({ nonce: await issueNonce() }));
 
 app.post("/auth/verify", async (c) => {
-    const domain = c.req.header("host");
-    if (!domain) {
-        return c.json({ error: "host" }, 400);
-    }
     let body;
     try {
         body = await readJson(c);
@@ -57,22 +65,17 @@ app.post("/auth/verify", async (c) => {
     if (typeof message !== "string" || typeof signature !== "string") {
         return c.json({ error: "invalid_json" }, 400);
     }
-    const result = await verifySignedMessage({
-        message,
-        signature,
-        domain,
-    });
+    const result = await verifySignedMessage({ message, signature });
     if (!result.ok) {
         return c.json({ error: result.error }, 401);
     }
     const token = createSessionToken();
     const row = await setSession(result.address, token, sessionExpiresAt());
-    setCookie(c, cookieName, token, sessionCookieOpts(isHttps(c)));
-    return c.json(publicAccount(row));
+    return c.json({ ...publicAccount(row), token });
 });
 
 app.get("/auth/me", async (c) => {
-    const row = await findBySessionToken(getCookie(c, cookieName));
+    const row = await findBySessionToken(bearerToken(c));
     if (!row) {
         return c.json({ error: "unauthorized" }, 401);
     }
@@ -80,9 +83,7 @@ app.get("/auth/me", async (c) => {
 });
 
 app.post("/auth/logout", async (c) => {
-    const token = getCookie(c, cookieName);
-    await clearSessionToken(token);
-    deleteCookie(c, cookieName, sessionCookieOpts(isHttps(c)));
+    await clearSessionToken(bearerToken(c));
     return c.json({ ok: true });
 });
 

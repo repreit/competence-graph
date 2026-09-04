@@ -22,6 +22,5 @@ Code-review the whole project. (in Plan mode)
 
 - History table (protocol schema will change)
 - Strengthen security
-- Bearer session + CORS
 - Review sessions table (multi-device login)
 - Review BFF pattern for first-party clients
