@@ -24,3 +24,4 @@ Code-review the whole project. (in Plan mode)
 - Strengthen security
 - Review sessions table (multi-device login)
 - Review BFF pattern for first-party clients
+- Cron cleanup for expired sessions
