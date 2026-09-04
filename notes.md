@@ -15,7 +15,7 @@ npx --ignore-scripts repomix@1.18.0
 # Frequently used prompts
 
 ```
-Code-review the whole project. (in Plan mode)
+Code-review the whole project. (in Ask mode)
 ```
 
 # TODOs
