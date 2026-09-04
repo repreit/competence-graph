@@ -25,3 +25,4 @@ Code-review the whole project. (in Plan mode)
 - Review Multi-device login
 - Review BFF pattern for first-party clients
 - Cron cleanup for expired sessions
+- Review future-state forgery
