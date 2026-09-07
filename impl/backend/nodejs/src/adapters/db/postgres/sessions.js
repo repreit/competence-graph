@@ -5,11 +5,16 @@ export async function setSession(address, sessionToken, expiresAt) {
     try {
         await client.query("BEGIN");
         const { rows } = await client.query(
-            `INSERT INTO accounts (address)
-       VALUES ($1)
-       ON CONFLICT (address) DO UPDATE
-         SET updated_at = now()
-       RETURNING id, address`,
+            `WITH ins AS (
+         INSERT INTO accounts (address)
+         VALUES ($1)
+         ON CONFLICT (address) DO NOTHING
+         RETURNING id, address
+       )
+       SELECT id, address FROM ins
+       UNION ALL
+       SELECT id, address FROM accounts WHERE address = $1
+       LIMIT 1`,
             [address],
         );
         const account = rows[0];

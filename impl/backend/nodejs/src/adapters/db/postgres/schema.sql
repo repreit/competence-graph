@@ -1,7 +1,18 @@
 CREATE TABLE IF NOT EXISTS accounts (
     id bigint generated always as identity PRIMARY KEY,
     address text NOT NULL UNIQUE,
-    updated_at timestamptz NOT NULL DEFAULT now()
+    created_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS deltas (
+    id bigint generated always as identity PRIMARY KEY,
+    account_id bigint NOT NULL REFERENCES accounts (id) ON DELETE CASCADE,
+    seq bigint NOT NULL,
+    prev_hash text,
+    content text NOT NULL,
+    signature text NOT NULL,
+    received_at timestamptz NOT NULL DEFAULT now(),
+    UNIQUE (account_id, seq)
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
