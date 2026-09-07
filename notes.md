@@ -21,10 +21,6 @@ Code-review the whole project. (in Ask mode)
 # TODOs
 
 ```
-History table (protocol schema will change)
-```
-
-```
 Strengthen security
 ```
 
