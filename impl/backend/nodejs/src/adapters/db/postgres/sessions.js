@@ -1,18 +1,16 @@
 import { pool } from "./pool.js";
 
-const emptyHistory = { nodes: [] };
-
 export async function setSession(address, sessionToken, expiresAt) {
     const client = await pool.connect();
     try {
         await client.query("BEGIN");
         const { rows } = await client.query(
-            `INSERT INTO accounts (address, history)
-       VALUES ($1, $2::jsonb)
+            `INSERT INTO accounts (address)
+       VALUES ($1)
        ON CONFLICT (address) DO UPDATE
          SET updated_at = now()
        RETURNING id, address`,
-            [address, JSON.stringify(emptyHistory)],
+            [address],
         );
         const account = rows[0];
         await client.query(`DELETE FROM sessions WHERE account_id = $1`, [
