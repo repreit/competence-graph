@@ -51,6 +51,15 @@ function bearerToken(c) {
     return token.length > 0 ? token : null;
 }
 
+async function requireSession(c, next) {
+    const account = await findBySessionToken(bearerToken(c));
+    if (!account) {
+        return c.json({ error: "unauthorized" }, 401);
+    }
+    c.set("account", account);
+    await next();
+}
+
 async function readJson(c) {
     const text = await c.req.text();
     if (text.length > 65536) {
@@ -85,32 +94,21 @@ app.post("/auth/verify", async (c) => {
     return c.json({ ...publicAccount(row), token });
 });
 
-app.get("/auth/me", async (c) => {
-    const row = await findBySessionToken(bearerToken(c));
-    if (!row) {
-        return c.json({ error: "unauthorized" }, 401);
-    }
-    return c.json(publicAccount(row));
+app.get("/auth/me", requireSession, async (c) => {
+    return c.json(publicAccount(c.get("account")));
 });
 
-app.post("/auth/logout", async (c) => {
+app.post("/auth/logout", requireSession, async (c) => {
     await clearSessionToken(bearerToken(c));
     return c.json({ ok: true });
 });
 
-app.get("/bindings", async (c) => {
-    const account = await findBySessionToken(bearerToken(c));
-    if (!account) {
-        return c.json({ error: "unauthorized" }, 401);
-    }
-    return c.json({ bindings: await listBindings(account.id) });
+app.get("/bindings", requireSession, async (c) => {
+    return c.json({ bindings: await listBindings(c.get("account").id) });
 });
 
-app.post("/bindings/bind", async (c) => {
-    const account = await findBySessionToken(bearerToken(c));
-    if (!account) {
-        return c.json({ error: "unauthorized" }, 401);
-    }
+app.post("/bindings/bind", requireSession, async (c) => {
+    const account = c.get("account");
     let body;
     try {
         body = await readJson(c);
@@ -136,16 +134,16 @@ app.post("/bindings/bind", async (c) => {
         signature,
     });
     if (!result.ok) {
-        return c.json({ error: result.error }, result.error === "invalid" ? 400 : 409);
+        return c.json(
+            { error: result.error },
+            result.error === "invalid" ? 400 : 409,
+        );
     }
     return c.json({ ok: true, seq: result.seq });
 });
 
-app.post("/bindings/:id/unbind", async (c) => {
-    const account = await findBySessionToken(bearerToken(c));
-    if (!account) {
-        return c.json({ error: "unauthorized" }, 401);
-    }
+app.post("/bindings/:id/unbind", requireSession, async (c) => {
+    const account = c.get("account");
     const id = Number(c.req.param("id"));
     if (!Number.isSafeInteger(id) || id < 1) {
         return c.json({ error: "invalid_json" }, 400);
