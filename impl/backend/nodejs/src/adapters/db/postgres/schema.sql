@@ -27,10 +27,10 @@ CREATE INDEX IF NOT EXISTS sessions_account_id_idx ON sessions (account_id);
 CREATE TABLE IF NOT EXISTS bindings (
     id bigint generated always as identity PRIMARY KEY,
     account_id bigint NOT NULL REFERENCES accounts (id) ON DELETE CASCADE,
-    public_key_jwk text NOT NULL,
+    public_key text NOT NULL,
     bound_seq bigint NOT NULL,
     unbound_seq bigint,
-    UNIQUE (account_id, public_key_jwk)
+    UNIQUE (account_id, public_key)
 );
 
 CREATE INDEX IF NOT EXISTS bindings_account_id_idx ON bindings (account_id);
