@@ -177,10 +177,10 @@ app.post("/bindings/:id/unbind", async (c) => {
     const content = unbindContent(id, publicKey);
     const result = await unbindKey(account.id, id, { content, signature });
     if (!result.ok) {
-        if (result.error === "not_found") {
-            return c.json({ error: "not_found" }, 404);
-        }
-        return c.json({ error: result.error }, 409);
+        return c.json(
+            { error: result.error },
+            result.error === "not_found" ? 404 : 409,
+        );
     }
     return c.json({ ok: true, seq: result.seq });
 });
