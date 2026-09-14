@@ -8,10 +8,7 @@ const sql = await readFile(join(dir, "schema.sql"), "utf8");
 
 try {
     await pool.query(sql);
-    console.log("accounts");
-    console.log("deltas");
-    console.log("sessions");
-    console.log("nonces");
+    console.log("done!");
 } finally {
     await pool.end();
 }
