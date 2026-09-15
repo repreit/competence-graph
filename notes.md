@@ -25,7 +25,7 @@ Strengthen security
 ```
 
 ```
-Review Multi-device login
+Review multi-device situations
 ```
 
 ```
