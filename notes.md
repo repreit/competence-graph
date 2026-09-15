@@ -13,7 +13,12 @@ npx --ignore-scripts repomix@1.18.0
 ```
 
 ```bash
-rm -rf ~/.cursor/projects ~/.cursor/plans
+rm -rf ~/.cursor/projects
+rm -rf ~/.cursor/plans
+
+rm -rf ~/"Library/Application Support/Cursor/User/History"
+rm -rf ~/"Library/Application Support/Cursor/User/globalStorage"
+rm -rf ~/"Library/Application Support/Cursor/User/workspaceStorage"
 ```
 
 # Frequently used prompts
