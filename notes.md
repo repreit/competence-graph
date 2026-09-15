@@ -37,9 +37,5 @@ Clean up expired sessions (cron)
 ```
 
 ```
-Review future-state forgery
-```
-
-```
 Each host needs its own key to write its slot.
 ```
