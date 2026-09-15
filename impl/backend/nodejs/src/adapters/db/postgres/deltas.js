@@ -1,20 +1,21 @@
 import { assertLink, hashContent } from "../../../../../../common/js/delta.js";
 import { pool } from "./pool.js";
 
-export async function findTip(accountId, client = pool) {
+export async function findTip(accountId, client = pool, forUpdate = false) {
     const { rows } = await client.query(
         `SELECT seq, prev_hash, content, signature
      FROM deltas
      WHERE account_id = $1
      ORDER BY seq DESC
-     LIMIT 1`,
+     LIMIT 1${forUpdate ? " FOR UPDATE" : ""}`,
         [accountId],
     );
     return rows[0] ?? null;
 }
 
-export async function appendDelta(accountId, row, client = pool) {
-    const tip = await findTip(accountId, client);
+/** Requires an open transaction on `client` (FOR UPDATE must span the insert). */
+export async function appendDelta(accountId, row, client) {
+    const tip = await findTip(accountId, client, true);
     const seq = tip ? tip.seq + 1 : 1;
     const prev_hash = tip ? await hashContent(tip.content) : null;
     const next = {
