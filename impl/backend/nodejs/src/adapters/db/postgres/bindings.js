@@ -123,6 +123,7 @@ export async function unbindKey(accountId, bindingId, { content, signature }) {
     }
 }
 
+// TODO: avoid always scanning all active keys
 export async function activePublicKeys(accountId) {
     const { rows } = await pool.query(
         `SELECT public_key FROM bindings
