@@ -12,6 +12,10 @@ npx --ignore-scripts prettier@3.9.6 --write .
 npx --ignore-scripts repomix@1.18.0
 ```
 
+```bash
+rm -rf ~/.cursor/projects/*
+```
+
 # Frequently used prompts
 
 ```
