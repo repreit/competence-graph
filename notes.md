@@ -13,7 +13,7 @@ npx --ignore-scripts repomix@1.18.0
 ```
 
 ```bash
-rm -rf ~/.cursor/projects/*
+rm -rf ~/.cursor/projects ~/.cursor/plans
 ```
 
 # Frequently used prompts
