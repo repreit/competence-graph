@@ -30,11 +30,7 @@ async function verifyWalletMessage(address, message, signature) {
     return { ok: true, address: expected.toLowerCase() };
 }
 
-export async function verifyBindAttestation({
-    address,
-    publicKey,
-    signature,
-}) {
+export async function verifyBindAttestation({ address, publicKey, signature }) {
     if (publicKey == null) {
         return { ok: false, error: "invalid_json" };
     }
