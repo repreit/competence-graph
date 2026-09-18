@@ -7,5 +7,6 @@
     "editor.formatOnSave": true,
     "editor.fontSize": 14,
     "workbench.colorTheme": "Monokai",
-    "workbench.editor.restoreViewState": false
+    "workbench.editor.restoreViewState": false,
+    "window.autoDetectColorScheme": false
 }
