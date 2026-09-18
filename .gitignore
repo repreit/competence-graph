@@ -1,6 +1,6 @@
 .DS_Store
 repomix-output.xml
-competence-graph-context.txt
+competence-graph-context.md
 .env
 .env.*
 !.env.example
