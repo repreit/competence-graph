@@ -1,6 +1,8 @@
+import { hashSessionToken } from "../../auth/siwe/session.js";
 import { pool } from "./pool.js";
 
 export async function setSession(address, sessionToken, expiresAt) {
+    const tokenHash = hashSessionToken(sessionToken);
     const client = await pool.connect();
     try {
         await client.query("BEGIN");
@@ -22,9 +24,9 @@ export async function setSession(address, sessionToken, expiresAt) {
             account.id,
         ]);
         await client.query(
-            `INSERT INTO sessions (account_id, token, expires_at)
+            `INSERT INTO sessions (account_id, token_hash, expires_at)
        VALUES ($1, $2, $3)`,
-            [account.id, sessionToken, expiresAt],
+            [account.id, tokenHash, expiresAt],
         );
         await client.query("COMMIT");
         return account;
@@ -40,12 +42,13 @@ export async function findBySessionToken(sessionToken) {
     if (!sessionToken) {
         return null;
     }
+    const tokenHash = hashSessionToken(sessionToken);
     const { rows } = await pool.query(
         `SELECT a.id, a.address
      FROM sessions s
      JOIN accounts a ON a.id = s.account_id
-     WHERE s.token = $1 AND s.expires_at > now()`,
-        [sessionToken],
+     WHERE s.token_hash = $1 AND s.expires_at > now()`,
+        [tokenHash],
     );
     return rows[0] ?? null;
 }
@@ -54,5 +57,8 @@ export async function clearSessionToken(sessionToken) {
     if (!sessionToken) {
         return;
     }
-    await pool.query(`DELETE FROM sessions WHERE token = $1`, [sessionToken]);
+    const tokenHash = hashSessionToken(sessionToken);
+    await pool.query(`DELETE FROM sessions WHERE token_hash = $1`, [
+        tokenHash,
+    ]);
 }
