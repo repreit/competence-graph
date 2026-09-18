@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS deltas (
 CREATE TABLE IF NOT EXISTS sessions (
     id bigint generated always as identity PRIMARY KEY,
     account_id bigint NOT NULL REFERENCES accounts (id) ON DELETE CASCADE,
-    token text NOT NULL UNIQUE,
+    token_hash text NOT NULL UNIQUE,
     expires_at timestamptz NOT NULL
 );
 
