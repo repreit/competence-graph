@@ -60,26 +60,25 @@ async function requireSession(c, next) {
     await next();
 }
 
-async function readJson(c) {
+async function requireJson(c, next) {
     const text = await c.req.text();
     if (text.length > 65536) {
-        throw new Error("too_large");
+        return c.json({ error: "too_large" }, 400);
     }
-    if (text.length === 0) {
-        return {};
+    let body;
+    try {
+        body = JSON.parse(text);
+    } catch {
+        return c.json({ error: "invalid_json" }, 400);
     }
-    return JSON.parse(text);
+    c.set("body", body);
+    await next();
 }
 
 app.get("/auth/nonce", async (c) => c.json({ nonce: await issueNonce() }));
 
-app.post("/auth/verify", async (c) => {
-    let body;
-    try {
-        body = await readJson(c);
-    } catch {
-        return c.json({ error: "invalid_json" }, 400);
-    }
+app.post("/auth/verify", requireJson, async (c) => {
+    const body = c.get("body");
     const message = body.message;
     const signature = body.signature;
     if (typeof message !== "string" || typeof signature !== "string") {
@@ -107,14 +106,9 @@ app.get("/bindings", requireSession, async (c) => {
     return c.json({ bindings: await listBindings(c.get("account").id) });
 });
 
-app.post("/bindings/bind", requireSession, async (c) => {
+app.post("/bindings/bind", requireSession, requireJson, async (c) => {
     const account = c.get("account");
-    let body;
-    try {
-        body = await readJson(c);
-    } catch {
-        return c.json({ error: "invalid_json" }, 400);
-    }
+    const body = c.get("body");
     const publicKey = body.publicKey;
     const signature = body.signature;
     if (publicKey == null || typeof signature !== "string") {
@@ -142,18 +136,13 @@ app.post("/bindings/bind", requireSession, async (c) => {
     return c.json({ ok: true, seq: result.seq });
 });
 
-app.post("/bindings/:id/unbind", requireSession, async (c) => {
+app.post("/bindings/:id/unbind", requireSession, requireJson, async (c) => {
     const account = c.get("account");
     const id = Number(c.req.param("id"));
     if (!Number.isSafeInteger(id) || id < 1) {
         return c.json({ error: "invalid_json" }, 400);
     }
-    let body;
-    try {
-        body = await readJson(c);
-    } catch {
-        return c.json({ error: "invalid_json" }, 400);
-    }
+    const body = c.get("body");
     const signature = body.signature;
     if (typeof signature !== "string") {
         return c.json({ error: "invalid_json" }, 400);
