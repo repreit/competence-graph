@@ -6,5 +6,6 @@
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
     "editor.fontSize": 14,
+    "workbench.colorTheme": "Default Dark Modern",
     "workbench.editor.restoreViewState": false
 }
