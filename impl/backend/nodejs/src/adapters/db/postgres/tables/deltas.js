@@ -1,5 +1,5 @@
-import { assertLink, hashContent } from "../../../../../../common/js/delta.js";
-import { pool } from "./pool.js";
+import { assertLink, hashContent } from "../../../../../../../common/js/delta.js";
+import { pool } from "../pool.js";
 
 export async function findTip(accountId, client = pool, forUpdate = false) {
     const { rows } = await client.query(

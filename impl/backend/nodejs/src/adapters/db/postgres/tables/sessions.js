@@ -1,5 +1,5 @@
-import { hashSessionToken } from "../../auth/siwe/session.js";
-import { pool } from "./pool.js";
+import { hashSessionToken } from "../../../auth/siwe/session.js";
+import { pool } from "../pool.js";
 
 export async function setSession(address, sessionToken, expiresAt) {
     const tokenHash = hashSessionToken(sessionToken);

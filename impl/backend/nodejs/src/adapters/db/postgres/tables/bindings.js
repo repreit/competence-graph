@@ -1,6 +1,6 @@
-import { parseBindContent } from "../../../../../../common/js/attest.js";
+import { parseBindContent } from "../../../../../../../common/js/attest.js";
 import { appendDelta, findTip } from "./deltas.js";
-import { pool } from "./pool.js";
+import { pool } from "../pool.js";
 
 function canonicalPublicKey(publicKey) {
     return JSON.stringify(publicKey);

@@ -1,4 +1,4 @@
-import { pool } from "./pool.js";
+import { pool } from "../pool.js";
 
 export async function insertNonce(nonce, expiresAt) {
     await pool.query(`DELETE FROM nonces WHERE expires_at <= now()`);
