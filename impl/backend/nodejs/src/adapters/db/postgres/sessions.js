@@ -58,7 +58,5 @@ export async function clearSessionToken(sessionToken) {
         return;
     }
     const tokenHash = hashSessionToken(sessionToken);
-    await pool.query(`DELETE FROM sessions WHERE token_hash = $1`, [
-        tokenHash,
-    ]);
+    await pool.query(`DELETE FROM sessions WHERE token_hash = $1`, [tokenHash]);
 }
