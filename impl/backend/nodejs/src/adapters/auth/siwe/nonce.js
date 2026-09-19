@@ -1,7 +1,7 @@
 import { generateSiweNonce } from "viem/siwe";
-import { insertNonce } from "../../db/postgres/nonces.js";
+import { insertNonce } from "../../db/postgres/tables/nonces.js";
 
-export { consumeNonce, nonceIsValid } from "../../db/postgres/nonces.js";
+export { consumeNonce, nonceIsValid } from "../../db/postgres/tables/nonces.js";
 
 const ttlMs = 10 * 60 * 1000;
 

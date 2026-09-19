@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import {
     setSession,
     clearSessionToken,
-} from "../adapters/db/postgres/sessions.js";
+} from "../adapters/db/postgres/tables/sessions.js";
 import { issueNonce } from "../adapters/auth/siwe/nonce.js";
 import {
     createSessionToken,

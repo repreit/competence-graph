@@ -1,4 +1,4 @@
-import { findBySessionToken } from "../adapters/db/postgres/sessions.js";
+import { findBySessionToken } from "../adapters/db/postgres/tables/sessions.js";
 
 export function publicAccount(row) {
     return { id: row.id, address: row.address };

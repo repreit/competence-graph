@@ -9,7 +9,7 @@ import {
     findActiveBinding,
     listBindings,
     unbindKey,
-} from "../adapters/db/postgres/bindings.js";
+} from "../adapters/db/postgres/tables/bindings.js";
 import { requireJson } from "../middleware/json.js";
 import { requireSession } from "../middleware/session.js";
 
