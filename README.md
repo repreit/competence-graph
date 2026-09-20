@@ -1,4 +1,7 @@
-**Note:** Current work is focused on [competence-graph-arc-microgrants](https://github.com/repreit/competence-graph-arc-microgrants) (Arc Microgrants).
+> [!NOTE]
+> Current work is focused on [competence-graph-arc-microgrants](https://github.com/repreit/competence-graph-arc-microgrants) (Arc Microgrants).
+
+<br>
 
 <img src="protocol/img/mark.svg" alt="competence-graph" height="32">
 
