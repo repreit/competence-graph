@@ -1,3 +1,5 @@
+**Note:** Current work is focused on [competence-graph-arc-microgrants](https://github.com/repreit/competence-graph-arc-microgrants) (Arc Microgrants).
+
 <img src="protocol/img/mark.svg" alt="competence-graph" height="32">
 
 # competence-graph <img src="protocol/img/protocol.svg" alt="PROTOCOL" height="20">
