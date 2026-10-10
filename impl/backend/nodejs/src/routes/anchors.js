@@ -7,7 +7,7 @@ const anchors = new Hono();
 // Invoked periodically by an external scheduler
 anchors.post("/run", async (c) => {
     const anchored = await batchAnchor();
-    if (anchored?.ok === false) {
+    if (anchored && !anchored.ok) {
         console.log(anchored);
         return c.json(anchored, 500);
     }
