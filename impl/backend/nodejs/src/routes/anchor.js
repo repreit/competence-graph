@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { batchAnchor } from "../adapters/anchor/evm/batch.js";
-import { listAnchored } from "../adapters/anchor/evm/read.js";
+import { listAnchors } from "../adapters/anchor/evm/read.js";
 
 const anchor = new Hono();
 
@@ -13,7 +13,7 @@ anchor.post("/run", async (c) => {
 });
 
 anchor.get("/list", async (c) => {
-    return c.json({ anchored: await listAnchored() });
+    return c.json({ anchors: await listAnchors() });
 });
 
 export default anchor;

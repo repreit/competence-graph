@@ -6,7 +6,7 @@ const client = createPublicClient({ chain, transport: http(chain.rpcUrl) });
 
 const windowSize = 8000n;
 
-export async function listAnchored({ blocks = 80000 } = {}) {
+export async function listAnchors({ blocks = 80000 } = {}) {
     const latest = await client.getBlockNumber();
     const floor = latest > BigInt(blocks) ? latest - BigInt(blocks) : 0n;
     const chunks = [];
