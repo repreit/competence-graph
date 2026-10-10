@@ -2,10 +2,10 @@ import { Hono } from "hono";
 import { batchAnchor } from "../adapters/anchor/evm/batch.js";
 import { listAnchors } from "../adapters/anchor/evm/read.js";
 
-const anchor = new Hono();
+const anchors = new Hono();
 
 // Invoked periodically by an external scheduler
-anchor.post("/run", async (c) => {
+anchors.post("/run", async (c) => {
     const anchored = await batchAnchor();
     if (anchored?.ok === false) {
         console.log(anchored);
@@ -25,8 +25,8 @@ anchor.post("/run", async (c) => {
     return c.json(result);
 });
 
-anchor.get("/list", async (c) => {
+anchors.get("/list", async (c) => {
     return c.json({ anchors: await listAnchors() });
 });
 
-export default anchor;
+export default anchors;
