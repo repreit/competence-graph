@@ -7,9 +7,22 @@ const anchor = new Hono();
 // Invoked periodically by an external scheduler
 anchor.post("/run", async (c) => {
     const anchored = await batchAnchor();
-    const result = anchored ?? { ok: true, anchored: false };
+    if (anchored?.ok === false) {
+        console.log(anchored);
+        return c.json(anchored, 500);
+    }
+    const result = {
+        ok: true,
+        anchor: anchored
+            ? {
+                  txHash: anchored.txHash,
+                  root: anchored.root,
+                  maxDeltaId: anchored.maxDeltaId,
+              }
+            : null,
+    };
     console.log(result);
-    return c.json(result, result.ok ? 200 : 500);
+    return c.json(result);
 });
 
 anchor.get("/list", async (c) => {
