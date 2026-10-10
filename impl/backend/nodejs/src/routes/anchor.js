@@ -5,10 +5,9 @@ const anchor = new Hono();
 
 anchor.post("/run", async (c) => {
     const anchored = await batchAnchor();
-    if (!anchored) {
-        return c.json({ ok: true, anchored: false });
-    }
-    return c.json(anchored);
+    const result = anchored ?? { ok: true, anchored: false };
+    console.log(result);
+    return c.json(result);
 });
 
 export default anchor;
