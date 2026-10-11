@@ -1,3 +1,4 @@
+import { forceCollide } from "d3-force-3d";
 import * as THREE from "three";
 import { lang } from "../../common/js/lang.js";
 import {
@@ -168,6 +169,7 @@ function createHistoryGraph(ForceGraph3D) {
     if (charge) {
         charge.strength(-3);
     }
+    historyGraph.d3Force("collide", forceCollide(CARD_HX + 1));
     bindHistoryControls(historyGraph);
     paintHistoryGraph(historyGraph);
     sizeHistoryGraph();
