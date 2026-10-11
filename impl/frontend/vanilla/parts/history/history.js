@@ -252,7 +252,10 @@ function submitDeedForm() {
         return;
     }
     if (editingNode) {
-        setNode({ id: editingNode.id, data: { title, link, img: img || null } });
+        setNode({
+            id: editingNode.id,
+            data: { title, link, img: img || null },
+        });
     } else {
         createNode({ data: { title, link, img: img || null } });
     }
