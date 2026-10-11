@@ -7,6 +7,12 @@
     "editor.formatOnSave": true,
     "editor.fontSize": 14,
 
+    "[yaml]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+
     "liveServer.settings.root": "/impl/frontend/vanilla",
     "liveServer.settings.mount": [["/impl/common", "impl/common"]],
     "liveServer.settings.NoBrowser": true,
