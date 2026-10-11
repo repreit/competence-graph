@@ -25,6 +25,7 @@ anchors.post("/run", async (c) => {
     return c.json(result);
 });
 
+// TODO: review cache
 anchors.get("/list", async (c) => {
     c.header("Cache-Control", "public, max-age=30");
     return c.json({ anchors: await listAnchors() });
