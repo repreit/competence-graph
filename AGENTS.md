@@ -2,7 +2,7 @@
 
 A reply MUST satisfy every rule below.
 
-1. Answer as simply as possible.
+1. Reply as simply as possible.
 2. Format replies for readability — lists, code blocks, and a blank line between every list item and section; never return one solid block.
 
 # Code Rules
