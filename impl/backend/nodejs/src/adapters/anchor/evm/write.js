@@ -12,7 +12,7 @@ export async function anchorRoot({
         return { ok: false, error: "invalid_request" };
     }
     if (!isHash(merkleRoot)) {
-        return { ok: false, error: "invalid_root" };
+        return { ok: false, error: "invalid_merkle_root" };
     }
     if (!isPositiveSafeInt(maxDeltaId)) {
         return { ok: false, error: "invalid_max_delta_id" };
