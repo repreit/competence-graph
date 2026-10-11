@@ -5,7 +5,7 @@ import { account } from "../../key/viem/account.js";
 import { createClient } from "../../rpc/alchemy/client.js";
 import { anchorAbi } from "./abi.js";
 import { computeMerkleRoot } from "./merkle.js";
-import { anchorRoot } from "./write.js";
+import { anchorMerkleRoot } from "./write.js";
 
 async function listHashedTips(maxId) {
     const rows = await listTips(maxId);
@@ -23,7 +23,7 @@ export async function batchAnchor() {
         return null;
     }
     const merkleRoot = computeMerkleRoot(await listHashedTips(maxId));
-    const anchored = await anchorRoot({
+    const anchored = await anchorMerkleRoot({
         client: createClient({ account, chain }),
         address: anchor.address,
         abi: anchorAbi,

@@ -1,7 +1,7 @@
 import { isHash } from "viem";
 import { isPositiveSafeInt } from "../../../../../../common/js/a001.js";
 
-export async function anchorRoot({
+export async function anchorMerkleRoot({
     client,
     address,
     abi,
