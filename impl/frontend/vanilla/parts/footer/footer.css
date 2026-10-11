@@ -29,6 +29,10 @@ footer a#anchor-latest img {
     flex: none;
 }
 
+footer a#anchor-latest[hidden] {
+    display: none;
+}
+
 footer a.github {
     display: inline-flex;
     align-items: center;
