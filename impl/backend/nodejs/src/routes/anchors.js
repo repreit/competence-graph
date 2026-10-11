@@ -16,7 +16,7 @@ anchors.post("/run", async (c) => {
         anchor: anchored
             ? {
                   txHash: anchored.txHash,
-                  root: anchored.root,
+                  merkleRoot: anchored.merkleRoot,
                   maxDeltaId: anchored.maxDeltaId,
               }
             : null,

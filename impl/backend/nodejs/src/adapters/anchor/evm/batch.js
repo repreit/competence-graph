@@ -30,5 +30,5 @@ export async function batchAnchor() {
         merkleRoot,
         maxDeltaId: maxId,
     });
-    return { ...anchored, root: merkleRoot, maxDeltaId: maxId };
+    return { ...anchored, merkleRoot, maxDeltaId: maxId };
 }
