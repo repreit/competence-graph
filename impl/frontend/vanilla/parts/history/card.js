@@ -29,6 +29,17 @@ export function invalidateCardPaint() {
     cardPaintEpoch += 1;
 }
 
+function proxiedImageUrl(url) {
+    if (!url) {
+        return "";
+    }
+    return (
+        "https://wsrv.nl/?url=" +
+        encodeURIComponent(url) +
+        "&w=1024&h=576&fit=cover&output=webp"
+    );
+}
+
 export function makeCardObject(node, hoveredNodeId) {
     const data = node.data ?? {};
     const theme = historyTheme();
@@ -81,9 +92,10 @@ export function makeCardObject(node, hoveredNodeId) {
     mesh.userData.nodeId = node.id;
     mesh.renderOrder = 1;
     paintCardOpaque(mesh);
-    const imgSrc = safeUrl(data.img);
+    const imgSrc = proxiedImageUrl(safeUrl(data.img));
     if (imgSrc) {
         const image = new Image();
+        image.crossOrigin = "anonymous";
         const epoch = cardPaintEpoch;
         image.onload = function () {
             if (epoch !== cardPaintEpoch) {
