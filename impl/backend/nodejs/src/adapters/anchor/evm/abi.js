@@ -4,7 +4,7 @@ export const anchorAbi = [
         name: "anchor",
         stateMutability: "nonpayable",
         inputs: [
-            { name: "root", type: "bytes32" },
+            { name: "merkleRoot", type: "bytes32" },
             { name: "maxDeltaId", type: "uint256" },
         ],
         outputs: [],
@@ -14,7 +14,7 @@ export const anchorAbi = [
         name: "Anchored",
         anonymous: false,
         inputs: [
-            { name: "root", type: "bytes32", indexed: true },
+            { name: "merkleRoot", type: "bytes32", indexed: true },
             { name: "maxDeltaId", type: "uint256", indexed: true },
         ],
     },

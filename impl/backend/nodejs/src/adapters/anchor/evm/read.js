@@ -28,7 +28,7 @@ export async function listAnchors({ blocks = 80000 } = {}) {
     }
     const logs = chunks.reverse().flat();
     return logs.map((log) => ({
-        root: log.args.root,
+        root: log.args.merkleRoot,
         maxDeltaId: Number(log.args.maxDeltaId),
         blockNumber: Number(log.blockNumber),
         txHash: log.transactionHash,
