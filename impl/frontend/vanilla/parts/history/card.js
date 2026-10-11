@@ -92,11 +92,13 @@ export function makeCardObject(node, hoveredNodeId) {
     mesh.userData.nodeId = node.id;
     mesh.renderOrder = 1;
     paintCardOpaque(mesh);
-    const imgSrc = proxiedImageUrl(safeUrl(data.img));
-    if (imgSrc) {
+    const defaultSrc = safeUrl(data.img);
+    const proxiedSrc = proxiedImageUrl(defaultSrc);
+    if (defaultSrc) {
         const image = new Image();
         image.crossOrigin = "anonymous";
         const epoch = cardPaintEpoch;
+        let usedFallback = false;
         image.onload = function () {
             if (epoch !== cardPaintEpoch) {
                 return;
@@ -112,7 +114,14 @@ export function makeCardObject(node, hoveredNodeId) {
             );
             tex.needsUpdate = true;
         };
-        image.src = imgSrc;
+        image.onerror = function () {
+            if (usedFallback || epoch !== cardPaintEpoch) {
+                return;
+            }
+            usedFallback = true;
+            image.src = proxiedSrc;
+        };
+        image.src = defaultSrc;
     }
     return mesh;
 }
