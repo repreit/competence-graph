@@ -36,7 +36,7 @@ function proxiedImageUrl(url) {
     return (
         "https://wsrv.nl/?url=" +
         encodeURIComponent(url) +
-        "&w=1024&h=576&fit=cover&output=webp"
+        "&w=512&h=288&fit=cover&output=webp&q=75"
     );
 }
 
