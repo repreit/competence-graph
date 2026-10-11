@@ -24,6 +24,10 @@ async function renderLatestAnchor() {
     }
     linkEl.href = chain.explorerUrl + "/tx/" + latest.txHash;
     textEl.textContent =
-        lang.ANCHOR_LATEST + " " + new Date(latest.timestamp).toLocaleString();
+        lang.ANCHOR_LATEST +
+        " " +
+        new Date(latest.timestamp).toLocaleString("en-US", {
+            timeZoneName: "short",
+        });
     linkEl.hidden = false;
 }
