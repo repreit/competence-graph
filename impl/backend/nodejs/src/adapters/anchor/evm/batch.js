@@ -4,7 +4,7 @@ import { listTips, maxDeltaId } from "../../db/postgres/tables/deltas.js";
 import { account } from "../../key/viem/account.js";
 import { createClient } from "../../rpc/alchemy/client.js";
 import { anchorAbi } from "./abi.js";
-import { merkleRoot } from "./merkle.js";
+import { computeMerkleRoot } from "./merkle.js";
 import { anchorRoot } from "./write.js";
 
 async function listHashedTips(maxId) {
@@ -22,7 +22,7 @@ export async function batchAnchor() {
     if (maxId == null) {
         return null;
     }
-    const root = merkleRoot(await listHashedTips(maxId));
+    const root = computeMerkleRoot(await listHashedTips(maxId));
     const anchored = await anchorRoot({
         client: createClient({ account, chain }),
         address: anchor.address,

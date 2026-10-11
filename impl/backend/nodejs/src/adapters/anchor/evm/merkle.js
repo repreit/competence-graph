@@ -3,7 +3,7 @@ import { withHexPrefix } from "../../../../../../common/js/a001.js";
 
 const LEAF_ENCODING = ["address", "bytes32"];
 
-export function merkleRoot(tips) {
+export function computeMerkleRoot(tips) {
     const values = tips.map((tip) => [
         tip.address.toLowerCase(),
         withHexPrefix(tip.tipHash),
