@@ -23,7 +23,7 @@ async function findTip(accountId, client, forUpdate = false) {
     if (!row) {
         return null;
     }
-    // pg returns bigint as a string, but seq is used for arithmetic.
+    // Postgres returns bigint as a string, but seq is used for arithmetic.
     return { ...row, seq: Number(row.seq) };
 }
 

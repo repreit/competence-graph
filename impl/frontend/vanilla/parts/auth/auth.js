@@ -8,7 +8,7 @@ import { getToken, setToken } from "../../common/js/session.js";
 import { emit, on, state } from "../../common/js/store.js";
 import { lang } from "../../common/js/lang.js";
 
-// TODO: review One-Click Auth
+// TODO: Review One-Click Auth
 function signIn() {
     emit("signInStarted", { authPending: true, authError: "" });
     openModal().catch(function (err) {
