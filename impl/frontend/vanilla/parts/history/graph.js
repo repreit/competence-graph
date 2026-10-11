@@ -138,7 +138,7 @@ function bindHistoryControls(graph) {
 function createHistoryGraph(ForceGraph3D) {
     historyGraph = new ForceGraph3D(viewportEl, { controlType: "orbit" })
         .showNavInfo(false)
-        .enableNodeDrag(ture)
+        .enableNodeDrag(true)
         .nodeOpacity(1)
         .linkOpacity(1)
         .linkWidth(0)
