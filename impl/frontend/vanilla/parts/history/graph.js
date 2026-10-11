@@ -13,7 +13,7 @@ import {
     linkKey,
     makeLinkObject,
     pairsFromNodes,
-} from "./links.js";
+} from "./link.js";
 import {
     handleDeedClick,
     handleGraphLinkClick,
