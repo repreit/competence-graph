@@ -26,4 +26,6 @@ export const en = Object.freeze({
     GRAPH_LOAD_FAILED: "Could not load the 3D graph. Reload to try again.",
     GRAPH_DRAW_FAILED:
         "Could not draw the graph for this address. Reload to try again.",
+
+    ANCHOR_LATEST: "Latest anchor",
 });
