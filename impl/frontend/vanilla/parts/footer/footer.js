@@ -27,6 +27,7 @@ async function renderLatestAnchor() {
         lang.ANCHOR_LATEST +
         " " +
         new Date(latest.timestamp).toLocaleString("en-US", {
+            timeZone: "UTC",
             timeZoneName: "short",
         });
     linkEl.hidden = false;
