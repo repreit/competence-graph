@@ -6,7 +6,7 @@ import {
     CARD_HY,
     invalidateCardPaint,
     makeCardObject,
-} from "./cards.js";
+} from "./card.js";
 import {
     clipLinkToCards,
     idFrom,

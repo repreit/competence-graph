@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { cssColor, historyTheme } from "./paint.js";
-import { CARD_HX, CARD_HY, CARD_HZ } from "./cards.js";
+import { CARD_HX, CARD_HY, CARD_HZ } from "./card.js";
 
 function pairKey(idA, idB) {
     return idA < idB ? idA + "|" + idB : idB + "|" + idA;
