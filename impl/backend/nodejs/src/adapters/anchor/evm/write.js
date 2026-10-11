@@ -1,11 +1,17 @@
 import { isHash } from "viem";
 import { isPositiveSafeInt } from "../../../../../../common/js/a001.js";
 
-export async function anchorRoot({ client, address, abi, root, maxDeltaId }) {
+export async function anchorRoot({
+    client,
+    address,
+    abi,
+    merkleRoot,
+    maxDeltaId,
+}) {
     if (!client || !address || !Array.isArray(abi)) {
         return { ok: false, error: "invalid_request" };
     }
-    if (!isHash(root)) {
+    if (!isHash(merkleRoot)) {
         return { ok: false, error: "invalid_root" };
     }
     if (!isPositiveSafeInt(maxDeltaId)) {
@@ -18,7 +24,7 @@ export async function anchorRoot({ client, address, abi, root, maxDeltaId }) {
             address,
             abi,
             functionName: "anchor",
-            args: [root, maxDeltaId],
+            args: [merkleRoot, maxDeltaId],
         });
     } catch {
         return { ok: false, error: "send" };

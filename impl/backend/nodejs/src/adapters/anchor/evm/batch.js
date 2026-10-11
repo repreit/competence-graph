@@ -22,13 +22,13 @@ export async function batchAnchor() {
     if (maxId == null) {
         return null;
     }
-    const root = computeMerkleRoot(await listHashedTips(maxId));
+    const merkleRoot = computeMerkleRoot(await listHashedTips(maxId));
     const anchored = await anchorRoot({
         client: createClient({ account, chain }),
         address: anchor.address,
         abi: anchorAbi,
-        root,
+        merkleRoot,
         maxDeltaId: maxId,
     });
-    return { ...anchored, root, maxDeltaId: maxId };
+    return { ...anchored, root: merkleRoot, maxDeltaId: maxId };
 }
