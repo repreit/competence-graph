@@ -11,7 +11,7 @@ export const chain = Object.freeze({
 });
 
 export const anchor = Object.freeze({
-    address: "0x2064BD16169B4eA78Dced8759216526B8F15939C",
+    address: "0x2c84B00FF16bE296d6Bf0A89bDF9f4c5040BfAe9",
 });
 
 export const app = Object.freeze({
