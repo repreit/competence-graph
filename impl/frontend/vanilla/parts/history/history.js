@@ -29,7 +29,6 @@ let pendingOpsStatusEl;
 let deedFormEl;
 let deedFormTitleEl;
 let deedFormLinkEl;
-let deedFormImgEl;
 let deedFormSubmitEl;
 let deedFormCancelEl;
 let historyStatusEl;
@@ -247,14 +246,13 @@ function submitDeedForm() {
     }
     const title = deedFormTitleEl.value.trim();
     const link = deedFormLinkEl.value.trim();
-    const img = deedFormImgEl.value.trim();
     if (!title || !link) {
         return;
     }
     if (editingNode) {
-        setNode({ id: editingNode.id, data: { title, link, img: img || null } });
+        setNode({ id: editingNode.id, data: { title, link } });
     } else {
-        createNode({ data: { title, link, img: img || null } });
+        createNode({ data: { title, link } });
     }
     closeDeedForm();
     showHistoryStatus("");
@@ -270,7 +268,6 @@ export function editDeed(node) {
     deedFormSubmitEl.textContent = "Update";
     deedFormTitleEl.value = node?.data?.title ?? "";
     deedFormLinkEl.value = node?.data?.link ?? "";
-    deedFormImgEl.value = node?.data?.img ?? "";
     openDeedForm();
     renderMainToolbar();
 }
@@ -391,7 +388,6 @@ export function bindHistory() {
     deedFormEl = document.getElementById("deed-form");
     deedFormTitleEl = document.getElementById("deed-form-title");
     deedFormLinkEl = document.getElementById("deed-form-link");
-    deedFormImgEl = document.getElementById("deed-form-img");
     deedFormSubmitEl = document.getElementById("deed-form-submit");
     deedFormCancelEl = document.getElementById("deed-form-cancel");
     if (deedFormEl) {
