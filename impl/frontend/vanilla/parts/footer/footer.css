@@ -17,6 +17,18 @@ footer p:last-child {
     margin-left: auto;
 }
 
+footer a#anchor-latest {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+footer a#anchor-latest img {
+    height: 0.85rem;
+    width: auto;
+    flex: none;
+}
+
 footer a.github {
     display: inline-flex;
     align-items: center;
