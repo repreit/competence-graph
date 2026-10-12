@@ -14,6 +14,7 @@ export const anchorAbi = [
         name: "Anchored",
         anonymous: false,
         inputs: [
+            { name: "anchorer", type: "address", indexed: true },
             { name: "merkleRoot", type: "bytes32", indexed: true },
             { name: "maxDeltaId", type: "uint256", indexed: true },
         ],
