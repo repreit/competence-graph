@@ -9,10 +9,10 @@ export function historyTheme() {
     );
 }
 
-export function colorFromCss(css) {
+export function colorFromCss(value) {
     const color = new THREE.Color();
-    if (css) {
-        color.setStyle(css);
+    if (value) {
+        color.setStyle(value);
     }
     return color;
 }
