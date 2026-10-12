@@ -39,7 +39,7 @@ let hoveredLinkKey = "";
 let hoveredLink = null;
 
 let fitTimer = 0;
-const FIT_PULL = 1;
+const FIT_PULL = 0.8;
 
 function sizeHistoryGraph() {
     if (!historyGraph || !viewportEl) {
