@@ -17,14 +17,14 @@ export function colorFromCss(value) {
     return color;
 }
 
-function eachPaintedObject(scene, visit) {
+function eachPaintedObject(scene, listener) {
     if (!scene || typeof scene.traverse !== "function") {
         return;
     }
     scene.traverse(function (obj) {
         const data = obj.userData;
         if (data && (data.historyCard || data.historyLink)) {
-            visit(obj, data);
+            listener(obj, data);
         }
     });
 }
