@@ -86,7 +86,7 @@ export function paintLinkHover(graph, hoveredLinkKey) {
     }
     const theme = historyTheme();
     forEachHistoryObject(graph.scene(), function (obj, data) {
-        if (!data.historyLink || !obj.material) {
+        if (!data.historyLink) {
             return;
         }
         const dim = hoveredLinkKey !== "" && data.linkKey !== hoveredLinkKey;
@@ -105,7 +105,7 @@ export function paintHistoryGraph(graph) {
         if (data.historyCard) {
             paintCardMesh(obj, theme);
         }
-        if (data.historyLink && obj.material) {
+        if (data.historyLink) {
             obj.material.color.copy(ink);
         }
     });
