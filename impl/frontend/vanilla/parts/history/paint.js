@@ -2,12 +2,11 @@ import * as THREE from "three";
 
 export function historyTheme() {
     const styles = getComputedStyle(document.documentElement);
-    return {
-        bg: styles.getPropertyValue("--bg").trim(),
-        ink: styles.getPropertyValue("--ink").trim(),
-        line: styles.getPropertyValue("--line").trim(),
-        surface: styles.getPropertyValue("--surface").trim(),
-    };
+    return Object.fromEntries(
+        ["bg", "ink", "line", "surface"].map(function (key) {
+            return [key, styles.getPropertyValue("--" + key).trim()];
+        }),
+    );
 }
 
 export function cssColor(value) {
