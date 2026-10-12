@@ -5,7 +5,10 @@ import { listAnchors } from "../adapters/anchor/evm/read.js";
 const anchors = new Hono();
 
 // Invoked periodically by an external scheduler
-anchors.post("/run", async (c) => {
+anchors.post("/run/:secret", async (c) => {
+    if (c.req.param("secret") !== process.env.ANCHOR_RUN_SECRET) {
+        return c.json({ error: "not_found" }, 404);
+    }
     const anchored = await batchAnchor();
     if (anchored && !anchored.ok) {
         console.log(anchored);
