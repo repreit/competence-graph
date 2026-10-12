@@ -278,6 +278,21 @@ export function editDeed(node) {
     renderMainToolbar();
 }
 
+export function handleDeedDragEnd(node) {
+    if (!isSessionAccount(selectedAccount) || !node) {
+        return;
+    }
+    const { x, y, z } = node;
+    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {
+        return;
+    }
+    node.fx = x;
+    node.fy = y;
+    node.fz = z;
+    setNode({ id: node.id, position: { x, y, z } });
+    renderMainToolbar();
+}
+
 export function deleteDeed(node) {
     if (!node || !isSessionAccount(selectedAccount)) {
         return;

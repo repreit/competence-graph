@@ -16,6 +16,7 @@ import {
 } from "./link.js";
 import {
     handleDeedClick,
+    handleDeedDragEnd,
     handleGraphLinkClick,
     showHistoryStatus,
 } from "./history.js";
@@ -162,6 +163,7 @@ function createHistoryGraph(ForceGraph3D) {
         .onLinkHover(function (link) {
             setHoveredLink(link);
         })
+        .onNodeDragEnd(handleDeedDragEnd)
         // Intentional: Only to enable the pointer cursor
         .onNodeClick(function () {})
         .onLinkClick(function () {});
