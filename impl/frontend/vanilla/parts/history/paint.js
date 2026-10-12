@@ -9,10 +9,10 @@ export function historyTheme() {
     );
 }
 
-export function cssColor(value) {
+export function colorFromCss(css) {
     const color = new THREE.Color();
-    if (value) {
-        color.setStyle(value);
+    if (css) {
+        color.setStyle(css);
     }
     return color;
 }
@@ -45,8 +45,8 @@ function paintCardMesh(mesh, theme) {
     card.tex.needsUpdate = true;
     const mats = mesh.material;
     if (Array.isArray(mats) && mats.length >= 6) {
-        mats[0].color.copy(cssColor(card.hovered ? theme.ink : theme.line));
-        mats[5].color.copy(cssColor(theme.surface));
+        mats[0].color.copy(colorFromCss(card.hovered ? theme.ink : theme.line));
+        mats[5].color.copy(colorFromCss(theme.surface));
     }
 }
 
@@ -90,7 +90,7 @@ export function paintGraphLinkHover(graph, hoveredLinkKey) {
             return;
         }
         const dim = hoveredLinkKey !== "" && data.linkKey !== hoveredLinkKey;
-        obj.material.color.copy(cssColor(dim ? theme.line : theme.ink));
+        obj.material.color.copy(colorFromCss(dim ? theme.line : theme.ink));
     });
 }
 
@@ -99,7 +99,7 @@ export function paintHistoryGraph(graph) {
         return;
     }
     const theme = historyTheme();
-    const ink = cssColor(theme.ink);
+    const ink = colorFromCss(theme.ink);
     graph.backgroundColor(theme.bg);
     eachPaintedObject(graph.scene(), function (obj, data) {
         if (data.historyCard) {

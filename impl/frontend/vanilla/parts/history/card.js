@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { safeUrl } from "../../common/js/a001.js";
 import {
-    cssColor,
+    colorFromCss,
     historyTheme,
     paintCardTexture,
     paintCardOpaque,
@@ -66,14 +66,18 @@ export function makeCardObject(node, hoveredNodeId) {
     );
     const back = new THREE.MeshBasicMaterial(
         Object.assign(
-            { color: cssColor(theme.surface), transparent: false, opacity: 1 },
+            {
+                color: colorFromCss(theme.surface),
+                transparent: false,
+                opacity: 1,
+            },
             CARD_MATERIAL_PARAMS,
         ),
     );
     const edge = new THREE.MeshBasicMaterial(
         Object.assign(
             {
-                color: cssColor(card.hovered ? theme.ink : theme.line),
+                color: colorFromCss(card.hovered ? theme.ink : theme.line),
                 transparent: false,
                 opacity: 1,
             },

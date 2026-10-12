@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { cssColor, historyTheme } from "./paint.js";
+import { colorFromCss, historyTheme } from "./paint.js";
 import { CARD_HX, CARD_HY, CARD_HZ } from "./card.js";
 
 function pairKey(idA, idB) {
@@ -78,7 +78,7 @@ export function makeLinkObject(link) {
     const line = new THREE.Line(
         geom,
         new THREE.LineBasicMaterial({
-            color: cssColor(historyTheme().ink),
+            color: colorFromCss(historyTheme().ink),
             depthTest: true,
             depthWrite: false,
         }),
