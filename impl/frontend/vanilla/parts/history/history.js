@@ -1,4 +1,8 @@
-import { applyOps, linkState } from "impl/common/js/history.js";
+import {
+    applyOps,
+    isFinitePosition,
+    linkState,
+} from "impl/common/js/history.js";
 import { shortAddress } from "../../common/js/a001.js";
 import { lang } from "../../common/js/lang.js";
 import { isSessionAccount } from "../../common/js/session.js";
@@ -279,13 +283,10 @@ export function editDeed(node) {
 }
 
 export function handleDeedDragEnd(node) {
-    if (!isSessionAccount(selectedAccount) || !node) {
+    if (!isSessionAccount(selectedAccount) || !isFinitePosition(node)) {
         return;
     }
     const { x, y, z } = node;
-    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {
-        return;
-    }
     node.fx = x;
     node.fy = y;
     node.fz = z;

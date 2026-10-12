@@ -1,4 +1,5 @@
 import { forceCollide } from "d3-force-3d";
+import { isFinitePosition } from "impl/common/js/history.js";
 import * as THREE from "three";
 import { lang } from "../../common/js/lang.js";
 import {
@@ -215,12 +216,7 @@ function graphDataFromNodes(sourceNodes) {
             nodeIds: node.nodeIds,
         };
         const pos = node.position;
-        if (
-            pos &&
-            Number.isFinite(pos.x) &&
-            Number.isFinite(pos.y) &&
-            Number.isFinite(pos.z)
-        ) {
+        if (isFinitePosition(pos)) {
             item.fx = pos.x;
             item.fy = pos.y;
             item.fz = pos.z;
