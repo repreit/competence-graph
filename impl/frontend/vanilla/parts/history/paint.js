@@ -209,7 +209,7 @@ export function paintCardTexture(ctx, canvas, data, theme, image, hovered) {
     ctx.textBaseline = "top";
     const pad = 22;
     const lines = wrapTitle(ctx, data.title ?? "", w - pad * 2);
-    let ty = imgH + 22;
+    let ty = imgH + 16;
     lines.forEach(function (line) {
         ctx.fillText(line, pad, ty);
         ty += 34;
