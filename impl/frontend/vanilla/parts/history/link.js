@@ -83,7 +83,7 @@ export function makeLinkObject(link) {
             depthWrite: false,
         }),
     );
-    line.userData.historyLink = true;
+    line.userData.isHistoryLink = true;
     line.userData.linkKey = linkKey(link);
     line.frustumCulled = false;
     return line;

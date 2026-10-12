@@ -23,7 +23,7 @@ function forEachHistoryObject(scene, listener) {
     }
     scene.traverse(function (obj) {
         const data = obj.userData;
-        if (data && (data.historyCard || data.historyLink)) {
+        if (data && (data.historyCard || data.isHistoryLink)) {
             listener(obj, data);
         }
     });
@@ -79,7 +79,7 @@ export function paintLinkHover(graph, hoveredLinkKey) {
     }
     const theme = historyTheme();
     forEachHistoryObject(graph.scene(), function (obj, data) {
-        if (!data.historyLink) {
+        if (!data.isHistoryLink) {
             return;
         }
         const dim = hoveredLinkKey !== "" && data.linkKey !== hoveredLinkKey;
@@ -98,7 +98,7 @@ export function paintHistoryGraph(graph) {
         if (data.historyCard) {
             paintCardMesh(obj, theme);
         }
-        if (data.historyLink) {
+        if (data.isHistoryLink) {
             obj.material.color.copy(ink);
         }
     });
