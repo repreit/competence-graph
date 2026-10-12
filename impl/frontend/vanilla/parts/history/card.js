@@ -4,7 +4,7 @@ import {
     colorFromCss,
     historyTheme,
     paintCardTexture,
-    setCardOpaque,
+    setOpaque,
 } from "./paint.js";
 
 const CARD_W = 16;
@@ -95,7 +95,7 @@ export function makeCardObject(node, hoveredNodeId) {
     mesh.userData.historyCard = card;
     mesh.userData.nodeId = node.id;
     mesh.renderOrder = 1;
-    setCardOpaque(mesh);
+    setOpaque(mesh);
     const defaultSrc = safeUrl(data.img);
     const proxiedSrc = proxiedImageUrl(defaultSrc);
     if (defaultSrc) {
