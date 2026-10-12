@@ -50,7 +50,7 @@ function paintCardMesh(mesh, theme) {
     }
 }
 
-export function paintCardOpaque(obj) {
+export function setCardOpaque(obj) {
     const mats = obj?.material;
     const list = Array.isArray(mats) ? mats : mats ? [mats] : [];
     list.forEach(function (mat) {

@@ -21,7 +21,7 @@ import {
 } from "./history.js";
 import {
     disposeGraphGpu,
-    paintCardOpaque,
+    setCardOpaque,
     paintGraphHover,
     paintGraphLinkHover,
     paintHistoryGraph,
@@ -151,7 +151,7 @@ function createHistoryGraph(ForceGraph3D) {
             return makeCardObject(node, hoveredNodeId);
         })
         .nodePositionUpdate(function (obj) {
-            paintCardOpaque(obj);
+            setCardOpaque(obj);
         })
         .nodeLabel(function () {
             return "";
