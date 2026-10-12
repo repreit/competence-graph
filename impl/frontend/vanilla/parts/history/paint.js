@@ -112,8 +112,11 @@ export function paintHistoryGraph(graph) {
 }
 
 export function disposeGraphGpu(graph) {
+    if (!graph) {
+        return;
+    }
     const objects = [];
-    forEachHistoryObject(graph?.scene?.(), function (obj) {
+    forEachHistoryObject(graph.scene(), function (obj) {
         objects.push(obj);
     });
     objects.forEach(disposeObject3D);
