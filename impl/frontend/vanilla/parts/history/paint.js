@@ -187,10 +187,11 @@ function paintCover(ctx, image, x, y, w, h) {
 export function paintCardTexture(ctx, data, theme, image, hovered) {
     const canvas = ctx.canvas;
     const w = canvas.width;
+    const h = canvas.height;
     const titleH = 96;
-    const imgH = canvas.height - titleH;
+    const imgH = h - titleH;
     ctx.fillStyle = theme.surface;
-    ctx.fillRect(0, 0, w, canvas.height);
+    ctx.fillRect(0, 0, w, h);
     if (image?.width) {
         paintCover(ctx, image, 0, 0, w, imgH);
     } else {
@@ -199,7 +200,7 @@ export function paintCardTexture(ctx, data, theme, image, hovered) {
     }
     ctx.strokeStyle = hovered ? theme.ink : theme.line;
     ctx.lineWidth = 4;
-    ctx.strokeRect(2, 2, w - 4, canvas.height - 4);
+    ctx.strokeRect(2, 2, w - 4, h - 4);
     ctx.fillStyle = theme.ink;
     ctx.font = '600 28px Georgia, "Times New Roman", serif';
     ctx.textBaseline = "top";
