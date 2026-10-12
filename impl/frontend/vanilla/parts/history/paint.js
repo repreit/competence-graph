@@ -61,7 +61,7 @@ export function setOpaque(obj) {
     });
 }
 
-export function paintGraphHover(graph, hoveredNodeId) {
+export function paintCardHover(graph, hoveredNodeId) {
     if (!graph) {
         return;
     }
@@ -80,7 +80,7 @@ export function paintGraphHover(graph, hoveredNodeId) {
     });
 }
 
-export function paintGraphLinkHover(graph, hoveredLinkKey) {
+export function paintLinkHover(graph, hoveredLinkKey) {
     if (!graph) {
         return;
     }
