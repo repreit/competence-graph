@@ -22,7 +22,7 @@ async function renderLatestAnchor() {
     if (!latest) {
         return;
     }
-    linkEl.href = chain.explorerUrl + "/tx/" + latest.txHash;
+    linkEl.href = chain.explorerUrl + "/tx/" + latest.txHash + "?tab=logs";
     textEl.textContent =
         lang.ANCHOR_LATEST +
         " " +
