@@ -17,7 +17,7 @@ export function colorFromCss(value) {
     return color;
 }
 
-function eachPaintedObject(scene, listener) {
+function forEachHistoryObject(scene, listener) {
     if (!scene || typeof scene.traverse !== "function") {
         return;
     }
@@ -66,7 +66,7 @@ export function paintGraphHover(graph, hoveredNodeId) {
         return;
     }
     const theme = historyTheme();
-    eachPaintedObject(graph.scene(), function (obj, data) {
+    forEachHistoryObject(graph.scene(), function (obj, data) {
         const card = data.historyCard;
         if (!card) {
             return;
@@ -85,7 +85,7 @@ export function paintGraphLinkHover(graph, hoveredLinkKey) {
         return;
     }
     const theme = historyTheme();
-    eachPaintedObject(graph.scene(), function (obj, data) {
+    forEachHistoryObject(graph.scene(), function (obj, data) {
         if (!data.historyLink || !obj.material) {
             return;
         }
@@ -101,7 +101,7 @@ export function paintHistoryGraph(graph) {
     const theme = historyTheme();
     const ink = colorFromCss(theme.ink);
     graph.backgroundColor(theme.bg);
-    eachPaintedObject(graph.scene(), function (obj, data) {
+    forEachHistoryObject(graph.scene(), function (obj, data) {
         if (data.historyCard) {
             paintCardMesh(obj, theme);
         }
@@ -113,7 +113,7 @@ export function paintHistoryGraph(graph) {
 
 export function disposeGraphGpu(graph) {
     const objects = [];
-    eachPaintedObject(graph?.scene?.(), function (obj) {
+    forEachHistoryObject(graph?.scene?.(), function (obj) {
         objects.push(obj);
     });
     objects.forEach(disposeObject3D);
