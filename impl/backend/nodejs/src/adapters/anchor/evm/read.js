@@ -1,5 +1,5 @@
 import { createPublicClient, http } from "viem";
-import { anchor, chain } from "../../../../../../common/js/config.js";
+import { anchor, chain, host } from "../../../../../../common/js/config.js";
 import { anchorAbi } from "./abi.js";
 
 const client = createPublicClient({ chain, transport: http(chain.rpcUrl) });
@@ -17,6 +17,7 @@ export async function listAnchors({ blocks = 80000 } = {}) {
                 address: anchor.address,
                 abi: anchorAbi,
                 eventName: "Anchored",
+                args: { anchorer: host.address },
                 fromBlock: from,
                 toBlock: to,
             }),
@@ -28,6 +29,7 @@ export async function listAnchors({ blocks = 80000 } = {}) {
     }
     const logs = chunks.reverse().flat();
     return logs.map((log) => ({
+        anchorer: log.args.anchorer,
         merkleRoot: log.args.merkleRoot,
         maxDeltaId: Number(log.args.maxDeltaId),
         blockNumber: Number(log.blockNumber),
