@@ -133,16 +133,16 @@ function disposeMaterial(mat) {
     mat.dispose();
 }
 
-function disposeObject3D(obj) {
-    if (!obj) {
+function disposeObject3D(object3D) {
+    if (!object3D) {
         return;
     }
     const seen = [];
-    obj.traverse(function (child) {
-        if (child.geometry) {
-            child.geometry.dispose();
+    object3D.traverse(function (obj) {
+        if (obj.geometry) {
+            obj.geometry.dispose();
         }
-        const mats = child.material;
+        const mats = obj.material;
         const list = Array.isArray(mats) ? mats : mats ? [mats] : [];
         list.forEach(function (mat) {
             if (mat && seen.indexOf(mat) === -1) {
