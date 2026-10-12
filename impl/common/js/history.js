@@ -17,14 +17,23 @@ function hasOwn(value, field) {
     return Object.hasOwn(value, field);
 }
 
+export function isFinitePosition(value) {
+    return (
+        isPlainObject(value) &&
+        Number.isFinite(value.x) &&
+        Number.isFinite(value.y) &&
+        Number.isFinite(value.z)
+    );
+}
+
 function parsePosition(value) {
     if (!isPlainObject(value) || !hasOnlyFields(value, POSITION_FIELDS)) {
         return null;
     }
-    const { x, y, z } = value;
-    if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) {
+    if (!isFinitePosition(value)) {
         return null;
     }
+    const { x, y, z } = value;
     return { x, y, z };
 }
 
