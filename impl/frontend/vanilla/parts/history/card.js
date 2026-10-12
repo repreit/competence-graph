@@ -57,7 +57,7 @@ export function makeCardObject(node, hoveredNodeId) {
         image: null,
         hovered: node.id === hoveredNodeId,
     };
-    paintCardTexture(ctx, canvas, data, theme, null, card.hovered);
+    paintCardTexture(ctx, data, theme, null, card.hovered);
     const front = new THREE.MeshBasicMaterial(
         Object.assign(
             { map: tex, transparent: false, opacity: 1 },
@@ -108,14 +108,7 @@ export function makeCardObject(node, hoveredNodeId) {
                 return;
             }
             card.image = image;
-            paintCardTexture(
-                ctx,
-                canvas,
-                data,
-                historyTheme(),
-                image,
-                card.hovered,
-            );
+            paintCardTexture(ctx, data, historyTheme(), image, card.hovered);
             tex.needsUpdate = true;
         };
         image.onerror = function () {

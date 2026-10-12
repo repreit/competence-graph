@@ -34,14 +34,7 @@ function paintCardMesh(mesh, theme) {
     if (!card) {
         return;
     }
-    paintCardTexture(
-        card.ctx,
-        card.canvas,
-        card.data,
-        theme,
-        card.image,
-        card.hovered,
-    );
+    paintCardTexture(card.ctx, card.data, theme, card.image, card.hovered);
     card.tex.needsUpdate = true;
     const mats = mesh.material;
     if (Array.isArray(mats) && mats.length >= 6) {
@@ -191,7 +184,8 @@ function paintCover(ctx, image, x, y, w, h) {
     ctx.drawImage(image, sx, sy, sw, sh, x, y, w, h);
 }
 
-export function paintCardTexture(ctx, canvas, data, theme, image, hovered) {
+export function paintCardTexture(ctx, data, theme, image, hovered) {
+    const canvas = ctx.canvas;
     const w = canvas.width;
     const titleH = 96;
     const imgH = canvas.height - titleH;
