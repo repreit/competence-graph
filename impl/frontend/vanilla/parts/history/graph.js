@@ -217,12 +217,9 @@ function graphDataFromNodes(sourceNodes) {
         const pos = node.position;
         if (
             pos &&
-            typeof pos.x === "number" &&
-            typeof pos.y === "number" &&
-            typeof pos.z === "number" &&
-            isFinite(pos.x) &&
-            isFinite(pos.y) &&
-            isFinite(pos.z)
+            Number.isFinite(pos.x) &&
+            Number.isFinite(pos.y) &&
+            Number.isFinite(pos.z)
         ) {
             item.fx = pos.x;
             item.fy = pos.y;
