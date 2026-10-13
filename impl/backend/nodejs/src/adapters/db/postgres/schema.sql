@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS deltas (
     seq bigint NOT NULL,
     prev_hash text,
     content text NOT NULL,
-    signature text NOT NULL,
+    signature text,
     received_at timestamptz NOT NULL DEFAULT now(),
     UNIQUE (account_id, seq)
 );
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS bindings (
     public_key text NOT NULL,
     bind_seq bigint NOT NULL,
     unbind_seq bigint,
+    -- Intentional: Never allow key re-bind
     UNIQUE (account_id, public_key)
 );
 

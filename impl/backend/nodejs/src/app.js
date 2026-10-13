@@ -1,7 +1,13 @@
 import { Hono } from "hono";
+import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
+import { maxBodyBytes } from "./config.js";
+import accounts from "./routes/accounts.js";
+import anchors from "./routes/anchors.js";
 import auth from "./routes/auth.js";
 import bindings from "./routes/bindings.js";
+import deltas from "./routes/deltas.js";
+import remoteConfig from "./routes/remote-config.js";
 
 const app = new Hono();
 
@@ -14,8 +20,20 @@ app.use(
     }),
 );
 
+app.use(
+    "*",
+    bodyLimit({
+        maxSize: maxBodyBytes,
+        onError: (c) => c.json({ error: "too_large" }, 413),
+    }),
+);
+
+app.route("/remote-config", remoteConfig);
 app.route("/auth", auth);
+app.route("/accounts", accounts);
 app.route("/bindings", bindings);
+app.route("/deltas", deltas);
+app.route("/anchors", anchors);
 
 app.notFound((c) => c.json({ error: "not_found" }, 404));
 

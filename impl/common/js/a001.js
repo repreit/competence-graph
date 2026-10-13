@@ -1,0 +1,74 @@
+export const HASH_ALGORITHM = "SHA-256";
+
+export function isPlainObject(value) {
+    return value != null && typeof value === "object" && !Array.isArray(value);
+}
+
+export function isNonEmptyString(value) {
+    return typeof value === "string" && value.length > 0;
+}
+
+export function isPositiveSafeInt(value) {
+    return Number.isSafeInteger(value) && value >= 1;
+}
+
+export function isCanonicalHash(value) {
+    return typeof value === "string" && /^[0-9a-f]{64}$/.test(value);
+}
+
+export function bytesFromBase64Url(value) {
+    const padded =
+        value.replace(/-/g, "+").replace(/_/g, "/") +
+        "==".slice(0, (4 - (value.length % 4)) % 4);
+    const binary = atob(padded);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+    }
+    return bytes;
+}
+
+export function base64UrlFromBytes(value) {
+    const bytes = new Uint8Array(value);
+    let binary = "";
+    for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary)
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=+$/, "");
+}
+
+export function bytesFromHex(value) {
+    if (
+        typeof value !== "string" ||
+        value.length % 2 !== 0 ||
+        !/^[0-9a-fA-F]*$/.test(value)
+    ) {
+        throw new TypeError("hex");
+    }
+    const bytes = new Uint8Array(value.length / 2);
+    for (let i = 0; i < bytes.length; i++) {
+        bytes[i] = parseInt(value.slice(i * 2, i * 2 + 2), 16);
+    }
+    return bytes;
+}
+
+export function hexFromBytes(value) {
+    const bytes = new Uint8Array(value);
+    let out = "";
+    for (const byte of bytes) {
+        out += byte.toString(16).padStart(2, "0");
+    }
+    return out;
+}
+
+export function withHexPrefix(value) {
+    return "0x" + value;
+}
+
+export async function hashBytes(value) {
+    const digest = await crypto.subtle.digest(HASH_ALGORITHM, value);
+    return hexFromBytes(digest);
+}

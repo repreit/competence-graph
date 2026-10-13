@@ -1,0 +1,51 @@
+footer {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0 1.25rem 3rem;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer p:last-child {
+    margin-left: auto;
+}
+
+footer a#anchor-latest {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+footer a#anchor-latest img {
+    height: 0.85rem;
+    width: auto;
+    flex: none;
+}
+
+footer a#anchor-latest[hidden] {
+    display: none;
+}
+
+footer a.github {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+}
+
+footer a.github:hover {
+    text-decoration: underline;
+}
+
+footer a.github svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: currentColor;
+}

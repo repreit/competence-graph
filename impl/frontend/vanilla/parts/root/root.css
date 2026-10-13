@@ -1,0 +1,116 @@
+:root {
+    color-scheme: light dark;
+    --bg: #f6f4ef;
+    --ink: #1c1b18;
+    --muted: #5c5850;
+    --line: #d8d3c8;
+    --surface: #fffdf8;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #161513;
+        --ink: #f3efe6;
+        --muted: #b0aaa0;
+        --line: #3a372f;
+        --surface: #1f1d1a;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+}
+
+body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+}
+
+main {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 2rem;
+}
+
+p {
+    color: var(--ink);
+}
+
+.muted {
+    color: var(--muted);
+}
+
+a {
+    color: inherit;
+}
+
+h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+}
+
+h2 {
+    font-size: 1.1rem;
+    margin: 0 0 0.6rem;
+}
+
+section {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 1.1rem 1.15rem 1.2rem;
+    margin-top: 1.25rem;
+    overflow: visible;
+}
+
+.difference > h2,
+.difference > p,
+header,
+.auth,
+footer,
+main > section:not(.difference) {
+    transition:
+        filter 0.22s ease,
+        opacity 0.22s ease;
+}
+
+body:has(.time-scene:hover)
+    :is(
+        header,
+        .auth,
+        footer,
+        .difference > :not(.time-scene),
+        main > section:not(.difference)
+    ),
+body:has(.clip:focus-visible)
+    :is(
+        header,
+        .auth,
+        footer,
+        .difference > :not(.time-scene),
+        main > section:not(.difference)
+    ),
+body.timeline-focus
+    :is(
+        header,
+        .auth,
+        footer,
+        .difference > :not(.time-scene),
+        main > section:not(.difference)
+    ),
+body:has(.time-scene:hover) .time-scene:not(:hover),
+body.timeline-focus .time-scene:not(.is-active) {
+    filter: blur(7px);
+    opacity: 0.4;
+    pointer-events: none;
+}

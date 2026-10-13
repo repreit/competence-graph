@@ -1,0 +1,101 @@
+import { safeUrl } from "../../common/js/a001.js";
+import { isSessionAccount } from "../../common/js/session.js";
+import { deleteDeed, editDeed, selectedAccount } from "./history.js";
+
+let windowEl;
+let imageEl;
+let titleEl;
+let linkEl;
+let editEl;
+let deleteEl;
+
+let openedNode = null;
+
+function bindDeedAction(el, action) {
+    if (!el) {
+        return;
+    }
+    el.addEventListener("click", function () {
+        if (openedNode) {
+            action(openedNode);
+            windowEl.close();
+        }
+    });
+}
+
+export function bindDeed() {
+    windowEl = document.getElementById("deed-window");
+    imageEl = document.getElementById("deed-image");
+    titleEl = document.getElementById("deed-title");
+    linkEl = document.getElementById("deed-link");
+    editEl = document.getElementById("deed-edit");
+    deleteEl = document.getElementById("deed-delete");
+    if (!windowEl) {
+        return;
+    }
+    const closeEl = windowEl.querySelector(".close");
+    if (closeEl) {
+        closeEl.addEventListener("click", function () {
+            windowEl.close();
+        });
+    }
+    windowEl.addEventListener("click", function (event) {
+        if (event.target === windowEl) {
+            windowEl.close();
+        }
+    });
+    windowEl.addEventListener("close", function () {
+        unlockScroll();
+        openedNode = null;
+    });
+    bindDeedAction(editEl, editDeed);
+    bindDeedAction(deleteEl, deleteDeed);
+}
+
+export function openDeed(node) {
+    if (!windowEl || windowEl.open) {
+        return;
+    }
+    openedNode = node;
+    if (editEl) {
+        editEl.hidden = !isSessionAccount(selectedAccount);
+    }
+    if (deleteEl) {
+        deleteEl.hidden = !isSessionAccount(selectedAccount);
+    }
+    const data = node?.data ?? {};
+    titleEl.textContent = data.title ?? "";
+    const linkText = typeof data.link === "string" ? data.link : "";
+    linkEl.hidden = !linkText;
+    linkEl.textContent = linkText;
+    const href = safeUrl(data.link);
+    if (href) {
+        linkEl.href = href;
+    } else {
+        linkEl.removeAttribute("href");
+    }
+    const src = safeUrl(data.img);
+    imageEl.hidden = !src;
+    if (src) {
+        imageEl.src = src;
+        imageEl.alt = data.alt ?? "";
+    } else {
+        imageEl.removeAttribute("src");
+        imageEl.alt = "";
+    }
+    const scrollY = window.scrollY;
+    windowEl.showModal();
+    document.body.style.position = "fixed";
+    document.body.style.top = "-" + scrollY + "px";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+}
+
+function unlockScroll() {
+    const top = document.body.style.top;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    window.scrollTo(0, Math.abs(parseInt(top || "0", 10)));
+}

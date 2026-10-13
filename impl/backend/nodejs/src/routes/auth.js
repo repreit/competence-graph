@@ -18,14 +18,18 @@ import {
 
 const auth = new Hono();
 
-auth.get("/nonce", async (c) => c.json({ nonce: await issueNonce() }));
+auth.get("/nonce", async (c) =>
+    c.json({
+        nonce: await issueNonce(),
+    }),
+);
 
 auth.post("/verify", requireJson, async (c) => {
     const body = c.get("body");
     const message = body.message;
     const signature = body.signature;
     if (typeof message !== "string" || typeof signature !== "string") {
-        return c.json({ error: "invalid_json" }, 400);
+        return c.json({ error: "invalid_request" }, 400);
     }
     const result = await verifySignedMessage({ message, signature });
     if (!result.ok) {
