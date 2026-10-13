@@ -1,4 +1,5 @@
 import { getAddress, recoverMessageAddress } from "viem";
+import { isPositiveSafeInt } from "../../../../../../common/js/a001.js";
 import {
     bindMessage,
     unbindMessage,
@@ -10,13 +11,13 @@ async function verifyWalletMessage(address, message, signature) {
         typeof message !== "string" ||
         typeof signature !== "string"
     ) {
-        return { ok: false, error: "invalid_json" };
+        return { ok: false, error: "invalid_request" };
     }
     let expected;
     try {
         expected = getAddress(address);
     } catch {
-        return { ok: false, error: "invalid_json" };
+        return { ok: false, error: "invalid_request" };
     }
     let recovered;
     try {
@@ -32,13 +33,13 @@ async function verifyWalletMessage(address, message, signature) {
 
 export async function verifyBindAttestation({ address, publicKey, signature }) {
     if (publicKey == null) {
-        return { ok: false, error: "invalid_json" };
+        return { ok: false, error: "invalid_request" };
     }
     let message;
     try {
-        message = bindMessage(getAddress(address), publicKey);
+        message = bindMessage(getAddress(address).toLowerCase(), publicKey);
     } catch {
-        return { ok: false, error: "invalid_json" };
+        return { ok: false, error: "invalid_request" };
     }
     return verifyWalletMessage(address, message, signature);
 }
@@ -49,18 +50,18 @@ export async function verifyUnbindAttestation({
     publicKey,
     signature,
 }) {
-    if (
-        publicKey == null ||
-        !Number.isSafeInteger(bindingId) ||
-        bindingId < 1
-    ) {
-        return { ok: false, error: "invalid_json" };
+    if (publicKey == null || !isPositiveSafeInt(bindingId)) {
+        return { ok: false, error: "invalid_request" };
     }
     let message;
     try {
-        message = unbindMessage(getAddress(address), bindingId, publicKey);
+        message = unbindMessage(
+            getAddress(address).toLowerCase(),
+            bindingId,
+            publicKey,
+        );
     } catch {
-        return { ok: false, error: "invalid_json" };
+        return { ok: false, error: "invalid_request" };
     }
     return verifyWalletMessage(address, message, signature);
 }

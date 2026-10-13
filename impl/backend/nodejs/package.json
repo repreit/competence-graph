@@ -6,12 +6,15 @@
         "node": ">=24"
     },
     "scripts": {
-        "db:migrate": "node --env-file=../../../.env ./src/adapters/db/postgres/migrate.js",
-        "start": "node --env-file=../../../.env ./src/server.js",
+        "anchor": "node --env-file-if-exists=../../../.env ./src/adapters/anchor/evm/run.js",
+        "db:migrate": "node --env-file-if-exists=../../../.env ./src/adapters/db/postgres/migrate.js",
+        "start": "node --env-file-if-exists=../../../.env ./src/server.js",
+        "dev": "node --watch --env-file-if-exists=../../../.env ./src/server.js",
         "deploy": "neon functions deploy api --src ./src/app.js"
     },
     "dependencies": {
         "@hono/node-server": "^2.1.1",
+        "@openzeppelin/merkle-tree": "^1.0.8",
         "hono": "^4.13.5",
         "pg": "^8.23.0",
         "viem": "^2.56.3"

@@ -1,0 +1,28 @@
+<main>
+    <div data-part="header"></div>
+    <div data-part="auth"></div>
+    <div data-part="difference"></div>
+    <div data-part="history"></div>
+</main>
+
+<div data-part="footer"></div>
+
+<div class="clip-bubble" id="clip-bubble" hidden>
+    <button
+        type="button"
+        class="transport"
+        id="bubble-transport"
+        hidden
+        aria-label="Pause"
+    >
+        <span class="play-shape" aria-hidden="true"></span>
+        <span class="pause-shape" aria-hidden="true"></span>
+    </button>
+    <img id="clip-bubble-image" alt="" />
+    <div class="sheet">
+        <h3 id="clip-bubble-title"></h3>
+        <p class="muted kind" id="clip-bubble-kind"></p>
+        <p class="story" id="clip-bubble-story"></p>
+    </div>
+    <span class="tail" aria-hidden="true"></span>
+</div>

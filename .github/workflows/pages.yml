@@ -23,8 +23,12 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - uses: actions/configure-pages@v5
+            - name: Copy impl/common
+              run: |
+                  mkdir -p impl/frontend/vanilla/impl
+                  cp -R impl/common impl/frontend/vanilla/impl/
             - uses: actions/upload-pages-artifact@v3
               with:
-                  path: demo
+                  path: impl/frontend/vanilla
             - id: deployment
               uses: actions/deploy-pages@v4

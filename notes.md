@@ -1,4 +1,4 @@
-# Vanilla
+# Development Concept
 
 Prefer vanilla development.
 
@@ -8,23 +8,10 @@ Prefer vanilla development.
 npx --ignore-scripts prettier@3.9.6 --write .
 ```
 
-```bash
-npx --ignore-scripts repomix@1.18.0
-```
-
-```bash
-rm -rf ~/.cursor/projects
-rm -rf ~/.cursor/plans
-
-rm -rf ~/"Library/Application Support/Cursor/User/History"
-rm -rf ~/"Library/Application Support/Cursor/User/globalStorage"
-rm -rf ~/"Library/Application Support/Cursor/User/workspaceStorage"
-```
-
 # Frequently used prompts
 
 ```
-Code-review the whole project. (in Ask mode)
+Code-review the whole project. (in read-only mode)
 ```
 
 # TODOs
@@ -46,9 +33,13 @@ Clean up expired sessions (cron)
 ```
 
 ```
-Each host needs its own key to write its slot.
+Each host needs its own key to write its slot
 ```
 
 ```
 Assemble the adapter stack at download, not at runtime
+```
+
+```
+Optimize performance
 ```

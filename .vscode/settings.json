@@ -6,7 +6,32 @@
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
     "editor.fontSize": 14,
-    "workbench.colorTheme": "Cursor Dark High Contrast",
+
+    "[yaml]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false
+    },
+
+    "liveServer.settings.root": "/impl/frontend/vanilla",
+    "liveServer.settings.mount": [["/impl/common", "impl/common"]],
+    "liveServer.settings.NoBrowser": true,
+
+    "window.autoDetectColorScheme": false,
+    "window.zoomLevel": 0.5,
+
+    "workbench.colorTheme": "Default High Contrast",
     "workbench.editor.restoreViewState": false,
-    "window.autoDetectColorScheme": false
+
+    "workbench.colorCustomizations": {
+        "diffEditor.insertedLineBackground": "#3fb9501f",
+        "diffEditor.insertedTextBackground": "#3fb9504d",
+        "diffEditor.insertedTextBorder": "#3fb95066",
+
+        "diffEditor.removedLineBackground": "#ef444433",
+        "diffEditor.removedTextBackground": "#ef444459",
+        "diffEditor.removedTextBorder": "#ef444480",
+
+        "diffEditor.diagonalFill": "#2b2b2b80"
+    }
 }

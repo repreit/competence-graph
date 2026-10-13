@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server";
 import app from "./app.js";
+import { serverPort } from "./config.js";
 
-const port = Number(process.env.PORT ?? "3000");
-
-serve({ fetch: app.fetch, port }, (info) => {
+// TODO: Handle SIGTERM/SIGINT for graceful shutdown before self-hosting.
+serve({ fetch: app.fetch, port: serverPort }, (info) => {
     console.log(`http://127.0.0.1:${info.port}`);
 });

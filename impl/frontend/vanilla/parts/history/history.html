@@ -1,0 +1,91 @@
+<section>
+    <h2>What if we could look at a history this way?</h2>
+    <p class="chips-label">Accounts</p>
+    <div
+        class="chips"
+        id="accounts"
+        role="group"
+        aria-label="Which account"
+    ></div>
+    <div class="main-toolbar">
+        <button type="button" id="deed-create" aria-controls="deed-form" hidden>
+            Create deed
+        </button>
+        <button type="button" id="deeds-connect" hidden>Connect deeds</button>
+        <button type="button" id="pending-ops-save" hidden>Save</button>
+        <button type="button" id="pending-ops-discard" hidden>Discard</button>
+        <span
+            class="pending-ops-status"
+            id="pending-ops-status"
+            role="status"
+            hidden
+        ></span>
+    </div>
+    <form class="deed-form" id="deed-form" hidden>
+        <input
+            type="text"
+            id="deed-form-title"
+            name="title"
+            placeholder="Deed title"
+            aria-label="Deed title"
+            autocomplete="off"
+            required
+        />
+        <input
+            type="text"
+            id="deed-form-link"
+            name="link"
+            placeholder="Deed link"
+            aria-label="Deed link"
+            autocomplete="off"
+            required
+        />
+        <!-- TODO: Upload to R2 -->
+        <input
+            type="text"
+            id="deed-form-img"
+            name="img"
+            placeholder="Deed image URL"
+            aria-label="Deed image URL"
+            autocomplete="off"
+        />
+        <button type="submit" id="deed-form-submit">Create</button>
+        <button type="button" id="deed-form-cancel">Cancel</button>
+    </form>
+    <p class="muted" id="history-status" role="status" hidden></p>
+    <div class="graph-wrapper">
+        <div
+            class="graph-viewport"
+            role="group"
+            aria-label="Click a deed to open details, or connect deeds."
+        ></div>
+        <button type="button" class="graph-reset" aria-label="Reset view">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M2.2 8a5.8 5.8 0 0 1 9.7-4.3L14 5.8" />
+                <path d="M14 2.2v3.6H10.4" />
+                <path d="M13.8 8a5.8 5.8 0 0 1-9.7 4.3L2 10.2" />
+                <path d="M2 13.8V10.2h3.6" />
+            </svg>
+        </button>
+    </div>
+    <dialog id="deed-window" aria-labelledby="deed-title">
+        <button type="button" class="close" aria-label="Close">&times;</button>
+        <img id="deed-image" alt="" />
+        <div class="inner">
+            <h2 id="deed-title"></h2>
+            <p class="muted">
+                <a
+                    id="deed-link"
+                    href=""
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    hidden
+                ></a>
+            </p>
+            <div class="buttons">
+                <button type="button" id="deed-edit" hidden>Edit</button>
+                <button type="button" id="deed-delete" hidden>Delete</button>
+            </div>
+        </div>
+    </dialog>
+</section>
