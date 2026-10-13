@@ -22,6 +22,7 @@
 
     "workbench.colorTheme": "Default High Contrast",
     "workbench.editor.restoreViewState": false,
+    "workbench.localHistory.enabled": false,
 
     "workbench.colorCustomizations": {
         "diffEditor.insertedLineBackground": "#3fb9501f",
