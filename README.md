@@ -1,5 +1,5 @@
-> [!IMPORTANT]
-> Current work is focused on [competence-graph-arc-microgrants](https://github.com/repreit/competence-graph-arc-microgrants) (Arc Microgrants).
+> [!NOTE]
+> Looking for the Arc Microgrants submission? See [competence-graph-arc-microgrants](https://github.com/repreit/competence-graph-arc-microgrants). This repository is the main line of development.
 
 <br>
 
