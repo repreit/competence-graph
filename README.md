@@ -25,7 +25,7 @@ We will not hide behind buzzwords or packaging. We shape this with your feedback
 
 ## Demo
 
-[https://repreit.github.io/competence-graph-arc-microgrants/](https://repreit.github.io/competence-graph-arc-microgrants/)
+[https://repreit.github.io/competence-graph/](https://repreit.github.io/competence-graph/)
 
 ## Who this is for
 
