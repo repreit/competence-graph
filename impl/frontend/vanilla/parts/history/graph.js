@@ -10,17 +10,12 @@ import {
 } from "./card.js";
 import {
     clipLinkToCards,
-    idFrom,
     linkKey,
     makeLinkObject,
     pairsFromNodes,
 } from "./link.js";
-import {
-    handleDeedClick,
-    handleDeedDragEnd,
-    handleGraphLinkClick,
-    showHistoryStatus,
-} from "./history.js";
+import { bindGraphPointer } from "./pointer.js";
+import { handleDeedDragEnd, showHistoryStatus } from "./history.js";
 import {
     disposeGraphGpu,
     setOpaque,
@@ -34,9 +29,9 @@ let historyGraph = null;
 let historyGraphPending = null;
 let graphRequest = 0;
 let hoveredNodeId = "";
-let hoveredNode = null;
+export let hoveredNode = null;
 let hoveredLinkKey = "";
-let hoveredLink = null;
+export let hoveredLink = null;
 
 let fitTimer = 0;
 const FIT_PULL = 0.8;
@@ -264,39 +259,7 @@ function paintGraphTheme() {
 export function bindHistoryGraph() {
     viewportEl = document.querySelector(".graph-viewport");
     if (viewportEl) {
-        let press = null;
-        const hoverWaitMs = 50;
-        viewportEl.addEventListener("pointerdown", function (ev) {
-            if (ev.button !== 0) {
-                press = null;
-                return;
-            }
-            press = { x: ev.clientX, y: ev.clientY };
-        });
-        viewportEl.addEventListener("pointerup", function (ev) {
-            if (!press || ev.button !== 0) {
-                press = null;
-                return;
-            }
-            const dx = ev.clientX - press.x;
-            const dy = ev.clientY - press.y;
-            press = null;
-            if (dx * dx + dy * dy >= 100) {
-                return;
-            }
-            window.setTimeout(function () {
-                if (hoveredNode) {
-                    handleDeedClick(hoveredNode);
-                    return;
-                }
-                if (hoveredLink) {
-                    handleGraphLinkClick(
-                        idFrom(hoveredLink.source),
-                        idFrom(hoveredLink.target),
-                    );
-                }
-            }, hoverWaitMs);
-        });
+        bindGraphPointer(viewportEl);
     }
     const resetViewEl = document.querySelector(".graph-reset");
     if (resetViewEl) {
