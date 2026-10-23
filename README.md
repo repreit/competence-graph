@@ -1,8 +1,3 @@
-> [!NOTE]
-> Looking for the Arc Microgrants submission? See [competence-graph-arc-microgrants](https://github.com/repreit/competence-graph-arc-microgrants).
-
-<br>
-
 <img src="protocol/img/mark.svg" alt="competence-graph" height="32">
 
 # competence-graph <img src="protocol/img/protocol.svg" alt="PROTOCOL" height="20">
